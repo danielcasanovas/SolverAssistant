@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="1102.0" styleClass="title-backgroundColor" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="solverassistant.FXMLDocumentController">
+    <children>
+      <TabPane layoutY="103.0" prefHeight="547.0" prefWidth="1102.0" stylesheets="@../style/style.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="103.0">
+        <tabs>
+          <Tab id="loadTab" fx:id="loadTab" closable="false" text="Load Log">
+            <content>
+              <AnchorPane styleClass="backgroundColor" stylesheets="@../style/style.css">
+                     <children>
+                        <TextArea id="logTextArea" fx:id="logTextArea" editable="false" layoutY="47.0" prefHeight="471.0" prefWidth="1102.0" styleClass="logTextArea-background" stylesheets="@../style/style.css" text="..." wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="47.0" />
+                          <Button id="loadLogButton" fx:id="loadLogButton" layoutX="20.0" layoutY="14.0" onAction="#openLog" prefHeight="25.0" prefWidth="190.0" text="Load Log" />
+                        <Label id="logNameLabel" fx:id="logNameLabel" layoutX="244.0" layoutY="18.0" styleClass="logTextArea-background" text="..." />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab id="editTab" fx:id="editTab" text="Edit Log">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="backgroundColor">
+                     <children>
+                        <TableView layoutX="216.0" prefHeight="441.0" prefWidth="887.0">
+                          <columns>
+                            <TableColumn prefWidth="172.0" text="File Name" />
+                            <TableColumn minWidth="0.0" prefWidth="65.0" text="Time" />
+                              <TableColumn prefWidth="85.0" text="Solution" />
+                              <TableColumn prefWidth="87.0" text="Optimal" />
+                              <TableColumn prefWidth="73.0" text="Error" />
+                              <TableColumn prefWidth="81.0" text="Log Name" />
+                              <TableColumn prefWidth="93.0" text="Var 1" />
+                          </columns>
+                        </TableView>
+                        <Label alignment="CENTER" layoutX="48.0" layoutY="39.0" prefHeight="17.0" prefWidth="116.0" text="Solver" />
+                        <TextField layoutX="32.0" layoutY="61.0" />
+                        <Label alignment="CENTER" layoutX="48.0" layoutY="96.0" prefHeight="17.0" prefWidth="116.0" text="Benchmark" />
+                        <TextField layoutX="32.0" layoutY="118.0" />
+                        <Label alignment="CENTER" layoutX="48.0" layoutY="212.0" prefHeight="17.0" prefWidth="116.0" text="Time out" />
+                        <TextField layoutX="32.0" layoutY="177.0" />
+                        <Label alignment="CENTER" layoutX="48.0" layoutY="155.0" prefHeight="17.0" prefWidth="116.0" text="Solver type" />
+                        <TextField layoutX="32.0" layoutY="234.0" />
+                        <Label disable="true" layoutX="216.0" layoutY="452.0" prefHeight="17.0" prefWidth="412.0" text="Load more solvers at : &quot;http://maxsat.ia.udl.cat/results&quot;" />
+                        <Button layoutX="915.0" layoutY="457.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="148.0" text="Send to Database" />
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+      <ComboBox id="comboLanguage" fx:id="comboLanguage" layoutX="988.0" layoutY="14.0" prefHeight="25.0" prefWidth="100.0" promptText="Language" styleClass="comboBox-defaultComboBox" stylesheets="@../style/style.css" visibleRowCount="3" />
+    </children>
+</AnchorPane>

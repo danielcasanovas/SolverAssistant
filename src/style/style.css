@@ -1,0 +1,29 @@
+/* 
+ Daniel Casanovas Gayoso 
+ Treball Fi de Grau 
+ EPS UDL 2014/2015
+*/
+
+.title-backgroundColor{
+    -fx-background-color: #DA45B4;
+    //-fx-background-image: url("../images/logoUDL.png");
+    -fx-background-image: url("http://www.udl.es/export/system/modules/org.opencms.udl/resources/imatges/estructura/logo-udl.png");
+    -fx-background-repeat: no-repeat;
+}
+
+.backgroundColor{
+    -fx-background-color: white;
+}
+
+.logTextArea-background{
+    -fx-background-color: gainsboro;
+    -fx-text-color: white;
+}
+
+.comboBox-defaultComboBox{
+    -fx-background-color: -fx-text-box-border, -fx-control-inner-background;
+    -fx-background-insets: 0, 1 0 1 1;
+    -fx-padding: 1 3 1 3;
+    -fx-background-radius: 0;
+    -fx-cursor: hand;
+}
