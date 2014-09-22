@@ -2,6 +2,7 @@
  * TFG: Daniel Casanovas Gayoso 
  * Grau en Enginyeria Informàtica - Escola Politècnica Superior de Lleida
  * 2014/2015
+ * Controller for the Main View
  */
 package solverassistant;
 
@@ -22,10 +23,7 @@ public class FXMLMainController implements Initializable {
     private ComboBox<String> comboLanguage;
 
     @FXML
-    private Tab loadTab;
-
-    @FXML
-    private Tab editTab;
+    private Tab loadTab, editTab;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -34,9 +32,13 @@ public class FXMLMainController implements Initializable {
         comboLanguage.getSelectionModel().selectedItemProperty().addListener(this.languageComboBoxListener());
     }
 
+    /**
+     * Set the properly i18n data to all the components in the view
+     */
     public void chargeI18nValues() {
         loadTab.setText(SolverAssistant.messages.getString("LoadLog"));
         editTab.setText(SolverAssistant.messages.getString("EditLog"));
+
     }
 
     private void chargeLanguageComboBox(Locale language) {

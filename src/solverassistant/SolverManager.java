@@ -2,6 +2,7 @@
  * TFG: Daniel Casanovas Gayoso 
  * Grau en Enginyeria Informàtica - Escola Politècnica Superior de Lleida
  * 2014/2015
+ * Class to manage all the controllers and the data between them
  */
 package solverassistant;
 
@@ -14,7 +15,8 @@ public class SolverManager {
 
     private final Scene scene;
     private FXMLMainController mainController;
-    private FXMLLoadLogController logController;
+    private FXMLLoadLogController loadLogController;
+    private FXMLEditLogController editLogController;
 
     public SolverManager(Scene scene) {
         this.scene = scene;
@@ -26,11 +28,15 @@ public class SolverManager {
         mainController = mainLoader.<FXMLMainController>getController();
         FXMLLoader loadLoader = new FXMLLoader(getClass().getResource("FXMLLoadLog.fxml"));
         loadLoader.load();
-        logController = loadLoader.<FXMLLoadLogController>getController();
+        loadLogController = loadLoader.<FXMLLoadLogController>getController();
+        FXMLLoader editLoader = new FXMLLoader(getClass().getResource("FXMLEditLog.fxml"));
+        editLoader.load();
+        editLogController = editLoader.<FXMLEditLogController>getController();
     }
 
     public void refreshI18nResources() {
         mainController.chargeI18nValues();
-        logController.chargeI18nValues();
+        loadLogController.chargeI18nValues();
+        editLogController.chargeI18nValues();
     }
 }
