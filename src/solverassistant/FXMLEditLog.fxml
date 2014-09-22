@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" styleClass="backgroundColor" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="solverassistant.FXMLEditLogController">
+    <children>
+        <TableView layoutX="216.0" prefHeight="441.0" prefWidth="887.0">
+            <columns>
+                <TableColumn prefWidth="172.0" text="File Name" />
+                <TableColumn minWidth="0.0" prefWidth="65.0" text="Time" />
+                <TableColumn prefWidth="85.0" text="Solution" />
+                <TableColumn prefWidth="87.0" text="Optimal" />
+                <TableColumn prefWidth="73.0" text="Error" />
+                <TableColumn prefWidth="81.0" text="Log Name" />
+                <TableColumn prefWidth="93.0" text="Var 1" />
+            </columns>
+        </TableView>
+        <Label alignment="CENTER" layoutX="48.0" layoutY="39.0" prefHeight="17.0" prefWidth="116.0" text="Solver" />
+        <TextField layoutX="32.0" layoutY="61.0" />
+        <Label alignment="CENTER" layoutX="48.0" layoutY="96.0" prefHeight="17.0" prefWidth="116.0" text="Benchmark" />
+        <TextField layoutX="32.0" layoutY="118.0" />
+        <Label alignment="CENTER" layoutX="48.0" layoutY="212.0" prefHeight="17.0" prefWidth="116.0" text="Time out" />
+        <TextField layoutX="32.0" layoutY="177.0" />
+        <Label alignment="CENTER" layoutX="48.0" layoutY="155.0" prefHeight="17.0" prefWidth="116.0" text="Solver type" />
+        <TextField layoutX="32.0" layoutY="234.0" />
+        <Label disable="true" layoutX="216.0" layoutY="452.0" prefHeight="17.0" prefWidth="412.0" text="Load more solvers at : &quot;http://maxsat.ia.udl.cat/results&quot;" />
+        <Button layoutX="915.0" layoutY="457.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="148.0" text="Send to Database" />
+    </children>
+</AnchorPane>

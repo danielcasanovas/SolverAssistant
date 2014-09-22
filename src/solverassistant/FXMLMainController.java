@@ -30,12 +30,11 @@ public class FXMLMainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.chargeI18nValues();
+        this.chargeLanguageComboBox(SolverAssistant.messages.getLocale());
         comboLanguage.getSelectionModel().selectedItemProperty().addListener(this.languageComboBoxListener());
     }
 
     public void chargeI18nValues() {
-        // Charge i18n values to the elements of this controller
-        this.chargeLanguageComboBox(SolverAssistant.messages.getLocale());
         loadTab.setText(SolverAssistant.messages.getString("LoadLog"));
         editTab.setText(SolverAssistant.messages.getString("EditLog"));
     }
@@ -63,7 +62,6 @@ public class FXMLMainController implements Initializable {
     private ChangeListener languageComboBoxListener() {
         return new ChangeListener() {
             public void stateChanged(ChangeEvent changeEvent) {
-
             }
 
             @Override
@@ -72,20 +70,17 @@ public class FXMLMainController implements Initializable {
                     case "Català":
                         SolverAssistant.messages = ResourceBundle.getBundle("bundles.bundle", Locale.forLanguageTag("cat"));
                         SolverAssistant.utils.fileWriter("lang.txt", "cat");
-                        SolverAssistant.loadController.chargeI18nValues();
                         break;
                     case "Español":
                         SolverAssistant.messages = ResourceBundle.getBundle("bundles.bundle", Locale.forLanguageTag("es"));
                         SolverAssistant.utils.fileWriter("lang.txt", "es");
-                        SolverAssistant.loadController.chargeI18nValues();
                         break;
                     case "English":
                         SolverAssistant.messages = ResourceBundle.getBundle("bundles.bundle", Locale.forLanguageTag("en"));
                         SolverAssistant.utils.fileWriter("lang.txt", "en");
-                        SolverAssistant.loadController.chargeI18nValues();
                         break;
                 }
-                chargeI18nValues();
+                SolverAssistant.manager.refreshI18nResources();
             }
         };
     }

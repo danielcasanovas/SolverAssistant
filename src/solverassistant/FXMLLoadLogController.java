@@ -28,7 +28,7 @@ public class FXMLLoadLogController implements Initializable {
     private Button loadLogButton;
 
     //private String logName;
-    private String logName = "C:\\Users\\Daniel\\Desktop\\ahmaxsat-ls-ms_crafted-COMPLETE-1800-3500-2.log";
+    private final String logName = "C:\\Users\\Daniel\\Desktop\\ahmaxsat-ls-ms_crafted-COMPLETE-1800-3500-2.log";
     private String log;
 
     @Override
@@ -44,11 +44,12 @@ public class FXMLLoadLogController implements Initializable {
     @FXML
     private void openLog(ActionEvent event) {
         JFileChooser fileChooser = new JFileChooser();
-
+        fileChooser.setDialogTitle(SolverAssistant.messages.getString("Open"));
+        fileChooser.setCurrentDirectory(new File("."));
         // Selecting File
-        // if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+        //if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
         if (true) {
-            File file = fileChooser.getSelectedFile();
+            //File file = fileChooser.getSelectedFile();
             log = SolverAssistant.utils.fileReader(new File(logName));
             logNameLabel.setText(logName);
             logTextArea.setText(log);

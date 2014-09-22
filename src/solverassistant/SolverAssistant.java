@@ -9,32 +9,25 @@ import java.io.File;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class SolverAssistant extends Application {
 
     public static ResourceBundle messages;
     public static Utils utils = new Utils();
-    public static FXMLMainController mainController;
-    public static FXMLLoadLogController loadController;
-    
+    public static SolverManager manager;
+
     @Override
     public void start(Stage stage) throws Exception {
-        
+        // Load the resource bundle
+        this.chargeResourceBundleLanguage();
+
         // Load Controllers
-        FXMLLoader loader;
-        loader = new FXMLLoader(SolverAssistant.class.getResource("FXMLMain.fxml"));
-        mainController = loader.getController();
-//        loader = new FXMLLoader(SolverAssistant.class.getResource("FXMLLoadLog.fxml"));
-//        loadController = loader.getController();
-        System.out.println(">>>>>>> "+mainController);
-        this.chargeI18nValues();
-        
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLMain.fxml"));
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(new StackPane());
+        manager = new SolverManager(scene);
+        manager.showMainView();
         stage.setScene(scene);
         stage.show();
     }
@@ -45,13 +38,9 @@ public class SolverAssistant extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
-     public void chargeI18nValues() {
-       String defaultLanguage = utils.fileReader(new File("lang.txt"));
-       this.chargeResourceBundleLanguage(defaultLanguage);
-    }
 
-    public void chargeResourceBundleLanguage(String defaultLanguage) {
+    public void chargeResourceBundleLanguage() {
+        String defaultLanguage = utils.fileReader(new File("lang.txt"));
         switch (defaultLanguage) {
             case "en":
                 messages = ResourceBundle.getBundle("bundles.bundle", Locale.forLanguageTag("en"));
@@ -66,9 +55,5 @@ public class SolverAssistant extends Application {
                 messages = ResourceBundle.getBundle("bundles.bundle", Locale.forLanguageTag("en"));
                 break;
         }
-    }
-    public void refreshCurrentLanguageInViews(){
-//        mainController.chargeI18nValues();
-//        loadController.chargeI18nValues();
     }
 }
