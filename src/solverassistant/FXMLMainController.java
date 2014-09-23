@@ -21,7 +21,12 @@ public class FXMLMainController implements Initializable {
 
     @FXML
     private ComboBox<String> comboLanguage;
-
+    
+    @FXML
+    private FXMLLoadLogController barTabPageLoadController;
+    
+    @FXML
+    private FXMLEditLogController barTabPageEditController;
     @FXML
     private Tab loadTab, editTab;
 
@@ -38,7 +43,8 @@ public class FXMLMainController implements Initializable {
     public void chargeI18nValues() {
         loadTab.setText(SolverAssistant.messages.getString("LoadLog"));
         editTab.setText(SolverAssistant.messages.getString("EditLog"));
-
+        barTabPageLoadController.chargeI18nValues();
+        barTabPageEditController.chargeI18nValues();
     }
 
     private void chargeLanguageComboBox(Locale language) {
@@ -82,7 +88,7 @@ public class FXMLMainController implements Initializable {
                         SolverAssistant.utils.fileWriter("lang.txt", "en");
                         break;
                 }
-                SolverAssistant.manager.refreshI18nResources();
+                chargeI18nValues();
             }
         };
     }
