@@ -5,12 +5,13 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import java.net.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="1102.0" styleClass="title-backgroundColor" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="solverassistant.FXMLMainController">
+<AnchorPane id="AnchorPane" minHeight="480.0" minWidth="800.0" prefHeight="768.0" prefWidth="1225.0" styleClass="title-backgroundColor" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="solverassistant.FXMLMainController">
     <children>
-        <TabPane layoutY="103.0" prefHeight="547.0" prefWidth="1102.0" stylesheets="@../style/style.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="103.0">
+        <TabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
             <tabs>
-                <Tab id="loadTab" fx:id="loadTab" closable="false" text="Load Log">
+                <Tab id="loadTab" fx:id="loadTab" text="Load Log">
                     <content>
                         <fx:include fx:id="barTabPageLoad" source="FXMLLoadLog.fxml" />
                     </content>
@@ -22,6 +23,9 @@
                 </Tab>
             </tabs>
         </TabPane>
-        <ComboBox id="comboLanguage" fx:id="comboLanguage" layoutX="988.0" layoutY="14.0" prefHeight="25.0" prefWidth="100.0" promptText="Language" styleClass="comboBox-defaultComboBox" stylesheets="@../style/style.css" visibleRowCount="3" />
+        <ComboBox id="comboLanguage" fx:id="comboLanguage" layoutX="1111.0" layoutY="14.0" prefHeight="25.0" prefWidth="100.0" promptText="Language" styleClass="comboBox-defaultComboBox" visibleRowCount="3" />
     </children>
+    <stylesheets>
+        <URL value="@/style/style.css" />
+    </stylesheets>
 </AnchorPane>

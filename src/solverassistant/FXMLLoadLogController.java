@@ -28,8 +28,7 @@ public class FXMLLoadLogController implements Initializable {
     @FXML
     private Button loadLogButton;
 
-    //private String logName;
-    private final String logName = "C:\\Users\\Daniel\\Desktop\\ahmaxsat-ls-ms_crafted-COMPLETE-1800-3500-2.log";
+    private String logName;
     private String log;
 
     @Override
@@ -42,7 +41,6 @@ public class FXMLLoadLogController implements Initializable {
      */
     public void chargeI18nValues() {
         loadLogButton.setText(SolverAssistant.messages.getString("OpenNewLog"));
-        System.out.println(">>>>>>>>>" +loadLogButton.getText());
     }
 
     // -------- Actions
@@ -52,12 +50,16 @@ public class FXMLLoadLogController implements Initializable {
         fileChooser.setDialogTitle(SolverAssistant.messages.getString("Open"));
         fileChooser.setCurrentDirectory(new File("."));
         // Selecting File
-        //if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+        // if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
         if (true) {
             //File file = fileChooser.getSelectedFile();
-            log = SolverAssistant.utils.fileReader(new File(logName));
+            logName = "ahmaxsat-ls-ms_crafted-COMPLETE-1800-3500-2.log";
+            // logName = fileChooser.getSelectedFile().getName();
+            log = SolverAssistant.utils.fileReader(new File("C:\\Users\\Daniel\\Desktop\\ahmaxsat-ls-ms_crafted-COMPLETE-1800-3500-2.log"));
+            // log = SolverAssistant.utils.fileReader(file);
             logNameLabel.setText(logName);
             logTextArea.setText(log);
         }
+        SolverManager.loadSolver(logName, log);
     }
 }

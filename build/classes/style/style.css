@@ -6,8 +6,7 @@
 
 .title-backgroundColor{
     -fx-background-color: #DA45B4;
-    //-fx-background-image: url("../images/logoUDL.png");
-    -fx-background-image: url("http://www.udl.es/export/system/modules/org.opencms.udl/resources/imatges/estructura/logo-udl.png");
+    -fx-background-image: url("/images/logoUDL.png");
     -fx-background-repeat: no-repeat;
 }
 

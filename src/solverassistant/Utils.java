@@ -13,6 +13,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.StringTokenizer;
 
 public class Utils {
 
@@ -60,6 +64,53 @@ public class Utils {
                 writer.close();
             } catch (Exception ex) {
             }
+        }
+    }
+
+    public static Solver createSolverFromData(String logName, String log) {
+        Solver solverCharged = new Solver();
+        try {
+            List<String> solverInfoList = Arrays.asList(logName.split("-"));
+            Collections.reverse(solverInfoList);
+            solverCharged.setNumberOfCores(Integer.parseInt((solverInfoList.get(0)).substring(0, (solverInfoList.get(0)).lastIndexOf("."))));
+            solverCharged.setMemory(Integer.parseInt(solverInfoList.get(1)));
+            solverCharged.setTimeOut(Integer.parseInt(solverInfoList.get(2)));
+            solverCharged.setType(solverInfoList.get(3));
+            solverCharged.setBenchmark(solverInfoList.get(4));
+            solverCharged.setName(solverInfoList.get(solverInfoList.size()-1));
+        } catch (Exception e) {
+            System.err.println("[ERROR-INFO] Solver has incomplete or incorrect name.");
+        }
+        
+        try {
+            StringTokenizer st = new StringTokenizer(log, "\t");
+            while (st.hasMoreTokens()) {
+                SolverInstance instance = new SolverInstance();
+                instance.setFileName(st.nextToken());
+                instance.setTime(Double.parseDouble(st.nextToken()));
+                if (st.nextToken().equals("OPTIMUM_FOUND")) {
+                    instance.setOptimum(true);
+                } else {
+                    instance.setOptimum(false);
+                }
+                instance.setSolution(Integer.parseInt(st.nextToken()));
+                instance.setInfo(Integer.parseInt(st.nextToken()));
+                instance.setTimeOut(Integer.parseInt(st.nextToken()));
+                instance.setBuggy(Integer.parseInt(st.nextToken()));
+                instance.setSegmentationFault(Integer.parseInt(st.nextToken()));
+                instance.setOutOfMemory(Integer.parseInt(st.nextToken()));
+                instance.setLog(st.nextToken());
+                instance.setNumberOfVariables(Integer.parseInt(st.nextToken()));
+                instance.setNumberOfClause(Integer.parseInt(st.nextToken()));
+                instance.setNumberOfHardClause(Integer.parseInt(st.nextToken()));
+                instance.setNumberOfUnsatClause(Integer.parseInt(st.nextToken()));
+                instance.setUnsatClauseWeigth(Integer.parseInt(st.nextToken()));
+                solverCharged.addInstanceToList(instance);
+            }
+        } catch (Exception e) {
+            System.err.println("[ERROR-INFO] There is incomplete or incorrect instances in the log.");
+        } finally {
+            return solverCharged;
         }
     }
 }
