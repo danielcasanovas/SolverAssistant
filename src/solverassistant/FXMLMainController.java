@@ -26,7 +26,7 @@ public class FXMLMainController implements Initializable {
     private FXMLLoadLogController barTabPageLoadController;
     
     @FXML
-    private FXMLEditLogController barTabPageEditController;
+    private FXMLEditSolverController barTabPageEditController;
     @FXML
     private Tab loadTab, editTab;
     
@@ -42,7 +42,7 @@ public class FXMLMainController implements Initializable {
      */
     public void chargeI18nValues() {
         loadTab.setText(SolverAssistant.messages.getString("LoadLog"));
-        editTab.setText(SolverAssistant.messages.getString("EditLog"));
+        editTab.setText(SolverAssistant.messages.getString("EditSolver"));
         barTabPageLoadController.chargeI18nValues();
         barTabPageEditController.chargeI18nValues();
         if (SolverManager.solverCharged == null) {

@@ -16,9 +16,9 @@
                         <fx:include fx:id="barTabPageLoad" source="FXMLLoadLog.fxml" />
                     </content>
                 </Tab>
-                <Tab id="editTab" fx:id="editTab" text="Edit Log">
+                <Tab id="editTab" fx:id="editTab" text="Edit Solver">
                     <content>
-                        <fx:include fx:id="barTabPageEdit" source="FXMLEditLog.fxml" />
+                        <fx:include fx:id="barTabPageEdit" source="FXMLEditSolver.fxml" />
                     </content>
                 </Tab>
             </tabs>

@@ -18,10 +18,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javax.swing.table.TableColumn;
 
-public class FXMLEditLogController implements Initializable {
+public class FXMLEditSolverController implements Initializable {
 
     @FXML
-    private TableView instancesTable;
+    private TableView<SolverInstance> instancesTable;
 
     @FXML
     private TableColumn instancesTableColumn;
@@ -65,6 +65,19 @@ public class FXMLEditLogController implements Initializable {
     }
 
     private void bindDataToTable() {
+
         final ObservableList<SolverInstance> data = FXCollections.observableArrayList(SolverManager.solverCharged.getInstancesList());
+
+        for (SolverInstance s : SolverManager.solverCharged.getInstancesList()) {
+            System.out.println("File Name:" + s.getFileName());
+        }
+
+//        final TableView<SolverInstance> instancesTabel = new TableView<>(data);
+//        TableColumn<SolverInstance,String> firstNameCol = new TableColumn<SolverInstance,String>("First Name");
+//
+//        instancesTable.setEditable(true);
+//        instancesTable.setItems(data);
+//
+//        System.out.println(">>>>>" + instancesTable.getItems().size());
     }
 }
