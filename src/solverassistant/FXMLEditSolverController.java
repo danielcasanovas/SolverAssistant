@@ -14,17 +14,19 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javax.swing.table.TableColumn;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 
 public class FXMLEditSolverController implements Initializable {
 
     @FXML
-    private TableView<SolverInstance> instancesTable;
+    private TableView<SolverInstancePropierties> instancesTable;
 
     @FXML
-    private TableColumn instancesTableColumn;
+    private TableColumn colInstance, colTime, colSolution, colOptimal, colInfo, colTimeOut, colBuggy, colSegmentation, colOutOfMemory, colLog, colVariables, colClauses, colHardClauses, colSoftClauses, colUnsatClauses, colWeigthUnsatClauses;
 
     @FXML
     private Label solverLabel, benchmarkLabel, solverTypeLabel, timeOutLabel, moreSolversLabel, memoryLabel, coresLabel;
@@ -35,9 +37,13 @@ public class FXMLEditSolverController implements Initializable {
     @FXML
     private Button sendToDBButton;
 
+    private ObservableList<SolverInstancePropierties> data;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.chargeI18nValues();
+        this.configTableViewPageUI();
+
     }
 
     /**
@@ -65,19 +71,18 @@ public class FXMLEditSolverController implements Initializable {
     }
 
     private void bindDataToTable() {
+        SolverInstancePropierties solvProp = new SolverInstancePropierties(SolverManager.solverCharged.getInstancesList().get(0));
+        data = FXCollections.observableArrayList(solvProp);
+//        for (SolverInstance s : SolverManager.solverCharged.getInstancesList()) {
+//            System.out.println("File Name:" + s.getFileName());
+//        }
+        instancesTable.setItems(data);
 
-        final ObservableList<SolverInstance> data = FXCollections.observableArrayList(SolverManager.solverCharged.getInstancesList());
+    }
 
-        for (SolverInstance s : SolverManager.solverCharged.getInstancesList()) {
-            System.out.println("File Name:" + s.getFileName());
-        }
-
-//        final TableView<SolverInstance> instancesTabel = new TableView<>(data);
-//        TableColumn<SolverInstance,String> firstNameCol = new TableColumn<SolverInstance,String>("First Name");
-//
-//        instancesTable.setEditable(true);
-//        instancesTable.setItems(data);
-//
-//        System.out.println(">>>>>" + instancesTable.getItems().size());
+    private void configTableViewPageUI() {
+        instancesTable.setEditable(true);
+        colLog.setCellValueFactory(new PropertyValueFactory<SolverInstancePropierties, String>("log"));
+        colLog.setCellFactory(TextFieldTableCell.forTableColumn());
     }
 }
