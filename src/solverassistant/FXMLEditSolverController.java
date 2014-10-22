@@ -7,6 +7,8 @@
 package solverassistant;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,7 +20,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 
 public class FXMLEditSolverController implements Initializable {
 
@@ -26,7 +27,52 @@ public class FXMLEditSolverController implements Initializable {
     private TableView<SolverInstancePropierties> instancesTable;
 
     @FXML
-    private TableColumn colInstance, colTime, colSolution, colOptimal, colInfo, colTimeOut, colBuggy, colSegmentation, colOutOfMemory, colLog, colVariables, colClauses, colHardClauses, colSoftClauses, colUnsatClauses, colWeigthUnsatClauses;
+    private TableColumn<SolverInstance, String> colInstance;
+
+    @FXML
+    private TableColumn<SolverInstance, Double> colTime;
+
+    @FXML
+    private TableColumn<SolverInstance, Boolean> colOptimal;
+
+    @FXML
+    private TableColumn<SolverInstance, Integer> colSolution;
+
+    @FXML
+    private TableColumn<SolverInstance, Integer> colInfo;
+
+    @FXML
+    private TableColumn<SolverInstance, Integer> colTimeOut;
+
+    @FXML
+    private TableColumn<SolverInstance, Integer> colBuggy;
+
+    @FXML
+    private TableColumn<SolverInstance, Integer> colSegmentation;
+
+    @FXML
+    private TableColumn<SolverInstance, Integer> colOutOfMemory;
+
+    @FXML
+    private TableColumn<SolverInstance, String> colLog;
+
+    @FXML
+    private TableColumn<SolverInstance, Integer> colVariables;
+
+    @FXML
+    private TableColumn<SolverInstance, Integer> colClauses;
+
+    @FXML
+    private TableColumn<SolverInstance, Integer> colHardClauses;
+
+    @FXML
+    private TableColumn<SolverInstance, Integer> colSoftClauses;
+
+    @FXML
+    private TableColumn<SolverInstance, Integer> colUnsatClauses;
+
+    @FXML
+    private TableColumn<SolverInstance, Integer> colWeigthUnsatClauses;
 
     @FXML
     private Label solverLabel, benchmarkLabel, solverTypeLabel, timeOutLabel, moreSolversLabel, memoryLabel, coresLabel;
@@ -37,13 +83,14 @@ public class FXMLEditSolverController implements Initializable {
     @FXML
     private Button sendToDBButton;
 
+    private List<SolverInstancePropierties> solvPropList;
     private ObservableList<SolverInstancePropierties> data;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        solvPropList = new ArrayList<>();
         this.chargeI18nValues();
         this.configTableViewPageUI();
-
     }
 
     /**
@@ -57,7 +104,23 @@ public class FXMLEditSolverController implements Initializable {
         memoryLabel.setText(SolverAssistant.messages.getString("Memory"));
         coresLabel.setText(SolverAssistant.messages.getString("NumberOfCores"));
         moreSolversLabel.setText(SolverAssistant.messages.getString("MoreSolvers") + " \"http://maxsat.ia.udl.cat/results\"");
-        sendToDBButton.setText(SolverAssistant.messages.getString("SendToDB"));
+        sendToDBButton.setText(SolverAssistant.messages.getString("Memory"));
+        colInstance.setText(SolverAssistant.messages.getString("Instance"));
+        colTime.setText(SolverAssistant.messages.getString("Time"));
+        colOptimal.setText(SolverAssistant.messages.getString("Optimal"));
+        colSolution.setText(SolverAssistant.messages.getString("Solution"));
+        colInfo.setText(SolverAssistant.messages.getString("Info"));
+        colTimeOut.setText(SolverAssistant.messages.getString("TimeOut"));
+        colBuggy.setText(SolverAssistant.messages.getString("Buggy"));
+        colSegmentation.setText(SolverAssistant.messages.getString("SegmentationFault"));
+        colOutOfMemory.setText(SolverAssistant.messages.getString("OutOfMemory"));
+        colLog.setText(SolverAssistant.messages.getString("Log"));
+        colVariables.setText(SolverAssistant.messages.getString("Variables"));
+        colClauses.setText(SolverAssistant.messages.getString("Clauses"));
+        colHardClauses.setText(SolverAssistant.messages.getString("HardClauses"));
+        colSoftClauses.setText(SolverAssistant.messages.getString("SoftClauses"));
+        colUnsatClauses.setText(SolverAssistant.messages.getString("UnSatClauses"));
+        colWeigthUnsatClauses.setText(SolverAssistant.messages.getString("WeigthUnsatClauses"));
     }
 
     public void loadSolver() {
@@ -71,18 +134,32 @@ public class FXMLEditSolverController implements Initializable {
     }
 
     private void bindDataToTable() {
-        SolverInstancePropierties solvProp = new SolverInstancePropierties(SolverManager.solverCharged.getInstancesList().get(0));
-        data = FXCollections.observableArrayList(solvProp);
-//        for (SolverInstance s : SolverManager.solverCharged.getInstancesList()) {
-//            System.out.println("File Name:" + s.getFileName());
-//        }
-        instancesTable.setItems(data);
 
+        for (SolverInstance s : SolverManager.solverCharged.getInstancesList()) {
+            solvPropList.add(new SolverInstancePropierties(s));
+        }
+        data = FXCollections.observableArrayList(solvPropList);
+        instancesTable.getItems().addAll(data);
     }
 
     private void configTableViewPageUI() {
-        instancesTable.setEditable(true);
-        colLog.setCellValueFactory(new PropertyValueFactory<SolverInstancePropierties, String>("log"));
-        colLog.setCellFactory(TextFieldTableCell.forTableColumn());
+        colInstance.setCellValueFactory(new PropertyValueFactory<>("fileName"));
+        colTime.setCellValueFactory(new PropertyValueFactory<>("time"));
+        colOptimal.setCellValueFactory(new PropertyValueFactory<>("optimum"));
+        colSolution.setCellValueFactory(new PropertyValueFactory<>("solution"));
+        colInfo.setCellValueFactory(new PropertyValueFactory<>("info"));
+        colTimeOut.setCellValueFactory(new PropertyValueFactory<>("timeOut"));
+        colBuggy.setCellValueFactory(new PropertyValueFactory<>("buggy"));
+        colSegmentation.setCellValueFactory(new PropertyValueFactory<>("segmentationFault"));
+        colOutOfMemory.setCellValueFactory(new PropertyValueFactory<>("outOfMemory"));
+        colLog.setCellValueFactory(new PropertyValueFactory<>("log"));
+        colVariables.setCellValueFactory(new PropertyValueFactory<>("numberOfVariables"));
+        colClauses.setCellValueFactory(new PropertyValueFactory<>("numberOfClause"));
+        colHardClauses.setCellValueFactory(new PropertyValueFactory<>("numberOfHardClause"));
+        colSoftClauses.setCellValueFactory(new PropertyValueFactory<>("numberOfSoftClause"));
+        colUnsatClauses.setCellValueFactory(new PropertyValueFactory<>("numberOfUnsatClause"));
+        colWeigthUnsatClauses.setCellValueFactory(new PropertyValueFactory<>("unsatClauseWeigth"));
+//        instancesTable.setEditable(true);
+
     }
 }

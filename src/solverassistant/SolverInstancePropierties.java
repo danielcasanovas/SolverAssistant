@@ -18,6 +18,7 @@ import javafx.beans.property.StringProperty;
 public class SolverInstancePropierties {
 
     private SolverInstance solverInstance;
+
     private StringProperty fileName = new SimpleStringProperty() {
         @Override
         public void set(String fileName) {
@@ -133,26 +134,28 @@ public class SolverInstancePropierties {
     };
 
     public SolverInstancePropierties(SolverInstance solverInstance) {
+        this.setInstance(solverInstance);
+    }
+
+    public final void setInstance(SolverInstance solverInstance) {
         if (solverInstance != null) {
             this.solverInstance = solverInstance;
-
-            solverInstance.setFileName(this.solverInstance.getFileName());
-            solverInstance.setTime(this.solverInstance.getTime());
-            solverInstance.setOptimum(this.solverInstance.isOptimum());
-            solverInstance.setSolution(this.solverInstance.getSolution());
-            solverInstance.setInfo(this.solverInstance.getInfo());
-            solverInstance.setTimeOut(this.solverInstance.getTimeOut());
-            solverInstance.setBuggy(this.solverInstance.getBuggy());
-            solverInstance.setSegmentationFault(this.solverInstance.getSegmentationFault());
-            solverInstance.setOutOfMemory(this.solverInstance.getOutOfMemory());
-            solverInstance.setLog(this.solverInstance.getLog());
-            solverInstance.setNumberOfVariables(this.solverInstance.getNumberOfVariables());
-            solverInstance.setNumberOfClause(this.solverInstance.getNumberOfClause());
-            solverInstance.setNumberOfHardClause(this.solverInstance.getNumberOfHardClause());
-            solverInstance.setNumberOfSoftClause(this.solverInstance.getNumberOfSoftClause());
-            solverInstance.setNumberOfUnsatClause(this.solverInstance.getNumberOfUnsatClause());
-            solverInstance.setUnsatClauseWeigth(this.solverInstance.getUnsatClauseWeigth());
-
+            getFileNameProperty().set(solverInstance.getFileName());
+            getTimeProperty().set(solverInstance.getTime());
+            getOptimumProperty().set(solverInstance.isOptimum());
+            getSolutionProperty().set(solverInstance.getSolution());
+            getInfoProperty().set(solverInstance.getInfo());
+            getTimeOutProperty().set(solverInstance.getTimeOut());
+            getBuggyProperty().set(solverInstance.getBuggy());
+            getSegmentationFaultProperty().set(solverInstance.getSegmentationFault());
+            getOutOfMemoryProperty().set(solverInstance.getOutOfMemory());
+            getLogProperty().set(solverInstance.getLog());
+            getNumberOfVariablesProperty().set(solverInstance.getNumberOfVariables());
+            getNumberOfClauseProperty().set(solverInstance.getNumberOfClause());
+            getNumberOfHardClauseProperty().set(solverInstance.getNumberOfHardClause());
+            getNumberOfSoftClauseProperty().set(solverInstance.getNumberOfSoftClause());
+            getNumberOfUnsatClauseProperty().set(solverInstance.getNumberOfUnsatClause());
+            getUnsatClauseWeigthProperty().set(solverInstance.getUnsatClauseWeigth());
         }
     }
 
@@ -163,116 +166,131 @@ public class SolverInstancePropierties {
         return solverInstance;
     }
 
-    /**
-     * @return the fileName
-     */
-    public StringProperty getFileName() {
+    public StringProperty getFileNameProperty() {
         return fileName;
     }
 
-    /**
-     * @return the time
-     */
-    public DoubleProperty getTime() {
+    public String getFileName() {
+        return fileName.getValue();
+    }
+
+    public DoubleProperty getTimeProperty() {
         return time;
     }
 
-    /**
-     * @return the optimum
-     */
-    public BooleanProperty getOptimum() {
+    public double getTime() {
+        return time.getValue();
+    }
+
+    public BooleanProperty getOptimumProperty() {
         return optimum;
     }
 
-    /**
-     * @return the solution
-     */
-    public IntegerProperty getSolution() {
+    public boolean getOptimum() {
+        return optimum.getValue();
+    }
+
+    public IntegerProperty getSolutionProperty() {
         return solution;
     }
 
-    /**
-     * @return the info
-     */
-    public IntegerProperty getInfo() {
+    public int getSolution() {
+        return solution.getValue();
+    }
+
+    public IntegerProperty getInfoProperty() {
         return info;
     }
 
-    /**
-     * @return the timeOut
-     */
-    public IntegerProperty getTimeOut() {
+    public int getInfo() {
+        return info.getValue();
+    }
+
+    public IntegerProperty getTimeOutProperty() {
         return timeOut;
     }
 
-    /**
-     * @return the buggy
-     */
-    public IntegerProperty getBuggy() {
+    public int getTimeOut() {
+        return timeOut.getValue();
+    }
+
+    public IntegerProperty getBuggyProperty() {
         return buggy;
     }
 
-    /**
-     * @return the segmentationFault
-     */
-    public IntegerProperty getSegmentationFault() {
+    public int getBuggy() {
+        return buggy.getValue();
+    }
+
+    public IntegerProperty getSegmentationFaultProperty() {
         return segmentationFault;
     }
 
-    /**
-     * @return the outOfMemory
-     */
-    public IntegerProperty getOutOfMemory() {
+    public int getSegmentationFault() {
+        return segmentationFault.getValue();
+    }
+
+    public IntegerProperty getOutOfMemoryProperty() {
         return outOfMemory;
     }
 
-    /**
-     * @return the log
-     */
-    public StringProperty getLog() {
+    public int getOutOfMemory() {
+        return outOfMemory.getValue();
+    }
+
+    public StringProperty getLogProperty() {
         return log;
     }
 
-    /**
-     * @return the numberOfVariables
-     */
-    public IntegerProperty getNumberOfVariables() {
+    public String getLog() {
+        return log.getValue();
+    }
+
+    public IntegerProperty getNumberOfVariablesProperty() {
         return numberOfVariables;
     }
 
-    /**
-     * @return the numberOfClause
-     */
-    public IntegerProperty getNumberOfClause() {
+    public int getNumberOfVariables() {
+        return numberOfVariables.getValue();
+    }
+
+    public IntegerProperty getNumberOfClauseProperty() {
         return numberOfClause;
     }
 
-    /**
-     * @return the numberOfHardClause
-     */
-    public IntegerProperty getNumberOfHardClause() {
+    public int getNumberOfClause() {
+        return numberOfClause.getValue();
+    }
+
+    public IntegerProperty getNumberOfHardClauseProperty() {
         return numberOfHardClause;
     }
 
-    /**
-     * @return the numberOfSoftClause
-     */
-    public IntegerProperty getNumberOfSoftClause() {
+    public int getNumberOfHardClause() {
+        return numberOfHardClause.getValue();
+    }
+
+    public IntegerProperty getNumberOfSoftClauseProperty() {
         return numberOfSoftClause;
     }
 
-    /**
-     * @return the numberOfUnsatClause
-     */
-    public IntegerProperty getNumberOfUnsatClause() {
+    public int getNumberOfSoftClause() {
+        return numberOfSoftClause.getValue();
+    }
+
+    public IntegerProperty getNumberOfUnsatClauseProperty() {
         return numberOfUnsatClause;
     }
 
-    /**
-     * @return the unsatClauseWeigth
-     */
-    public IntegerProperty getUnsatClauseWeigth() {
+    public int getNumberOfUnsatClause() {
+        return numberOfUnsatClause.getValue();
+    }
+
+    public IntegerProperty getUnsatClauseWeigthProperty() {
         return unsatClauseWeigth;
     }
-    
+
+    public int getUnsatClauseWeigth() {
+        return unsatClauseWeigth.getValue();
+    }
 }

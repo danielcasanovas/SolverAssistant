@@ -30,7 +30,7 @@ public class SolverAssistant extends Application {
         manager = new SolverManager(scene);
         manager.showMainView();
         stage.setScene(scene);
-        stage.setResizable(false);
+//        stage.setResizable(false);
         stage.show();
     }
 

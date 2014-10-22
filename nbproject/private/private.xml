@@ -3,10 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/D:/WorkSpace/SolverAssistant/src/solverassistant/SolverManager.java</file>
             <file>file:/D:/WorkSpace/SolverAssistant/src/solverassistant/SolverInstancePropierties.java</file>
+            <file>file:/D:/WorkSpace/SolverAssistant/src/solverassistant/FXMLLoadLogController.java</file>
             <file>file:/D:/WorkSpace/SolverAssistant/src/solverassistant/FXMLEditSolverController.java</file>
+            <file>file:/D:/WorkSpace/SolverAssistant/src/solverassistant/SolverAssistant.java</file>
+            <file>file:/D:/WorkSpace/SolverAssistant/src/bundles/bundle_en.properties</file>
             <file>file:/D:/WorkSpace/SolverAssistant/src/solverassistant/Solver.java</file>
-            <file>file:/D:/WorkSpace/SolverAssistant/src/solverassistant/SolverInstance.java</file>
+            <file>file:/D:/WorkSpace/SolverAssistant/src/solverassistant/FXMLMainController.java</file>
+            <file>file:/D:/WorkSpace/SolverAssistant/src/solverassistant/Utils.java</file>
             <file>file:/D:/WorkSpace/SolverAssistant/src/solverassistant/FXMLEditSolver.fxml</file>
         </group>
     </open-files>

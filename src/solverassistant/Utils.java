@@ -77,16 +77,21 @@ public class Utils {
             solverCharged.setTimeOut(Integer.parseInt(solverInfoList.get(2)));
             solverCharged.setType(solverInfoList.get(3));
             solverCharged.setBenchmark(solverInfoList.get(4));
-            solverCharged.setName(solverInfoList.get(solverInfoList.size()-1));
+            solverCharged.setName(solverInfoList.get(solverInfoList.size() - 1));
         } catch (Exception e) {
             System.err.println("[ERROR-INFO] Solver has incomplete or incorrect name.");
         }
-        
+
         try {
             StringTokenizer st = new StringTokenizer(log, "\t");
+            SolverInstance instance = null;
+            boolean firstElement = true;
             while (st.hasMoreTokens()) {
-                SolverInstance instance = new SolverInstance();
-                instance.setFileName(st.nextToken());
+                if (firstElement) {
+                    instance = new SolverInstance();
+                    instance.setFileName(st.nextToken());
+                    firstElement = false;
+                }
                 instance.setTime(Double.parseDouble(st.nextToken()));
                 if (st.nextToken().equals("OPTIMUM_FOUND")) {
                     instance.setOptimum(true);
@@ -103,9 +108,19 @@ public class Utils {
                 instance.setNumberOfVariables(Integer.parseInt(st.nextToken()));
                 instance.setNumberOfClause(Integer.parseInt(st.nextToken()));
                 instance.setNumberOfHardClause(Integer.parseInt(st.nextToken()));
+                instance.setNumberOfSoftClause(Integer.parseInt(st.nextToken()));
                 instance.setNumberOfUnsatClause(Integer.parseInt(st.nextToken()));
-                instance.setUnsatClauseWeigth(Integer.parseInt(st.nextToken()));
+
+                String unSatClauseWeigthString = st.nextToken();
+                int limit = unSatClauseWeigthString.indexOf("/", 0);
+                instance.setUnsatClauseWeigth(Integer.parseInt(unSatClauseWeigthString.substring(0, limit)));
+
                 solverCharged.addInstanceToList(instance);
+
+                if (st.hasMoreTokens()) {
+                    instance = new SolverInstance();
+                    instance.setFileName(unSatClauseWeigthString.substring(limit));
+                }
             }
         } catch (Exception e) {
             System.err.println("[ERROR-INFO] There is incomplete or incorrect instances in the log.");

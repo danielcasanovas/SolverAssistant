@@ -49,17 +49,17 @@ public class FXMLLoadLogController implements Initializable {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle(SolverAssistant.messages.getString("Open"));
         fileChooser.setCurrentDirectory(new File("."));
-        // Selecting File
-        // if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+//         Selecting File
+//        if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
         if (true) {
-            //File file = fileChooser.getSelectedFile();
+//            File file = fileChooser.getSelectedFile();
             logName = "ahmaxsat-ls-ms_crafted-COMPLETE-1800-3500-2.log";
-            // logName = fileChooser.getSelectedFile().getName();
+//            logName = fileChooser.getSelectedFile().getName();
             log = SolverAssistant.utils.fileReader(new File("C:\\Users\\Daniel\\Desktop\\ahmaxsat-ls-ms_crafted-COMPLETE-1800-3500-2.log"));
-            // log = SolverAssistant.utils.fileReader(file);
+//            log = SolverAssistant.utils.fileReader(file);
             logNameLabel.setText(logName);
             logTextArea.setText(log);
+            SolverManager.loadSolver(logName, log);
         }
-        SolverManager.loadSolver(logName, log);
     }
 }

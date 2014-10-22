@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
@@ -7,28 +8,6 @@
 
 <AnchorPane id="AnchorPane" styleClass="backgroundColor" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="solverassistant.FXMLEditSolverController">
     <children>
-        <AnchorPane layoutX="229.0" layoutY="103.0" prefHeight="591.0" prefWidth="1380.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="103.0">   
-            <TableView id="instancesTable" fx:id="instancesTable" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                <columns>
-                    <TableColumn prefWidth="75.0" text="Instance" fx:id="colInstance"/> 
-                    <TableColumn prefWidth="75.0" text="Time" fx:id="colTime"/>
-                    <TableColumn prefWidth="75.0" text="Solution" fx:id="colSolution"/>
-                    <TableColumn prefWidth="75.0" text="Optimal" fx:id="colOptimal"/>
-                    <TableColumn prefWidth="75.0" text="Info" fx:id="colInfo"/>
-                    <TableColumn prefWidth="75.0" text="Time out" fx:id="colTimeOut"/>
-                    <TableColumn prefWidth="75.0" text="Buggy" fx:id="colBuggy"/>
-                    <TableColumn prefWidth="75.0" text="Segmentation fault" fx:id="colSegmentation"/>
-                    <TableColumn prefWidth="75.0" text="Out of memory" fx:id="colOutOfMemory"/>
-                    <TableColumn prefWidth="75.0" text="Log " fx:id="colLog"/>
-                    <TableColumn prefWidth="75.0" text="Variables" fx:id="colVariables"/>
-                    <TableColumn prefWidth="75.0" text="Clauses" fx:id="colClauses"/>
-                    <TableColumn prefWidth="75.0" text="Hard clauses" fx:id="colHardClauses"/>
-                    <TableColumn prefWidth="75.0" text="Soft clauses" fx:id="colSoftClauses"/>
-                    <TableColumn prefWidth="75.0" text="Unsat clauses" fx:id="colUnsatClauses"/>
-                    <TableColumn prefWidth="75.0" text="Weigth unsat clauses" fx:id="colWeigthUnsatClauses"/>
-                </columns>
-            </TableView>
-        </AnchorPane>
         <AnchorPane layoutX="38.0" layoutY="14.0" prefHeight="694.0" prefWidth="1380.0" AnchorPane.bottomAnchor="-14.0" AnchorPane.leftAnchor="38.0" AnchorPane.rightAnchor="-38.0" AnchorPane.topAnchor="14.0">
             <children>
                 <Label id="timeOutLabel" fx:id="timeOutLabel" alignment="CENTER" layoutX="600.0" prefHeight="17.0" prefWidth="148.0" text="Time out" />
@@ -47,5 +26,30 @@
                 <TextField id="coresTextField" fx:id="coresTextField" alignment="CENTER" layoutX="1000.0" layoutY="20.0" />
             </children>
         </AnchorPane>
+        <AnchorPane layoutX="229.0" layoutY="103.0" prefHeight="591.0" prefWidth="1380.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="103.0">
+            <children>   
+                <TableView id="instancesTable" fx:id="instancesTable" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columns>
+                        <TableColumn fx:id="colInstance" prefWidth="150.0" text="Instance" /> 
+                        <TableColumn fx:id="colTime" prefWidth="65.0" text="Time" />
+                        <TableColumn fx:id="colSolution" prefWidth="65.0" text="Solution" />
+                        <TableColumn fx:id="colOptimal" prefWidth="65.0" text="Optimal" />
+                        <TableColumn fx:id="colInfo" prefWidth="65.0" text="Info" />
+                        <TableColumn fx:id="colTimeOut" prefWidth="65.0" text="Time out" />
+                        <TableColumn fx:id="colBuggy" prefWidth="65.0" text="Buggy" />
+                        <TableColumn fx:id="colSegmentation" prefWidth="65.0" text="Segmentation fault" />
+                        <TableColumn fx:id="colOutOfMemory" prefWidth="65.0" text="Out of memory" />
+                        <TableColumn fx:id="colLog" prefWidth="150.0" text="Log " />
+                        <TableColumn fx:id="colVariables" prefWidth="65.0" text="Variables" />
+                        <TableColumn fx:id="colClauses" prefWidth="65.0" text="Clauses" />
+                        <TableColumn fx:id="colHardClauses" prefWidth="65.0" text="Hard clauses" />
+                        <TableColumn fx:id="colSoftClauses" prefWidth="65.0" text="Soft clauses" />
+                        <TableColumn fx:id="colUnsatClauses" prefWidth="65.0" text="Unsat clauses" />
+                        <TableColumn fx:id="colWeigthUnsatClauses" prefWidth="65.0" text="Weigth unsat clauses" />
+                    </columns>
+                </TableView>
+            </children>
+        </AnchorPane>
+        
     </children>
 </AnchorPane>
