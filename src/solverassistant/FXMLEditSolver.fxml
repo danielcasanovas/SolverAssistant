@@ -19,7 +19,7 @@
                 <Label id="coresLabel" fx:id="coresLabel" alignment="CENTER" layoutX="1000.0" prefHeight="17.0" prefWidth="148.0" text="Number of cores" />
                 <Label id="benchmarkLabel" fx:id="benchmarkLabel" alignment="CENTER" layoutX="200.0" prefHeight="17.0" prefWidth="149.0" text="Benchmark" />
                 <Label id="solverLabel" fx:id="solverLabel" alignment="CENTER" prefHeight="17.0" prefWidth="149.0" text="Solver" />
-                <Button id="sendToDBButton" fx:id="sendToDBButton" layoutX="800.0" layoutY="55.0" prefHeight="25.0" prefWidth="349.0" styleClass="button-defaultButton" text="Send to Database" />
+                <Button id="sendToDBButton" fx:id="sendToDBButton" layoutX="800.0" layoutY="55.0" onAction="#saveSolver" prefHeight="25.0" prefWidth="349.0" styleClass="button-defaultButton" text="Send to Database" />
                 <TextField id="solverTypeTextField" fx:id="solverTypeTextField" alignment="CENTER" layoutX="400.0" layoutY="20.0" />
                 <Label id="memoryLabel" fx:id="memoryLabel" alignment="CENTER" layoutX="800.0" prefHeight="17.0" prefWidth="148.0" text="Memory" />
                 <TextField id="benchmarkTextField" fx:id="benchmarkTextField" alignment="CENTER" layoutX="200.0" layoutY="20.0" />

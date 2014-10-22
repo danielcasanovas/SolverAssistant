@@ -6,12 +6,15 @@
  */
 package solverassistant;
 
+import entities.SolverInstance;
+import entities.SolverInstancePropierties;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -104,7 +107,7 @@ public class FXMLEditSolverController implements Initializable {
         memoryLabel.setText(SolverAssistant.messages.getString("Memory"));
         coresLabel.setText(SolverAssistant.messages.getString("NumberOfCores"));
         moreSolversLabel.setText(SolverAssistant.messages.getString("MoreSolvers") + " \"http://maxsat.ia.udl.cat/results\"");
-        sendToDBButton.setText(SolverAssistant.messages.getString("Memory"));
+        sendToDBButton.setText(SolverAssistant.messages.getString("SendToDB"));
         colInstance.setText(SolverAssistant.messages.getString("Instance"));
         colTime.setText(SolverAssistant.messages.getString("Time"));
         colOptimal.setText(SolverAssistant.messages.getString("Optimal"));
@@ -134,7 +137,6 @@ public class FXMLEditSolverController implements Initializable {
     }
 
     private void bindDataToTable() {
-
         for (SolverInstance s : SolverManager.solverCharged.getInstancesList()) {
             solvPropList.add(new SolverInstancePropierties(s));
         }
@@ -160,6 +162,20 @@ public class FXMLEditSolverController implements Initializable {
         colUnsatClauses.setCellValueFactory(new PropertyValueFactory<>("numberOfUnsatClause"));
         colWeigthUnsatClauses.setCellValueFactory(new PropertyValueFactory<>("unsatClauseWeigth"));
 //        instancesTable.setEditable(true);
+    }
 
+    private void saveSolverData() {
+        SolverManager.solverCharged.setName(solverTextField.getText());
+        SolverManager.solverCharged.setBenchmark(benchmarkTextField.getText());
+        SolverManager.solverCharged.setType(solverTypeTextField.getText());
+        SolverManager.solverCharged.setTimeOut(Integer.parseInt(timeOutTextField.getText()));
+        SolverManager.solverCharged.setMemory(Integer.parseInt(memoryTextField.getText()));
+        SolverManager.solverCharged.setNumberOfCores(Integer.parseInt(coresTextField.getText()));
+    }
+    
+     // -------- Actions
+    @FXML
+    private void saveSolver(ActionEvent event) {
+        this.saveSolverData();
     }
 }

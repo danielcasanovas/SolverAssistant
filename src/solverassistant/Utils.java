@@ -5,6 +5,8 @@
  */
 package solverassistant;
 
+import entities.SolverInstance;
+import entities.Solver;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -128,4 +130,5 @@ public class Utils {
             return solverCharged;
         }
     }
+    
 }

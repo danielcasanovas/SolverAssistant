@@ -6,7 +6,10 @@
  */
 package solverassistant;
 
+import entities.Solver;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -16,9 +19,16 @@ public class SolverManager {
     private final Scene scene;
     private static FXMLMainController mainController;
     public static Solver solverCharged = null;
+    public static DataBase database = null;
+    private final static String dataBaseName = "SolverAssistant";
 
     public SolverManager(Scene scene) {
         this.scene = scene;
+        try {
+            SolverManager.initDataBase();
+        } catch (Exception ex) {
+            System.err.println("[ERROR-INFO] - " + ex);
+        }
     }
 
     public void showMainView() throws IOException {
@@ -30,5 +40,9 @@ public class SolverManager {
     public static void loadSolver(String logName, String log) {
         solverCharged = Utils.createSolverFromData(logName, log);
         mainController.loadSolver();
+    }
+
+    private static void initDataBase() throws Exception {
+        database = new DataBase(dataBaseName);
     }
 }
