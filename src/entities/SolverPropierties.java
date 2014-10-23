@@ -16,25 +16,25 @@ public class SolverPropierties {
 
     private Solver solver;
     private StringProperty name = new SimpleStringProperty() {
-	@Override
-	public void set(String name) {
-	    super.set(name);
-	    solver.setName(name);
-	}
+        @Override
+        public void set(String name) {
+            super.set(name);
+            solver.setName(name);
+        }
     };
     private StringProperty benchmark = new SimpleStringProperty() {
-	@Override
-	public void set(String benchmark) {
-	    super.set(benchmark);
-	    solver.setBenchmark(benchmark);
-	}
+        @Override
+        public void set(String benchmark) {
+            super.set(benchmark);
+            solver.setBenchmark(benchmark);
+        }
     };
     private StringProperty type = new SimpleStringProperty() {
-	@Override
-	public void set(String type) {
-	    super.set(type);
-	    solver.setType(type);
-	}
+        @Override
+        public void set(String type) {
+            super.set(type);
+            solver.setType(type);
+        }
     };
     private IntegerProperty timeOut = new SimpleIntegerProperty() {
         @Override
@@ -60,74 +60,76 @@ public class SolverPropierties {
     private List<SolverInstance> instancesList;
 
     public SolverPropierties(Solver solver) {
+        this.setSolver(solver);
+    }
+
+    private void setSolver(Solver solver) {
         if (solver != null) {
             this.solver = solver;
-
-            solver.setName(this.solver.getName());
-            solver.setBenchmark(this.solver.getBenchmark());
-            solver.setType(this.solver.getType());
-            solver.setTimeOut(this.solver.getTimeOut());
-            solver.setMemory(solver.getMemory());
-            solver.setNumberOfCores(solver.getNumberOfCores());
-            solver.setInstancesList(solver.getInstancesList());
+            getNameProperty().set(this.solver.getName());
+            getBenchmarkProperty().set(this.solver.getBenchmark());
+            getTypeProperty().set(this.solver.getType());
+            getTimeOutProperty().set(this.solver.getTimeOut());
+            getMemoryProperty().set(this.solver.getMemory());
+            getNumberOfCoresProperty().set(this.solver.getNumberOfCores());
+            solver.setInstancesList(this.solver.getInstancesList());
         }
     }
 
-    /**
-     * @return the solver
-     */
     public Solver getSolver() {
         return solver;
     }
 
-    /**
-     * @return the name
-     */
-    public StringProperty getName() {
+    public StringProperty getNameProperty() {
         return name;
     }
 
-    /**
-     * @return the benchmark
-     */
-    public StringProperty getBenchmark() {
+    public String getName() {
+        return name.getValue();
+    }
+
+    public StringProperty getBenchmarkProperty() {
         return benchmark;
     }
 
-    /**
-     * @return the type
-     */
-    public StringProperty getType() {
+    public String getBenchmark() {
+        return benchmark.getValue();
+    }
+
+    public StringProperty getTypeProperty() {
         return type;
     }
 
-    /**
-     * @return the timeOut
-     */
-    public IntegerProperty getTimeOut() {
+    public String getType() {
+        return type.getValue();
+    }
+
+    public IntegerProperty getTimeOutProperty() {
         return timeOut;
     }
 
-    /**
-     * @return the memory
-     */
-    public IntegerProperty getMemory() {
+    public int getTimeOut() {
+        return timeOut.getValue();
+    }
+
+    public IntegerProperty getMemoryProperty() {
         return memory;
     }
 
-    /**
-     * @return the numberOfCores
-     */
-    public IntegerProperty getNumberOfCores() {
+    public int getMemory() {
+        return memory.getValue();
+    }
+
+    public IntegerProperty getNumberOfCoresProperty() {
         return numberOfCores;
     }
 
-    /**
-     * @return the instancesList
-     */
+    public int getNumberOfCores() {
+        return numberOfCores.getValue();
+    }
+
     public List<SolverInstance> getInstancesList() {
         return instancesList;
     }
-    
-    
+
 }

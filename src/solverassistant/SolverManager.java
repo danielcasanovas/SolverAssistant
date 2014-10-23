@@ -8,8 +8,6 @@ package solverassistant;
 
 import entities.Solver;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -43,6 +41,6 @@ public class SolverManager {
     }
 
     private static void initDataBase() throws Exception {
-        database = new DataBase(dataBaseName);
+       // database = new DataBase(dataBaseName);
     }
 }
