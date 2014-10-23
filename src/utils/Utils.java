@@ -2,8 +2,9 @@
  * TFG: Daniel Casanovas Gayoso 
  * Grau en Enginyeria Informàtica - Escola Politècnica Superior de Lleida
  * 2014/2015
+ * Utils
  */
-package solverassistant;
+package utils;
 
 import entities.SolverInstance;
 import entities.Solver;
@@ -130,5 +131,5 @@ public class Utils {
             return solverCharged;
         }
     }
-    
+
 }

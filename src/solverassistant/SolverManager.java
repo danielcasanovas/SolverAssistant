@@ -6,6 +6,7 @@
  */
 package solverassistant;
 
+import utils.Utils;
 import entities.Solver;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +18,7 @@ public class SolverManager {
     private final Scene scene;
     private static FXMLMainController mainController;
     public static Solver solverCharged = null;
-    public static DataBase database = null;
+    public static DataBaseManager database = null;
     private final static String dataBaseName = "SolverAssistant";
 
     public SolverManager(Scene scene) {
@@ -41,6 +42,6 @@ public class SolverManager {
     }
 
     private static void initDataBase() throws Exception {
-       // database = new DataBase(dataBaseName);
+       // database = new DataBaseManager(dataBaseName);
     }
 }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane styleClass="backgroundColor" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="solverassistant.FXMLCompareController">
+    <children>
+      
+        <TableView prefHeight="257.0" prefWidth="922.0" AnchorPane.leftAnchor="245.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+            <columns>
+                <TableColumn prefWidth="25.0" />
+                <TableColumn prefWidth="75.0" text="Solver" />
+                <TableColumn prefWidth="75.0" text="Benchmark" />
+                <TableColumn prefWidth="75.0" text="Solver type" />
+                <TableColumn prefWidth="75.0" text="Time out" />
+                <TableColumn prefWidth="75.0" text="Memory" />
+                <TableColumn prefWidth="75.0" text="Number of cores" />
+          
+            </columns>
+        </TableView>
+        <Button prefHeight="25.0" prefWidth="150.0" text="Compare" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="40.0" />
+        <TableView prefHeight="257.0" prefWidth="922.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="245.0" AnchorPane.rightAnchor="0.0">
+            <columns>
+                <TableColumn prefWidth="75.0" text="Solver" />
+                <TableColumn prefWidth="75.0" text="Benchmark" />
+                <TableColumn prefWidth="75.0" text="Solver type" />
+                <TableColumn prefWidth="75.0" text="Time out" />
+                <TableColumn prefWidth="75.0" text="Memory" />
+                <TableColumn prefWidth="75.0" text="Number of cores" />
+            </columns>
+        </TableView>
+        <Label prefHeight="17.0" prefWidth="150.0" text="Solver" textAlignment="CENTER" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="40.0" />
+        <ComboBox prefWidth="150.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="60.0" />
+        <Label prefHeight="17.0" prefWidth="150.0" text="Benchmark" textAlignment="CENTER" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="90.0" />
+        <ComboBox prefWidth="150.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="110.0" />
+        <Label prefHeight="17.0" prefWidth="150.0" text="Solver type" textAlignment="CENTER" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="140.0" />
+        <ComboBox prefWidth="150.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="160.0" />
+        <Label prefHeight="17.0" prefWidth="150.0" text="Time out" textAlignment="CENTER"  AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="190.0" />
+        <ComboBox prefWidth="150.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="210.0" />
+        <Label prefHeight="17.0" prefWidth="150.0" text="Memory" textAlignment="CENTER"  AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="240.0" />
+        <ComboBox prefWidth="150.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="260.0" />
+        <Label prefHeight="17.0" prefWidth="150.0" text="Number of cores" textAlignment="CENTER"  AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="290.0" />
+        <ComboBox prefWidth="150.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="310.0" />
+    </children>
+</AnchorPane>

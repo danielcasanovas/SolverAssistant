@@ -2,7 +2,7 @@
  * TFG: Daniel Casanovas Gayoso 
  * Grau en Enginyeria Informàtica - Escola Politècnica Superior de Lleida
  * 2014/2015
- * DataBase Manager
+ * DataBaseManager Manager
  */
 package solverassistant;
 
@@ -12,7 +12,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DataBase {
+public class DataBaseManager {
 
     private final String sDriver = "org.sqlite.JDBC";
     private final String sUrl = "jdbc:sqlite:";
@@ -23,16 +23,16 @@ public class DataBase {
 
     // To use, use empty constructor and after call init function with the db name or use the second constructor with the db name
     // After that execute executeUp or executeQr
-    public DataBase() {
+    public DataBaseManager() {
     }
 
-    public DataBase(String databaseName) throws Exception {
+    public DataBaseManager(String databaseName) throws Exception {
         init(databaseName);
     }
 
     public void init(String databaseName) throws Exception {
         setConnection();
-        setStatement();
+        createStatement();
     }
 
     public String getDatabaseName() {
@@ -56,7 +56,7 @@ public class DataBase {
         return conn;
     }
 
-    public void setStatement() throws Exception {
+    public void createStatement() throws Exception {
         if (conn == null) {
             setConnection();
         }

@@ -5,6 +5,7 @@
  */
 package solverassistant;
 
+import utils.Utils;
 import java.io.File;
 import java.util.Locale;
 import java.util.ResourceBundle;
