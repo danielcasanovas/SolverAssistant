@@ -6,6 +6,7 @@
  */
 package solverassistant;
 
+import database.DAOSolver;
 import utils.Utils;
 import entities.Solver;
 import java.io.IOException;
@@ -18,16 +19,10 @@ public class SolverManager {
     private final Scene scene;
     private static FXMLMainController mainController;
     public static Solver solverCharged = null;
-    public static DataBaseManager database = null;
-    private final static String dataBaseName = "SolverAssistant";
+    public static DAOSolver daoSolver = null;
 
     public SolverManager(Scene scene) {
         this.scene = scene;
-        try {
-            SolverManager.initDataBase();
-        } catch (Exception ex) {
-            System.err.println("[ERROR-INFO] - " + ex);
-        }
     }
 
     public void showMainView() throws IOException {
@@ -41,7 +36,7 @@ public class SolverManager {
         mainController.loadSolver();
     }
 
-    private static void initDataBase() throws Exception {
-       // database = new DataBaseManager(dataBaseName);
+    public static void initDB() {
+        daoSolver = new DAOSolver();
     }
 }

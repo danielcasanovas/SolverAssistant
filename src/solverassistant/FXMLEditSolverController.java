@@ -7,7 +7,7 @@
 package solverassistant;
 
 import entities.SolverInstance;
-import entities.SolverInstancePropierties;
+import entities.SolverInstanceProperties;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class FXMLEditSolverController implements Initializable {
 
     @FXML
-    private TableView<SolverInstancePropierties> instancesTable;
+    private TableView<SolverInstanceProperties> instancesTable;
 
     @FXML
     private TableColumn<SolverInstance, String> colInstance;
@@ -86,8 +86,8 @@ public class FXMLEditSolverController implements Initializable {
     @FXML
     private Button sendToDBButton;
 
-    private List<SolverInstancePropierties> solvPropList;
-    private ObservableList<SolverInstancePropierties> data;
+    private List<SolverInstanceProperties> solvPropList;
+    private ObservableList<SolverInstanceProperties> data;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -138,7 +138,7 @@ public class FXMLEditSolverController implements Initializable {
 
     private void bindDataToTable() {
         for (SolverInstance s : SolverManager.solverCharged.getInstancesList()) {
-            solvPropList.add(new SolverInstancePropierties(s));
+            solvPropList.add(new SolverInstanceProperties(s));
         }
         data = FXCollections.observableArrayList(solvPropList);
         instancesTable.getItems().addAll(data);

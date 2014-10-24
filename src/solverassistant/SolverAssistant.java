@@ -29,6 +29,7 @@ public class SolverAssistant extends Application {
         // Load Controllers
         Scene scene = new Scene(new StackPane());
         manager = new SolverManager(scene);
+        manager.initDB();
         manager.showMainView();
         stage.setScene(scene);
 //        stage.setResizable(false);
