@@ -1,51 +1,36 @@
-
--- -----------------------------------------------------
--- -------------------- DATABASE -----------------------
--- -----------------------------------------------------
-USE `SolverAssistant`;
-
 -- -----------------------------------------------------
 -- ------------------ MAIN ENTITIES --------------------
 -- -----------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `Solver` (
-  `SolverId` INT(11) NOT NULL AUTO_INCREMENT,
-  `Name` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `Benchmark` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `Type` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `TimeOut` INT(11) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `Memory` INT(11) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `NumberOfCores` INT(11) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  PRIMARY KEY (`SolverId`)
-) ENGINE=InnoDB  
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_general_ci;
+  `SolverId` INTEGER PRIMARY KEY AUTOINCREMENT,
+  `Name` TEXT DEFAULT NULL,
+  `Benchmark` TEXT DEFAULT NULL,
+  `Type` TEXT DEFAULT NULL,
+  `TimeOut` INTEGER DEFAULT NULL,
+  `Memory` INTEGER DEFAULT NULL,
+  `NumberOfCores` INTEGER DEFAULT NULL
+);
 
 CREATE TABLE IF NOT EXISTS `SolverInstance` (
-  `SolverInstanceId` int(11) NOT NULL AUTO_INCREMENT,
-  `Instance` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `Time` DECIMAL(11,4) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `Optimum` TINYINT(1) NOT NULL DEFAULT 0,
-  `Solution` INT(11) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `Info` INT(11) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `TimeOut` INT(11) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `Buggy` INT(11) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `SegmentationFault` INT(11) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `Log` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `OutOfMemory` INT(11) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `NumberOfVariables` INT(11) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `NumberOfClause` INT(11) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `NumberOfHardClause` INT(11) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `NumberOfSoftClause` INT(11) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `NumberOfUnsatClause` INT(11) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `NumberOfUnsatClauseWeigth` INT(11) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `SolverId` INT(11) NULL DEFAULT NULL,
-  PRIMARY KEY (`SolverInstanceId`),
-  CONSTRAINT `fk_solver`
-    FOREIGN KEY (`SolverId`)
-    REFERENCES `Solver` (`SolverId`)
+  `SolverInstanceId` INTEGER PRIMARY KEY AUTOINCREMENT,
+  `Instance` TEXT DEFAULT NULL,
+  `Time` NUMERIC DEFAULT NULL,
+  `Optimum` NUMERIC DEFAULT NULL,
+  `Solution` INTEGER DEFAULT NULL,
+  `Info` INTEGER DEFAULT NULL,
+  `TimeOut` INTEGER DEFAULT NULL,
+  `Buggy` INTEGER DEFAULT NULL,
+  `SegmentationFault` INTEGER DEFAULT NULL,
+  `Log` TEXT DEFAULT NULL,
+  `OutOfMemory` INTEGER DEFAULT NULL,
+  `NumberOfVariables` INTEGER DEFAULT NULL,
+  `NumberOfClause` INTEGER DEFAULT NULL,
+  `NumberOfHardClause` INTEGER DEFAULT NULL,
+  `NumberOfSoftClause` INTEGER DEFAULT NULL,
+  `NumberOfUnsatClause` INTEGER DEFAULT NULL,
+  `NumberOfUnsatClauseWeigth` INTEGER DEFAULT NULL,
+  `SolverId` INTEGER REFERENCES `Solver`(`SolverId`)
     ON DELETE CASCADE
     ON UPDATE CASCADE
-) ENGINE=InnoDB  
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_general_ci;
+);

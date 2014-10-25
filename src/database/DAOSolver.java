@@ -9,6 +9,7 @@ package database;
 import entities.Solver;
 import entities.SolverInstance;
 import java.math.BigDecimal;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,14 +17,14 @@ import java.sql.SQLException;
 public class DAOSolver {
 
     public static DataBaseManager databaseManager = null;
-    public final static String sqlInsertSolver = "INSERT INTO `Solver` VALUES (?,?,?,?,?,?);";
-    public final static String sqlInsertSolverInstance = "INSERT INTO `SolverInstance` VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+    public final static String sqlInsertSolver = "INSERT INTO `Solver` (`Name`,`Benchmark`,`Type`,`TimeOut`,`Memory`,`NumberOfCores`) VALUES (?,?,?,?,?,?);";
+    public final static String sqlInsertSolverInstance = "INSERT INTO `SolverInstance` (`Instance`,`Time`,`Optimum`,`Solution`,`Info`,`TimeOut`,`Buggy`,`SegmentationFault`,`Log`,`OutOfMemory`,`NumberOfVariables`,`NumberOfClause`,`NumberOfHardClause`,`NumberOfSoftClause`,`NumberOfUnsatClause`,`NumberOfUnsatClauseWeigth`,`SolverId`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 
     public DAOSolver() {
         try {
             initDataBase();
         } catch (Exception ex) {
-            System.err.println("[ERROR-INFO] - " + ex);
+            System.err.println("[ERROR-INFO (DAO)] - " + ex);
         }
     }
 
@@ -31,11 +32,13 @@ public class DAOSolver {
         databaseManager = new DataBaseManager();
     }
 
-    public void addSolver(Solver solv) throws Exception {
+    public void addSolver(Solver solv) {
         PreparedStatement pst = null;
         ResultSet rs = null;
         try {
             databaseManager.openConnection();
+            Connection conn = databaseManager.getConnection();
+            conn.setAutoCommit(false);
             pst = databaseManager.getStatement(sqlInsertSolver);
 
             int i = 1;
@@ -57,9 +60,10 @@ public class DAOSolver {
                 }
             }
             pst.close();
-            if (solverId!= null && !solv.getInstancesList().isEmpty()) {
+            conn.commit();
+            if (solverId != null && !solv.getInstancesList().isEmpty()) {
                 for (SolverInstance instance : solv.getInstancesList()) {
-                    pst = databaseManager.getStatement(sqlInsertSolver);
+                    pst = databaseManager.getStatement(sqlInsertSolverInstance);
                     i = 1;
                     pst.setString(i++, instance.getFileName());
                     pst.setDouble(i++, instance.getTime());
@@ -82,20 +86,24 @@ public class DAOSolver {
                     pst.setInt(i++, instance.getNumberOfUnsatClause());
                     pst.setInt(i++, instance.getUnsatClauseWeigth());
                     pst.setInt(i++, solverId.intValue());
-
                     pst.execute();
                 }
+                conn.commit();
             }
         } catch (SQLException e) {
-            throw new SQLException(e);
+            System.err.println("[ERROR-INFO (DAO)] - " + e);
         } finally {
-            if (rs != null) {
-                rs.close();
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pst != null) {
+                    pst.close();
+                }
+            } catch (SQLException ex) {
+                System.err.println("[ERROR-INFO (DAO)] - " + ex);
             }
-            if (pst != null) {
-                pst.close();
-            }
-            databaseManager.closeConnection();
         }
+        databaseManager.closeConnection();
     }
 }

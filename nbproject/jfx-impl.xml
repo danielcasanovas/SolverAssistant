@@ -2553,21 +2553,21 @@
                                 var pv = replaceSuffix(pn, JFXPARN, JFXPARV);
                                 var propv = new String(project.getProperty(pv));
                                 if(defined(propv)) {
-                                    params.append("\n        <param name=\"");
+                                    params.append("        <param name=\"");
                                     params.append(propn);
                                     params.append("\" value=\"");
                                     params.append(propv);
                                     params.append("\"/>");
-                                    args.append("\n        <argument>");
+                                    args.append("        <argument>");
                                     args.append(propn);
                                     args.append("=");
                                     args.append(propv);
                                     args.append("</argument>");
                                 } else {
-                                    params.append("\n        <param name=\"");
+                                    params.append("        <param name=\"");
                                     params.append(propn);
                                     params.append("\" value=\"\"/>");
-                                    args.append("\n        <argument>");
+                                    args.append("        <argument>");
                                     args.append(propn);
                                     args.append("</argument>");
                                 }

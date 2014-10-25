@@ -25,75 +25,76 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class FXMLEditSolverController implements Initializable {
-
+    
     @FXML
     private TableView<SolverInstanceProperties> instancesTable;
-
+    
     @FXML
     private TableColumn<SolverInstance, String> colInstance;
-
+    
     @FXML
     private TableColumn<SolverInstance, Double> colTime;
-
+    
     @FXML
     private TableColumn<SolverInstance, Boolean> colOptimal;
-
+    
     @FXML
     private TableColumn<SolverInstance, Integer> colSolution;
-
+    
     @FXML
     private TableColumn<SolverInstance, Integer> colInfo;
-
+    
     @FXML
     private TableColumn<SolverInstance, Integer> colTimeOut;
-
+    
     @FXML
     private TableColumn<SolverInstance, Integer> colBuggy;
-
+    
     @FXML
     private TableColumn<SolverInstance, Integer> colSegmentation;
-
+    
     @FXML
     private TableColumn<SolverInstance, Integer> colOutOfMemory;
-
+    
     @FXML
     private TableColumn<SolverInstance, String> colLog;
-
+    
     @FXML
     private TableColumn<SolverInstance, Integer> colVariables;
-
+    
     @FXML
     private TableColumn<SolverInstance, Integer> colClauses;
-
+    
     @FXML
     private TableColumn<SolverInstance, Integer> colHardClauses;
-
+    
     @FXML
     private TableColumn<SolverInstance, Integer> colSoftClauses;
-
+    
     @FXML
     private TableColumn<SolverInstance, Integer> colUnsatClauses;
-
+    
     @FXML
     private TableColumn<SolverInstance, Integer> colWeigthUnsatClauses;
-
+    
     @FXML
     private Label solverLabel, benchmarkLabel, solverTypeLabel, timeOutLabel, moreSolversLabel, memoryLabel, coresLabel;
-
+    
     @FXML
     private TextField solverTextField, benchmarkTextField, solverTypeTextField, timeOutTextField, memoryTextField, coresTextField;
-
+    
     @FXML
     private Button sendToDBButton;
-
+    
     private List<SolverInstanceProperties> solvPropList;
     private ObservableList<SolverInstanceProperties> data;
-
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         solvPropList = new ArrayList<>();
         this.chargeI18nValues();
         this.configTableViewPageUI();
+        
     }
 
     /**
@@ -124,8 +125,9 @@ public class FXMLEditSolverController implements Initializable {
         colSoftClauses.setText(SolverAssistant.messages.getString("SoftClauses"));
         colUnsatClauses.setText(SolverAssistant.messages.getString("UnSatClauses"));
         colWeigthUnsatClauses.setText(SolverAssistant.messages.getString("WeigthUnsatClauses"));
+        instancesTable.requestFocus();
     }
-
+    
     public void loadSolver() {
         solverTextField.setText(SolverManager.solverCharged.getName());
         benchmarkTextField.setText(String.valueOf(SolverManager.solverCharged.getBenchmark()));
@@ -135,7 +137,7 @@ public class FXMLEditSolverController implements Initializable {
         coresTextField.setText(String.valueOf(SolverManager.solverCharged.getNumberOfCores()));
         this.bindDataToTable();
     }
-
+    
     private void bindDataToTable() {
         for (SolverInstance s : SolverManager.solverCharged.getInstancesList()) {
             solvPropList.add(new SolverInstanceProperties(s));
@@ -143,7 +145,7 @@ public class FXMLEditSolverController implements Initializable {
         data = FXCollections.observableArrayList(solvPropList);
         instancesTable.getItems().addAll(data);
     }
-
+    
     private void configTableViewPageUI() {
         colInstance.setCellValueFactory(new PropertyValueFactory<>("fileName"));
         colTime.setCellValueFactory(new PropertyValueFactory<>("time"));
@@ -161,9 +163,8 @@ public class FXMLEditSolverController implements Initializable {
         colSoftClauses.setCellValueFactory(new PropertyValueFactory<>("numberOfSoftClause"));
         colUnsatClauses.setCellValueFactory(new PropertyValueFactory<>("numberOfUnsatClause"));
         colWeigthUnsatClauses.setCellValueFactory(new PropertyValueFactory<>("unsatClauseWeigth"));
-//        instancesTable.setEditable(true);
     }
-
+    
     private void saveSolverData() {
         SolverManager.solverCharged.setName(solverTextField.getText());
         SolverManager.solverCharged.setBenchmark(benchmarkTextField.getText());
@@ -172,10 +173,11 @@ public class FXMLEditSolverController implements Initializable {
         SolverManager.solverCharged.setMemory(Integer.parseInt(memoryTextField.getText()));
         SolverManager.solverCharged.setNumberOfCores(Integer.parseInt(coresTextField.getText()));
     }
-    
-     // -------- Actions
+
+    // -------- Actions
     @FXML
     private void saveSolver(ActionEvent event) {
         this.saveSolverData();
+        SolverManager.daoSolver.addSolver(SolverManager.solverCharged);
     }
 }
