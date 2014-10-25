@@ -108,7 +108,9 @@ public class FXMLEditSolverController implements Initializable {
         memoryLabel.setText(SolverAssistant.messages.getString("Memory"));
         coresLabel.setText(SolverAssistant.messages.getString("NumberOfCores"));
         moreSolversLabel.setText(SolverAssistant.messages.getString("MoreSolvers") + " \"http://maxsat.ia.udl.cat/results\"");
+        
         sendToDBButton.setText(SolverAssistant.messages.getString("SendToDB"));
+        
         colInstance.setText(SolverAssistant.messages.getString("Instance"));
         colTime.setText(SolverAssistant.messages.getString("Time"));
         colOptimal.setText(SolverAssistant.messages.getString("Optimal"));

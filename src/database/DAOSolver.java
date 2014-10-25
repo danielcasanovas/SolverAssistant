@@ -13,12 +13,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DAOSolver {
 
     public static DataBaseManager databaseManager = null;
     public final static String sqlInsertSolver = "INSERT INTO `Solver` (`Name`,`Benchmark`,`Type`,`TimeOut`,`Memory`,`NumberOfCores`) VALUES (?,?,?,?,?,?);";
     public final static String sqlInsertSolverInstance = "INSERT INTO `SolverInstance` (`Instance`,`Time`,`Optimum`,`Solution`,`Info`,`TimeOut`,`Buggy`,`SegmentationFault`,`Log`,`OutOfMemory`,`NumberOfVariables`,`NumberOfClause`,`NumberOfHardClause`,`NumberOfSoftClause`,`NumberOfUnsatClause`,`NumberOfUnsatClauseWeigth`,`SolverId`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+    public final static String sqlGetSolvers = "SELECT * FROM `Solver`";
 
     public DAOSolver() {
         try {
@@ -105,5 +108,35 @@ public class DAOSolver {
             }
         }
         databaseManager.closeConnection();
+    }
+
+    public List<Solver> getAllSolvers() {
+        List<Solver> solvers = new ArrayList<>();
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            databaseManager.openConnection();
+            pst = databaseManager.getStatement(sqlGetSolvers);
+            pst.execute();
+            ResultSet res = pst.executeQuery();
+            while (res.next()) {
+                solvers.add(new Solver(res.getInt(1), res.getString(2), res.getString(3), res.getString(4), res.getInt(5), res.getInt(6), res.getInt(7)));
+            }
+        } catch (SQLException e) {
+            System.err.println("[ERROR-INFO (DAO)] - " + e);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pst != null) {
+                    pst.close();
+                }
+            } catch (SQLException ex) {
+                System.err.println("[ERROR-INFO (DAO)] - " + ex);
+            }
+        }
+        databaseManager.closeConnection();
+        return solvers;
     }
 }

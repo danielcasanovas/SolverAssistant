@@ -11,6 +11,7 @@ import java.util.List;
 
 public class Solver {
 
+    private int id;
     private String name;
     private String benchmark;
     private String type;
@@ -20,6 +21,7 @@ public class Solver {
     private List<SolverInstance> instancesList;
 
     public Solver() {
+        this.id = -1;
         this.name = "";
         this.benchmark = "";
         this.type = "";
@@ -30,6 +32,7 @@ public class Solver {
     }
 
     public Solver(String name, String benchmark, String type, int timeOut, int memory, int numberOfCores, List<SolverInstance> instancesList) {
+        this.id = -1;
         this.name = name;
         this.benchmark = benchmark;
         this.type = type;
@@ -37,6 +40,30 @@ public class Solver {
         this.memory = memory;
         this.numberOfCores = numberOfCores;
         this.instancesList = instancesList;
+    }
+
+    public Solver(int id, String name, String benchmark, String type, int timeOut, int memory, int numberOfCores) {
+        this.id = id;
+        this.name = name;
+        this.benchmark = benchmark;
+        this.type = type;
+        this.timeOut = timeOut;
+        this.memory = memory;
+        this.numberOfCores = numberOfCores;
+    }
+
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
@@ -136,11 +163,12 @@ public class Solver {
     public void setInstancesList(List<SolverInstance> instancesList) {
         this.instancesList = instancesList;
     }
-    
+
     /**
      * @param instance instance to add
      */
-    public void addInstanceToList(SolverInstance instance){
+    public void addInstanceToList(SolverInstance instance) {
         this.instancesList.add(instance);
     }
+
 }

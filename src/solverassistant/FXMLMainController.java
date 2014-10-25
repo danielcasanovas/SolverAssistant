@@ -18,18 +18,22 @@ import javafx.scene.control.Tab;
 import javax.swing.event.ChangeEvent;
 
 public class FXMLMainController implements Initializable {
-    
+
     @FXML
     private ComboBox<String> comboLanguage;
-    
+
     @FXML
     private FXMLLoadLogController barTabPageLoadController;
-    
+
     @FXML
     private FXMLEditSolverController barTabPageEditController;
+
     @FXML
-    private Tab loadTab, editTab;
-    
+    private FXMLCompareController barTabPageCompareController;
+
+    @FXML
+    private Tab loadTab, editTab, compareTab;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.chargeI18nValues();
@@ -43,13 +47,17 @@ public class FXMLMainController implements Initializable {
     public void chargeI18nValues() {
         loadTab.setText(SolverAssistant.messages.getString("LoadLog"));
         editTab.setText(SolverAssistant.messages.getString("EditSolver"));
+        compareTab.setText(SolverAssistant.messages.getString("CompareFromDatabase"));
+
         barTabPageLoadController.chargeI18nValues();
         barTabPageEditController.chargeI18nValues();
+        barTabPageCompareController.chargeI18nValues();
+
         if (SolverManager.solverCharged == null) {
             editTab.setDisable(true);
         }
     }
-    
+
     private void chargeLanguageComboBox(Locale language) {
         comboLanguage.getItems().addAll(
                 "Català",
@@ -69,17 +77,17 @@ public class FXMLMainController implements Initializable {
         }
     }
 
-    public void loadSolver(){
+    public void loadSolver() {
         editTab.setDisable(false);
         barTabPageEditController.loadSolver();
     }
-    
+
     // -------- Listeners
     private ChangeListener languageComboBoxListener() {
         return new ChangeListener() {
             public void stateChanged(ChangeEvent changeEvent) {
             }
-            
+
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 switch ((String) newValue) {
@@ -100,5 +108,5 @@ public class FXMLMainController implements Initializable {
             }
         };
     }
-    
+
 }

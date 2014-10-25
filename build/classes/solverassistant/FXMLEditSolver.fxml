@@ -10,20 +10,20 @@
     <children>
         <AnchorPane AnchorPane.bottomAnchor="-14.0" AnchorPane.leftAnchor="38.0" AnchorPane.rightAnchor="-38.0" AnchorPane.topAnchor="14.0">
             <children>
-                <Label id="solverLabel" fx:id="solverLabel" alignment="CENTER" prefHeight="17.0" prefWidth="100.0" text="Solver" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                <TextField id="solverTextField" fx:id="solverTextField" alignment="CENTER" prefWidth="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="20.0" />
-                <Label id="benchmarkLabel" fx:id="benchmarkLabel" alignment="CENTER" prefHeight="17.0" prefWidth="100.0" text="Benchmark" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="0.0" />
-                <TextField id="benchmarkTextField" fx:id="benchmarkTextField" alignment="CENTER" prefHeight="17.0" prefWidth="100.0" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="20.0" />
-                <Label id="solverTypeLabel" fx:id="solverTypeLabel" alignment="CENTER" prefHeight="17.0" prefWidth="100.0" text="Solver type" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="0.0" />
-                <TextField id="solverTypeTextField" fx:id="solverTypeTextField" alignment="CENTER" prefHeight="17.0" prefWidth="100.0" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="20.0" />
-                <Label id="timeOutLabel" fx:id="timeOutLabel" alignment="CENTER" prefHeight="17.0" prefWidth="100.0" text="Time out" AnchorPane.leftAnchor="450.0" AnchorPane.topAnchor="0.0" />
-                <TextField id="timeOutTextField" fx:id="timeOutTextField" alignment="CENTER" prefHeight="17.0" prefWidth="100.0" AnchorPane.leftAnchor="450.0" AnchorPane.topAnchor="20.0" />
-                <Label id="memoryLabel" fx:id="memoryLabel" alignment="CENTER" prefHeight="17.0" prefWidth="100.0" text="Memory" AnchorPane.leftAnchor="600.0" AnchorPane.topAnchor="0.0" />
-                <TextField id="memoryTextField" fx:id="memoryTextField" alignment="CENTER" prefHeight="17.0" prefWidth="100.0" AnchorPane.leftAnchor="600.0" AnchorPane.topAnchor="20.0" />
-                <Label id="coresLabel" fx:id="coresLabel" alignment="CENTER" layoutX="1000.0" prefHeight="17.0" prefWidth="100.0" text="Number of cores" AnchorPane.leftAnchor="750.0" AnchorPane.topAnchor="0.0" />
-                <TextField id="coresTextField" fx:id="coresTextField" alignment="CENTER" prefHeight="17.0" prefWidth="100.0" AnchorPane.leftAnchor="750.0" AnchorPane.topAnchor="20.0" />
+                <Label id="solverLabel" fx:id="solverLabel" alignment="CENTER" prefHeight="17.0" prefWidth="125.0" text="Solver" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                <TextField id="solverTextField" fx:id="solverTextField" alignment="CENTER" prefWidth="125.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="20.0" />
+                <Label id="benchmarkLabel" fx:id="benchmarkLabel" alignment="CENTER" prefHeight="17.0" prefWidth="125.0" text="Benchmark" AnchorPane.leftAnchor="175.0" AnchorPane.topAnchor="0.0" />
+                <TextField id="benchmarkTextField" fx:id="benchmarkTextField" alignment="CENTER" prefHeight="17.0" prefWidth="125.0" AnchorPane.leftAnchor="175.0" AnchorPane.topAnchor="20.0" />
+                <Label id="solverTypeLabel" fx:id="solverTypeLabel" alignment="CENTER" prefHeight="17.0" prefWidth="125.0" text="Solver type" AnchorPane.leftAnchor="325.0" AnchorPane.topAnchor="0.0" />
+                <TextField id="solverTypeTextField" fx:id="solverTypeTextField" alignment="CENTER" prefHeight="17.0" prefWidth="125.0" AnchorPane.leftAnchor="325.0" AnchorPane.topAnchor="20.0" />
+                <Label id="timeOutLabel" fx:id="timeOutLabel" alignment="CENTER" prefHeight="17.0" prefWidth="125.0" text="Time out" AnchorPane.leftAnchor="475.0" AnchorPane.topAnchor="0.0" />
+                <TextField id="timeOutTextField" fx:id="timeOutTextField" alignment="CENTER" prefHeight="17.0" prefWidth="125.0" AnchorPane.leftAnchor="475.0" AnchorPane.topAnchor="20.0" />
+                <Label id="memoryLabel" fx:id="memoryLabel" alignment="CENTER" prefHeight="17.0" prefWidth="125.0" text="Memory" AnchorPane.leftAnchor="625.0" AnchorPane.topAnchor="0.0" />
+                <TextField id="memoryTextField" fx:id="memoryTextField" alignment="CENTER" prefHeight="17.0" prefWidth="125.0" AnchorPane.leftAnchor="625.0" AnchorPane.topAnchor="20.0" />
+                <Label id="coresLabel" fx:id="coresLabel" alignment="CENTER" layoutX="1000.0" prefHeight="17.0" prefWidth="125.0" text="Number of cores" AnchorPane.leftAnchor="775.0" AnchorPane.topAnchor="0.0" />
+                <TextField id="coresTextField" fx:id="coresTextField" alignment="CENTER" prefHeight="17.0" prefWidth="125.0" AnchorPane.leftAnchor="775.0" AnchorPane.topAnchor="20.0" />
                 <Label id="moreSolversLabel" fx:id="moreSolversLabel" disable="true" prefHeight="17.0" prefWidth="450.0" text="Load more solvers at :" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="60.0" />
-                <Button id="sendToDBButton" fx:id="sendToDBButton" onAction="#saveSolver" prefHeight="25.0" prefWidth="350.0" styleClass="button-defaultButton" text="Send to Database" AnchorPane.leftAnchor="500.0" AnchorPane.topAnchor="55.0" />
+                <Button id="sendToDBButton" fx:id="sendToDBButton" onAction="#saveSolver" prefHeight="25.0" prefWidth="400.0" styleClass="button-defaultButton" text="Send to Database" AnchorPane.leftAnchor="500.0" AnchorPane.topAnchor="55.0" />
             </children>
         </AnchorPane>
         <AnchorPane layoutX="229.0" layoutY="103.0" prefHeight="591.0" prefWidth="1380.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
