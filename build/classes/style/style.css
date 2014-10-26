@@ -14,6 +14,11 @@
     -fx-background-color: white;
 }
 
+.filterPane{
+    -fx-border-style: dashed;
+    -fx-border-color: gainsboro;
+}
+
 .logTextArea-background{
     -fx-background-color: gainsboro;
     -fx-text-color: white;

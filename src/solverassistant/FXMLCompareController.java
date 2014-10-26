@@ -15,6 +15,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
@@ -27,6 +28,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class FXMLCompareController implements Initializable {
@@ -74,25 +76,29 @@ public class FXMLCompareController implements Initializable {
     private TableColumn<SolverProperties, Integer> colSelectedNumberOfCores;
 
     @FXML
-    private Label solverLabel, benchmarkLabel, solverTypeLabel, timeOutLabel, memoryLabel, coresLabel;
+    private Label filterLabel;
+
+    @FXML
+    private TextField filterTextField;
 
     @FXML
     private Button compareButton;
 
     @FXML
-    private ComboBox solverComboBox, benchmarkComboBox, solverTypeComboBox, timeOutComboBox, memoryComboBox, coresComboBox;
+    private CheckBox solverCheckBox, benchmarkCheckBox, typeCheckBox, memoryCheckBox, timeOutCheckBox, coresCheckBox;
 
     private List<Solver> solvers; // All solvers without the instances from db
     private List<Solver> solversToPrint; // Solvers selecteds to print 
     private ObservableList<SolverProperties> data; // All solvers without the instances from db to put in first table
-    private FilteredList<SolverProperties> filteredData; // Solvers filetered
+    private ObservableList<SolverProperties> filteredData; // Solvers filetered
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         loadSolversFromDB();
         configTableViewPageUI();
-        bindDataToTable();
-        fillComboBoxFilters();
+        bindDataToTable(data);
+        filteredData = FXCollections.observableArrayList();
+        chargeI18nValues();
     }
 
     private void loadSolversFromDB() {
@@ -102,6 +108,12 @@ public class FXMLCompareController implements Initializable {
             solversPropierties.add(new SolverProperties(s));
         }
         data = FXCollections.observableArrayList(solversPropierties);
+        data.addListener(new ListChangeListener<SolverProperties>() {
+            @Override
+            public void onChanged(ListChangeListener.Change<? extends SolverProperties> change) {
+                updateFilteredData();
+            }
+        });
     }
 
     public void chargeI18nValues() {
@@ -119,17 +131,13 @@ public class FXMLCompareController implements Initializable {
         colSelectedMemory.setText(SolverAssistant.messages.getString("Memory"));
         colSelectedNumberOfCores.setText(SolverAssistant.messages.getString("NumberOfCores"));
 
-        solverLabel.setText(SolverAssistant.messages.getString("Solver"));
-        benchmarkLabel.setText(SolverAssistant.messages.getString("Benchmark"));
-        solverTypeLabel.setText(SolverAssistant.messages.getString("SolverType"));
-        timeOutLabel.setText(SolverAssistant.messages.getString("TimeOut"));
-        memoryLabel.setText(SolverAssistant.messages.getString("Memory"));
-        coresLabel.setText(SolverAssistant.messages.getString("NumberOfCores"));
+        filterLabel.setText(SolverAssistant.messages.getString("Filter"));
 
         compareButton.setText(SolverAssistant.messages.getString("Compare"));
     }
 
-    private void bindDataToTable() {
+    private void bindDataToTable(ObservableList<SolverProperties> data) {
+        allSolversTable.getItems().clear();
         allSolversTable.getItems().addAll(data);
     }
 
@@ -142,91 +150,72 @@ public class FXMLCompareController implements Initializable {
         colAllNumberOfCores.setCellValueFactory(new PropertyValueFactory<>("numberOfCores"));
         colAllSelect.setCellFactory((TableColumn<SolverProperties, Boolean> p) -> new CheckBoxTableCell<>());
 
-        filteredData = new FilteredList<>(data, p -> true);
-        solverComboBox.valueProperty().addListener(new ChangeListener<String>() {
+        solverCheckBox.selectedProperty().addListener(getComboBoxListener());
+        benchmarkCheckBox.selectedProperty().addListener(getComboBoxListener());
+        typeCheckBox.selectedProperty().addListener(getComboBoxListener());
+        memoryCheckBox.selectedProperty().addListener(getComboBoxListener());
+        timeOutCheckBox.selectedProperty().addListener(getComboBoxListener());
+        coresCheckBox.selectedProperty().addListener(getComboBoxListener());
+
+        filterTextField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable,
                     String oldValue, String newValue) {
                 updateFilteredData();
+                bindDataToTable(filteredData);
             }
         });
+
     }
 
     private void updateFilteredData() {
         filteredData.clear();
-        for (SolverProperties solv : data) {
-            if (matchesFilter(solv)) {
-                filteredData.add(solv);
+        for (SolverProperties p : data) {
+            if (matchesFilter(p)) {
+                filteredData.add(p);
             }
         }
-        fillComboBoxFilters();
     }
 
     private boolean matchesFilter(SolverProperties solv) {
-        String filterString = solverComboBox.getPromptText();
-        if (filterString == null || filterString.isEmpty()) { // No filter --> Add all.
+        String filterString = filterTextField.getText();
+        // No filter --> Add all.
+        if (filterString == null || filterString.isEmpty()) {
+            
             return true;
         }
-        if (solv.getName().toLowerCase().indexOf(filterString.toLowerCase()) != -1) {
-            return true;
-        }
-        return false; // Does not match
-    }
-
-    private void fillComboBoxFilters() {
-        solverComboBox.getItems().clear();
-        benchmarkComboBox.getItems().clear();
-        solverTypeComboBox.getItems().clear();
-        timeOutComboBox.getItems().clear();
-        memoryComboBox.getItems().clear();
-        coresComboBox.getItems().clear();
-
-        if (!filteredData.isEmpty()) {
-            for (SolverProperties solv : filteredData) {
-                if (!solverComboBox.getItems().contains(solv.getName())) {
-                    solverComboBox.getItems().add(solv.getName());
-                }
-                if (!benchmarkComboBox.getItems().contains(solv.getBenchmark())) {
-                    benchmarkComboBox.getItems().add(solv.getBenchmark());
-                }
-                if (!solverTypeComboBox.getItems().contains(solv.getType())) {
-                    solverTypeComboBox.getItems().add(solv.getType());
-                }
-                if (!timeOutComboBox.getItems().contains(solv.getTimeOut())) {
-                    timeOutComboBox.getItems().add(solv.getTimeOut());
-                }
-                if (!memoryComboBox.getItems().contains(solv.getMemory())) {
-                    memoryComboBox.getItems().add(solv.getMemory());
-                }
-                if (!coresComboBox.getItems().contains(solv.getNumberOfCores())) {
-                    coresComboBox.getItems().add(solv.getNumberOfCores());
-                }
-            }
-            if (solverComboBox.getItems().size() == 1) {
-                solverComboBox.getSelectionModel().select(0);
-                solverComboBox.setDisable(true);
-            }
-            if (benchmarkComboBox.getItems().size() == 1) {
-                benchmarkComboBox.getSelectionModel().select(0);
-                benchmarkComboBox.setDisable(true);
-            }
-            if (solverTypeComboBox.getItems().size() == 1) {
-                solverTypeComboBox.getSelectionModel().select(0);
-                solverTypeComboBox.setDisable(true);
-            }
-            if (timeOutComboBox.getItems().size() == 1) {
-                timeOutComboBox.getSelectionModel().select(0);
-                timeOutComboBox.setDisable(true);
-            }
-            if (memoryComboBox.getItems().size() == 1) {
-                memoryComboBox.getSelectionModel().select(0);
-                memoryComboBox.setDisable(true);
-            }
-            if (coresComboBox.getItems().size() == 1) {
-                coresComboBox.getSelectionModel().select(0);
-                coresComboBox.setDisable(true);
+        // If not check if check box is selected and filter by filterstring
+        if (solverCheckBox.isSelected()) {
+            if (solv.getName().toLowerCase().contains(filterString.toLowerCase())) {
+                return true;
             }
         }
+        if (benchmarkCheckBox.isSelected()) {
+            if (solv.getBenchmark().toLowerCase().contains(filterString.toLowerCase())) {
+                return true;
+            }
+        }
+        if (typeCheckBox.isSelected()) {
+            if (solv.getType().toLowerCase().contains(filterString.toLowerCase())) {
+                return true;
+            }
+        }
+        if (memoryCheckBox.isSelected()) {
+            if (String.valueOf(solv.getTimeOut()).contains(filterString.toLowerCase())) {
+                return true;
+            }
+        }
+        if (timeOutCheckBox.isSelected()) {
+            if (String.valueOf(solv.getMemory()).contains(filterString.toLowerCase())) {
+                return true;
+            }
+        }
+        if (coresCheckBox.isSelected()) {
+            if (String.valueOf(solv.getNumberOfCores()).contains(filterString.toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static class CheckBoxTableCell<S, T> extends TableCell<S, T> {
@@ -259,5 +248,16 @@ public class FXMLCompareController implements Initializable {
                 }
             }
         }
+    }
+
+    private ChangeListener<Boolean> getComboBoxListener() {
+        return new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                System.out.println("HEY");
+                updateFilteredData();
+                bindDataToTable(filteredData);
+            }
+        };
     }
 }

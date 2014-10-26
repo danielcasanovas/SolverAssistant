@@ -92,8 +92,8 @@ public class FXMLEditSolverController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         solvPropList = new ArrayList<>();
-        this.chargeI18nValues();
         this.configTableViewPageUI();
+        this.chargeI18nValues();
 
     }
 
