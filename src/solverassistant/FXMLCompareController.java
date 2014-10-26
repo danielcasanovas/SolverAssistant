@@ -18,6 +18,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -76,7 +77,7 @@ public class FXMLCompareController implements Initializable {
     private TableColumn<SolverProperties, Integer> colSelectedNumberOfCores;
 
     @FXML
-    private Label filterLabel;
+    private Label filterLabel, filterByLabel;
 
     @FXML
     private TextField filterTextField;
@@ -132,6 +133,13 @@ public class FXMLCompareController implements Initializable {
         colSelectedNumberOfCores.setText(SolverAssistant.messages.getString("NumberOfCores"));
 
         filterLabel.setText(SolverAssistant.messages.getString("Filter"));
+        filterByLabel.setText(SolverAssistant.messages.getString("Filter") + " " + SolverAssistant.messages.getString("By") + ":");
+        solverCheckBox.setText(SolverAssistant.messages.getString("Solver"));
+        benchmarkCheckBox.setText(SolverAssistant.messages.getString("Benchmark"));
+        typeCheckBox.setText(SolverAssistant.messages.getString("SolverType"));
+        memoryCheckBox.setText(SolverAssistant.messages.getString("TimeOut"));
+        timeOutCheckBox.setText(SolverAssistant.messages.getString("Memory"));
+        coresCheckBox.setText(SolverAssistant.messages.getString("NumberOfCores"));
 
         compareButton.setText(SolverAssistant.messages.getString("Compare"));
     }
@@ -181,7 +189,7 @@ public class FXMLCompareController implements Initializable {
         String filterString = filterTextField.getText();
         // No filter --> Add all.
         if (filterString == null || filterString.isEmpty()) {
-            
+
             return true;
         }
         // If not check if check box is selected and filter by filterstring
@@ -254,10 +262,18 @@ public class FXMLCompareController implements Initializable {
         return new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                System.out.println("HEY");
                 updateFilteredData();
                 bindDataToTable(filteredData);
             }
         };
     }
+
+    // -------- Actions
+    @FXML
+    private void refreshSolvers(ActionEvent event) {
+        loadSolversFromDB();
+        updateFilteredData();
+        bindDataToTable(filteredData);
+    }
+
 }

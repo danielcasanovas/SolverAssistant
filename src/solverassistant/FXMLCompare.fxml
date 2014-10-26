@@ -21,7 +21,6 @@
                 <TableColumn fx:id="colAllTimeOut" prefWidth="75.0" text="Time out" />
                 <TableColumn fx:id="colAllMemory" prefWidth="75.0" text="Memory" />
                 <TableColumn fx:id="colAllNumberOfCores" prefWidth="75.0" text="Number of cores" />
-          
             </columns>
         </TableView>
         <Button id="compareButton" fx:id="compareButton" disable="true" prefHeight="25.0" prefWidth="150.0" styleClass="button-defaultButton" text="Compare" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="40.0" />
@@ -42,14 +41,16 @@
             <children>
                 <Label id="filterLabel" fx:id="filterLabel" alignment="CENTER" prefHeight="17.0" prefWidth="150.0" text="Filter" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="10.0" />
                 <TextField id="filterTextField" fx:id="filterTextField" alignment="CENTER" layoutY="20.0" prefWidth="150.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="30.0" />
-                <Label id="filterByLabel" fx:id="filterByLabel" alignment="CENTER" layoutY="70.0" prefHeight="17.0" prefWidth="150.0" text="Filter by:" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="70.0" />
-                <CheckBox id="solverCheckBox" fx:id="solverCheckBox" layoutY="90.0" selected="true" text="Solver" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="90.0" />
-                <CheckBox id="benchmarkCheckBox" fx:id="benchmarkCheckBox" layoutY="110.0" selected="true" text="Benchmark" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="110.0" />
-                <CheckBox id="typeCheckBox" fx:id="typeCheckBox" layoutY="130.0" selected="true" text="Solver type" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="130.0" />
-                <CheckBox id="timeOutCheckBox" fx:id="timeOutCheckBox" layoutY="150.0" selected="true" text="Time out" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="150.0" />
-                <CheckBox id="memoryCheckBox" fx:id="memoryCheckBox" layoutY="170.0" selected="true" text="Memory" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="170.0" />
-                <CheckBox id="coresCheckBox" fx:id="coresCheckBox" layoutY="190.0" selected="true" text="Number of cores" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="190.0" />
+                <Label id="filterByLabel" fx:id="filterByLabel" alignment="CENTER" prefHeight="17.0" prefWidth="150.0" text="Filter by:" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="70.0" />
+                <CheckBox id="solverCheckBox" fx:id="solverCheckBox" layoutY="90.0" selected="true" text="Solver" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="100.0" />
+                <CheckBox id="benchmarkCheckBox" fx:id="benchmarkCheckBox" layoutY="110.0" selected="true" text="Benchmark" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="120.0" />
+                <CheckBox id="typeCheckBox" fx:id="typeCheckBox" layoutY="130.0" selected="true" text="Solver type" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="140.0" />
+                <CheckBox id="timeOutCheckBox" fx:id="timeOutCheckBox" layoutY="150.0" selected="true" text="Time out" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="160.0" />
+                <CheckBox id="memoryCheckBox" fx:id="memoryCheckBox" layoutY="170.0" selected="true" text="Memory" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="180.0" />
+                <CheckBox id="coresCheckBox" fx:id="coresCheckBox" layoutY="190.0" selected="true" text="Number of cores" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="200.0" />
             </children>
         </AnchorPane>
+        <Button id="refreshButton" fx:id="refreshButton" onAction="#refreshSolvers" prefHeight="25.0" prefWidth="150.0" styleClass="button-refreshButton" text="Refresh" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="40.0" />
+
     </children>
 </AnchorPane>
