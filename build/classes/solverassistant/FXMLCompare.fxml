@@ -9,7 +9,7 @@
 <AnchorPane styleClass="backgroundColor" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="solverassistant.FXMLCompareController">
     <children>
       
-        <TableView id="allSolversTable" fx:id="allSolversTable" prefHeight="257.0" prefWidth="922.0" AnchorPane.leftAnchor="245.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+        <TableView id="allSolversTable" fx:id="allSolversTable" prefHeight="225.0" prefWidth="922.0" AnchorPane.leftAnchor="245.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
             <columnResizePolicy>
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
             </columnResizePolicy>
@@ -24,7 +24,7 @@
             </columns>
         </TableView>
         <Button id="compareButton" fx:id="compareButton" disable="true" prefHeight="25.0" prefWidth="150.0" styleClass="button-defaultButton" text="Compare" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="40.0" />
-        <TableView id="selectedSolversTable" fx:id="selectedSolversTable" prefHeight="257.0" prefWidth="922.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="245.0" AnchorPane.rightAnchor="0.0">
+        <TableView id="selectedSolversTable" fx:id="selectedSolversTable" prefHeight="225.0" prefWidth="922.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="245.0" AnchorPane.rightAnchor="0.0">
             <columnResizePolicy>
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
             </columnResizePolicy>
@@ -50,7 +50,7 @@
                 <CheckBox id="coresCheckBox" fx:id="coresCheckBox" layoutY="190.0" selected="true" text="Number of cores" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="200.0" />
             </children>
         </AnchorPane>
-        <Button id="refreshButton" fx:id="refreshButton" onAction="#refreshSolvers" prefHeight="25.0" prefWidth="150.0" styleClass="button-defaultButton" text="Refresh" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="40.0" />
+        <Button id="refreshButton" fx:id="refreshButton" onAction="#refreshSolvers" prefHeight="25.0" prefWidth="150.0" styleClass="button-defaultButton" text="Refresh" AnchorPane.topAnchor="300.0" AnchorPane.leftAnchor="40.0" />
 
     </children>
 </AnchorPane>

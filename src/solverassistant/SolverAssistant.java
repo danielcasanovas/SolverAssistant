@@ -32,6 +32,7 @@ public class SolverAssistant extends Application {
         manager.initDB();
         manager.showMainView();
         stage.setScene(scene);
+        stage.setTitle("Solver Assistant 0.1");
 //        stage.setResizable(false);
         stage.show();
     }

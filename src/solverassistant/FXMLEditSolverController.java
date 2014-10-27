@@ -127,7 +127,8 @@ public class FXMLEditSolverController implements Initializable {
         colSoftClauses.setText(SolverAssistant.messages.getString("SoftClauses"));
         colUnsatClauses.setText(SolverAssistant.messages.getString("UnSatClauses"));
         colWeigthUnsatClauses.setText(SolverAssistant.messages.getString("WeigthUnsatClauses"));
-        instancesTable.requestFocus();
+        instancesTable.setPlaceholder(new Label(SolverAssistant.messages.getString("EmptyTable")));
+//        instancesTable.requestFocus();
     }
 
     public void loadSolver() {
