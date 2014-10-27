@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -31,6 +32,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 
 public class FXMLCompareController implements Initializable {
 
@@ -83,7 +85,7 @@ public class FXMLCompareController implements Initializable {
     private TextField filterTextField;
 
     @FXML
-    private Button compareButton;
+    private Button compareButton, refreshButton;
 
     @FXML
     private CheckBox solverCheckBox, benchmarkCheckBox, typeCheckBox, memoryCheckBox, timeOutCheckBox, coresCheckBox;
@@ -141,7 +143,11 @@ public class FXMLCompareController implements Initializable {
         timeOutCheckBox.setText(SolverAssistant.messages.getString("Memory"));
         coresCheckBox.setText(SolverAssistant.messages.getString("NumberOfCores"));
 
+        refreshButton.setText(SolverAssistant.messages.getString("Refresh"));
         compareButton.setText(SolverAssistant.messages.getString("Compare"));
+        
+        allSolversTable.setPlaceholder(new Label(SolverAssistant.messages.getString("EmptyTable")));
+        selectedSolversTable.setPlaceholder(new Label(SolverAssistant.messages.getString("EmptyTable")));
     }
 
     private void bindDataToTable(ObservableList<SolverProperties> data) {
