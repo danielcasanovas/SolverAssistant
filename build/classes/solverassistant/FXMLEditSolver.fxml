@@ -23,7 +23,7 @@
                 <Label id="coresLabel" fx:id="coresLabel" alignment="CENTER" layoutX="1000.0" prefHeight="17.0" prefWidth="125.0" text="Number of cores" AnchorPane.leftAnchor="775.0" AnchorPane.topAnchor="0.0" />
                 <TextField id="coresTextField" fx:id="coresTextField" alignment="CENTER" prefHeight="17.0" prefWidth="125.0" AnchorPane.leftAnchor="775.0" AnchorPane.topAnchor="20.0" />
                 <Label id="moreSolversLabel" fx:id="moreSolversLabel" disable="true" prefHeight="17.0" prefWidth="450.0" text="Load more solvers at :" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="60.0" />
-                <Button id="sendToDBButton" fx:id="sendToDBButton" styleClass="button-saveDBButton" onAction="#saveSolver" prefHeight="25.0" prefWidth="400.0" text="Send to Database" AnchorPane.leftAnchor="500.0" AnchorPane.topAnchor="55.0" />
+                <Button id="sendToDBButton" fx:id="sendToDBButton" styleClass="button-defaultButton" onAction="#saveSolver" prefHeight="25.0" prefWidth="400.0" text="Send to Database" AnchorPane.leftAnchor="500.0" AnchorPane.topAnchor="55.0" />
             </children>
         </AnchorPane>
         <AnchorPane layoutX="229.0" layoutY="103.0" prefHeight="591.0" prefWidth="1380.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">

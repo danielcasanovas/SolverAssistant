@@ -39,30 +39,36 @@
     -fx-cursor: hand;
 }
 
-.button-saveDBButton{
+.button-defaultButton:hover{
+    -fx-background-color: #deeff6;
+}
 
-    -fx-background-image:url("/images/save.png");
+#sendToDBButton{
+
+    -fx-background-image:url("/images/box.png");
+    -fx-background-size: 18 18;
     -fx-background-repeat: no-repeat;
     -fx-background-position: right center;
-    -fx-background-color: -fx-text-box-border, -fx-control-inner-background;
-    -fx-background-insets: 0, 1 1 1 1;
-    -fx-padding: 1 3 1 3;
-    -fx-cursor: hand;
 }
 
-.button-refreshButton{
+#refreshButton{
 
     -fx-background-image:url("/images/refresh.png");
+    -fx-background-size: 18 18;
     -fx-background-repeat: no-repeat;
     -fx-background-position: left center;
-    -fx-background-color: -fx-text-box-border, -fx-control-inner-background;
-    -fx-background-insets: 0, 1 1 1 1;
-    -fx-padding: 1 3 1 3;
-    -fx-cursor: hand;
 }
 
-.textField-search{
-    -fx-background-image:url("/images/ico_lupa.png");
+#loadLogButton{
+    -fx-background-image:url("/images/folder.png");
+    -fx-background-size: 18 18;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: right center;
+}
+
+#filterTextField{
+    -fx-background-image:url("/images/search.png");
+    -fx-background-size: 18 18;
     -fx-background-repeat: no-repeat;
     -fx-background-position: right center;
 }

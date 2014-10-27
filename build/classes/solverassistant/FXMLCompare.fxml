@@ -40,7 +40,7 @@
         <AnchorPane prefHeight="250" prefWidth="190.0" styleClass="filterPane" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="40.0">
             <children>
                 <Label id="filterLabel" fx:id="filterLabel" alignment="CENTER" prefHeight="17.0" prefWidth="150.0" text="Filter" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="10.0" />
-                <TextField id="filterTextField" fx:id="filterTextField" styleClass="textField-search" alignment="CENTER" layoutY="20.0" prefWidth="150.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="30.0" />
+                <TextField id="filterTextField" fx:id="filterTextField" alignment="CENTER" layoutY="20.0" prefWidth="150.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="30.0" />
                 <Label id="filterByLabel" fx:id="filterByLabel" alignment="CENTER" prefHeight="17.0" prefWidth="150.0" text="Filter by:" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="70.0" />
                 <CheckBox id="solverCheckBox" fx:id="solverCheckBox" layoutY="90.0" selected="true" text="Solver" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="100.0" />
                 <CheckBox id="benchmarkCheckBox" fx:id="benchmarkCheckBox" layoutY="110.0" selected="true" text="Benchmark" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="120.0" />
@@ -50,7 +50,7 @@
                 <CheckBox id="coresCheckBox" fx:id="coresCheckBox" layoutY="190.0" selected="true" text="Number of cores" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="200.0" />
             </children>
         </AnchorPane>
-        <Button id="refreshButton" fx:id="refreshButton" onAction="#refreshSolvers" prefHeight="25.0" prefWidth="150.0" styleClass="button-refreshButton" text="Refresh" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="40.0" />
+        <Button id="refreshButton" fx:id="refreshButton" onAction="#refreshSolvers" prefHeight="25.0" prefWidth="150.0" styleClass="button-defaultButton" text="Refresh" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="40.0" />
 
     </children>
 </AnchorPane>
