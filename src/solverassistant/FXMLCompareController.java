@@ -1,7 +1,8 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * TFG: Daniel Casanovas Gayoso 
+ * Grau en Enginyeria Informàtica - Escola Politècnica Superior de Lleida
+ * 2014/2015
+ * Controller for the Compare View
  */
 package solverassistant;
 
@@ -12,27 +13,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.text.Text;
 
 public class FXMLCompareController implements Initializable {
 
@@ -88,34 +85,34 @@ public class FXMLCompareController implements Initializable {
     private Button compareButton, refreshButton;
 
     @FXML
-    private CheckBox solverCheckBox, benchmarkCheckBox, typeCheckBox, memoryCheckBox, timeOutCheckBox, coresCheckBox;
+    private CheckBox wholeWordCheckBox, solverCheckBox, benchmarkCheckBox, typeCheckBox, memoryCheckBox, timeOutCheckBox, coresCheckBox;
 
-    private List<Solver> solvers; // All solvers without the instances from db
-    private List<Solver> solversToPrint; // Solvers selecteds to print 
     private ObservableList<SolverProperties> data; // All solvers without the instances from db to put in first table
     private ObservableList<SolverProperties> filteredData; // Solvers filetered
+    private ObservableList<SolverProperties> selectedData; // Solvers filetered
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        loadSolversFromDB();
-        configTableViewPageUI();
-        bindDataToTable(data);
         filteredData = FXCollections.observableArrayList();
+        selectedData = FXCollections.observableArrayList();
+        configTableViewPageUI();
+        loadSolversFromDB();
+        bindDataToTable(data, false);
         chargeI18nValues();
     }
 
     private void loadSolversFromDB() {
-        solvers = SolverManager.daoSolver.getAllSolvers();
+        List<Solver> solvers = SolverManager.daoSolver.getAllSolvers();
         List<SolverProperties> solversPropierties = new ArrayList<>();
         for (Solver s : solvers) {
             solversPropierties.add(new SolverProperties(s));
         }
         data = FXCollections.observableArrayList(solversPropierties);
-        data.addListener(new ListChangeListener<SolverProperties>() {
-            @Override
-            public void onChanged(ListChangeListener.Change<? extends SolverProperties> change) {
-                updateFilteredData();
+        selectedData.addListener((ListChangeListener.Change<? extends SolverProperties> change) -> {
+            if(selectedData.isEmpty()){
+                compareButton.setDisable(true);
             }
+            else compareButton.setDisable(false);
         });
     }
 
@@ -145,41 +142,45 @@ public class FXMLCompareController implements Initializable {
 
         refreshButton.setText(SolverAssistant.messages.getString("Refresh"));
         compareButton.setText(SolverAssistant.messages.getString("Compare"));
-        
+
         allSolversTable.setPlaceholder(new Label(SolverAssistant.messages.getString("EmptyTable")));
         selectedSolversTable.setPlaceholder(new Label(SolverAssistant.messages.getString("EmptyTable")));
     }
 
-    private void bindDataToTable(ObservableList<SolverProperties> data) {
-        allSolversTable.getItems().clear();
-        allSolversTable.getItems().addAll(data);
-    }
-
     private void configTableViewPageUI() {
+        colAllSelect.setCellFactory((TableColumn<SolverProperties, Boolean> p) -> new CheckBoxTableCell<>());
         colAllSolver.setCellValueFactory(new PropertyValueFactory<>("name"));
         colAllBenchmark.setCellValueFactory(new PropertyValueFactory<>("benchmark"));
         colAllSolverType.setCellValueFactory(new PropertyValueFactory<>("type"));
         colAllTimeOut.setCellValueFactory(new PropertyValueFactory<>("timeOut"));
         colAllMemory.setCellValueFactory(new PropertyValueFactory<>("memory"));
         colAllNumberOfCores.setCellValueFactory(new PropertyValueFactory<>("numberOfCores"));
-        colAllSelect.setCellFactory((TableColumn<SolverProperties, Boolean> p) -> new CheckBoxTableCell<>());
 
+        colSelectedSolver.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colSelectedBenchmark.setCellValueFactory(new PropertyValueFactory<>("benchmark"));
+        colSelectedSolverType.setCellValueFactory(new PropertyValueFactory<>("type"));
+        colSelectedTimeOut.setCellValueFactory(new PropertyValueFactory<>("timeOut"));
+        colSelectedMemory.setCellValueFactory(new PropertyValueFactory<>("memory"));
+        colSelectedNumberOfCores.setCellValueFactory(new PropertyValueFactory<>("numberOfCores"));
+
+        filterTextField.textProperty().addListener(getTextFieldListener());
         solverCheckBox.selectedProperty().addListener(getComboBoxListener());
         benchmarkCheckBox.selectedProperty().addListener(getComboBoxListener());
         typeCheckBox.selectedProperty().addListener(getComboBoxListener());
         memoryCheckBox.selectedProperty().addListener(getComboBoxListener());
         timeOutCheckBox.selectedProperty().addListener(getComboBoxListener());
         coresCheckBox.selectedProperty().addListener(getComboBoxListener());
+        wholeWordCheckBox.selectedProperty().addListener(getComboBoxListener());
+    }
 
-        filterTextField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable,
-                    String oldValue, String newValue) {
-                updateFilteredData();
-                bindDataToTable(filteredData);
-            }
-        });
-
+    private void bindDataToTable(ObservableList<SolverProperties> data, boolean table) {
+        if (table) {
+            selectedSolversTable.getItems().clear();
+            selectedSolversTable.getItems().addAll(data);
+        } else {
+            allSolversTable.getItems().clear();
+            allSolversTable.getItems().addAll(data);
+        }
     }
 
     private void updateFilteredData() {
@@ -195,44 +196,46 @@ public class FXMLCompareController implements Initializable {
         String filterString = filterTextField.getText();
         // No filter --> Add all.
         if (filterString == null || filterString.isEmpty()) {
-
             return true;
         }
-        // If not check if check box is selected and filter by filterstring
-        if (solverCheckBox.isSelected()) {
-            if (solv.getName().toLowerCase().contains(filterString.toLowerCase())) {
+        if (wholeWordCheckBox.isSelected()) {
+            // If not check if check box is selected and filter by filterstring
+            if (solverCheckBox.isSelected() && solv.getName().toLowerCase().equals(filterString.toLowerCase())) {
                 return true;
+            } else if (benchmarkCheckBox.isSelected() && solv.getBenchmark().toLowerCase().equals(filterString.toLowerCase())) {
+                return true;
+            } else if (typeCheckBox.isSelected() && solv.getType().toLowerCase().equals(filterString.toLowerCase())) {
+                return true;
+            } else if (memoryCheckBox.isSelected() && String.valueOf(solv.getTimeOut()).equals(filterString.toLowerCase())) {
+                return true;
+            } else if (timeOutCheckBox.isSelected() && String.valueOf(solv.getMemory()).equals(filterString.toLowerCase())) {
+                return true;
+            } else if (coresCheckBox.isSelected() && String.valueOf(solv.getNumberOfCores()).equals(filterString.toLowerCase())) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            // If not check if check box is selected and filter by filterstring
+            if (solverCheckBox.isSelected() && solv.getName().toLowerCase().contains(filterString.toLowerCase())) {
+                return true;
+            } else if (benchmarkCheckBox.isSelected() && solv.getBenchmark().toLowerCase().contains(filterString.toLowerCase())) {
+                return true;
+            } else if (typeCheckBox.isSelected() && solv.getType().toLowerCase().contains(filterString.toLowerCase())) {
+                return true;
+            } else if (memoryCheckBox.isSelected() && String.valueOf(solv.getTimeOut()).contains(filterString.toLowerCase())) {
+                return true;
+            } else if (timeOutCheckBox.isSelected() && String.valueOf(solv.getMemory()).contains(filterString.toLowerCase())) {
+                return true;
+            } else if (coresCheckBox.isSelected() && String.valueOf(solv.getNumberOfCores()).contains(filterString.toLowerCase())) {
+                return true;
+            } else {
+                return false;
             }
         }
-        if (benchmarkCheckBox.isSelected()) {
-            if (solv.getBenchmark().toLowerCase().contains(filterString.toLowerCase())) {
-                return true;
-            }
-        }
-        if (typeCheckBox.isSelected()) {
-            if (solv.getType().toLowerCase().contains(filterString.toLowerCase())) {
-                return true;
-            }
-        }
-        if (memoryCheckBox.isSelected()) {
-            if (String.valueOf(solv.getTimeOut()).contains(filterString.toLowerCase())) {
-                return true;
-            }
-        }
-        if (timeOutCheckBox.isSelected()) {
-            if (String.valueOf(solv.getMemory()).contains(filterString.toLowerCase())) {
-                return true;
-            }
-        }
-        if (coresCheckBox.isSelected()) {
-            if (String.valueOf(solv.getNumberOfCores()).contains(filterString.toLowerCase())) {
-                return true;
-            }
-        }
-        return false;
     }
 
-    public static class CheckBoxTableCell<S, T> extends TableCell<S, T> {
+    public class CheckBoxTableCell<S, T> extends TableCell<S, T> {
 
         private final CheckBox checkBox;
         private ObservableValue<T> ov;
@@ -240,7 +243,19 @@ public class FXMLCompareController implements Initializable {
         public CheckBoxTableCell() {
             this.checkBox = new CheckBox();
             this.checkBox.setAlignment(Pos.CENTER);
-
+            this.checkBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+                @Override
+                public void changed(ObservableValue<? extends Boolean> ov, Boolean t, Boolean t1) {
+                    if (ov.getValue()) {
+                        getTableView().getSelectionModel().select(getTableRow().getIndex());
+                        addToSelecteds(getTableView().getSelectionModel().getSelectedItem());
+                    } else {
+                        getTableView().getSelectionModel().select(getTableRow().getIndex());
+                        removeFromSelecteds(getTableView().getSelectionModel().getSelectedItem());
+                    }
+                    bindDataToTable(selectedData, true);
+                }
+            });
             setAlignment(Pos.CENTER);
             setGraphic(checkBox);
         }
@@ -264,14 +279,27 @@ public class FXMLCompareController implements Initializable {
         }
     }
 
+    public void addToSelecteds(Object obj) {
+        selectedData.add((SolverProperties) obj);
+    }
+
+    public void removeFromSelecteds(Object obj) {
+        selectedData.remove((SolverProperties) obj);
+    }
+
+    // -------- Listeners
     private ChangeListener<Boolean> getComboBoxListener() {
-        return new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                updateFilteredData();
-                bindDataToTable(filteredData);
-            }
+        return (ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            updateFilteredData();
+            bindDataToTable(filteredData, false);
         };
+    }
+
+    private ChangeListener<String> getTextFieldListener() {
+        return ((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            updateFilteredData();
+            bindDataToTable(filteredData, false);
+        });
     }
 
     // -------- Actions
@@ -279,7 +307,8 @@ public class FXMLCompareController implements Initializable {
     private void refreshSolvers(ActionEvent event) {
         loadSolversFromDB();
         updateFilteredData();
-        bindDataToTable(filteredData);
+        selectedData.clear();
+        bindDataToTable(filteredData, false);
+        bindDataToTable(selectedData, true);
     }
-
 }

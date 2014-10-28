@@ -166,6 +166,7 @@ public class FXMLEditSolverController implements Initializable {
         colSoftClauses.setCellValueFactory(new PropertyValueFactory<>("numberOfSoftClause"));
         colUnsatClauses.setCellValueFactory(new PropertyValueFactory<>("numberOfUnsatClause"));
         colWeigthUnsatClauses.setCellValueFactory(new PropertyValueFactory<>("unsatClauseWeigth"));
+        instancesTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
     private void saveSolverData() {
@@ -179,7 +180,7 @@ public class FXMLEditSolverController implements Initializable {
 
     // -------- Actions
     @FXML
-    private void saveSolver(ActionEvent event) {
+    private void saveSolverAction(ActionEvent event) {
         this.saveSolverData();
         SolverManager.daoSolver.addSolver(SolverManager.solverCharged);
     }
