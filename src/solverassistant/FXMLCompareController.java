@@ -82,7 +82,7 @@ public class FXMLCompareController implements Initializable {
     private TextField filterTextField;
 
     @FXML
-    private Button compareButton, refreshButton;
+    private Button compareButton, reloadButton;
 
     @FXML
     private CheckBox wholeWordCheckBox, solverCheckBox, benchmarkCheckBox, typeCheckBox, memoryCheckBox, timeOutCheckBox, coresCheckBox;
@@ -141,7 +141,7 @@ public class FXMLCompareController implements Initializable {
         timeOutCheckBox.setText(SolverAssistant.messages.getString("Memory"));
         coresCheckBox.setText(SolverAssistant.messages.getString("NumberOfCores"));
 
-        refreshButton.setText(SolverAssistant.messages.getString("Refresh"));
+        reloadButton.setText(SolverAssistant.messages.getString("ResetAndReloadData"));
         compareButton.setText(SolverAssistant.messages.getString("Compare"));
 
         allSolversTable.setPlaceholder(new Label(SolverAssistant.messages.getString("EmptyTable")));
@@ -247,10 +247,10 @@ public class FXMLCompareController implements Initializable {
                 public void changed(ObservableValue<? extends Boolean> ov, Boolean t, Boolean t1) {
                     if (ov.getValue()) {
                         getTableView().getSelectionModel().select(getTableRow().getIndex());
-                        addToSelecteds(getTableView().getSelectionModel().getSelectedItem());
+                        addToSelectedsList(getTableView().getSelectionModel().getSelectedItem());
                     } else {
                         getTableView().getSelectionModel().select(getTableRow().getIndex());
-                        removeFromSelecteds(getTableView().getSelectionModel().getSelectedItem());
+                        removeFromSelectedsList(getTableView().getSelectionModel().getSelectedItem());
                     }
                     bindDataToTable(selectedData, true);
                 }
@@ -278,11 +278,11 @@ public class FXMLCompareController implements Initializable {
         }
     }
 
-    public void addToSelecteds(Object obj) {
+    public void addToSelectedsList(Object obj) {
         selectedData.add((SolverProperties) obj);
     }
 
-    public void removeFromSelecteds(Object obj) {
+    public void removeFromSelectedsList(Object obj) {
         selectedData.remove((SolverProperties) obj);
     }
 
@@ -303,11 +303,14 @@ public class FXMLCompareController implements Initializable {
 
     // -------- Actions
     @FXML
-    private void refreshSolvers(ActionEvent event) {
+    private void resetAndReloadSolvers(ActionEvent event) {
         loadSolversFromDB();
         updateFilteredData();
         selectedData.clear();
         bindDataToTable(filteredData, false);
         bindDataToTable(selectedData, true);
+        colAllSelect.setCellFactory(null);
+        colAllSelect.setCellFactory((TableColumn<SolverProperties, Boolean> p) -> new CheckBoxTableCell<>());
+
     }
 }
