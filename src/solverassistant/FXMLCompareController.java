@@ -144,8 +144,8 @@ public class FXMLCompareController implements Initializable {
         reloadButton.setText(SolverAssistant.messages.getString("ResetAndReloadData"));
         compareButton.setText(SolverAssistant.messages.getString("Compare"));
 
-        allSolversTable.setPlaceholder(new Label(SolverAssistant.messages.getString("EmptyTable")));
-        selectedSolversTable.setPlaceholder(new Label(SolverAssistant.messages.getString("EmptyTable")));
+        allSolversTable.setPlaceholder(new Label(SolverAssistant.messages.getString("EmptyTableDataBaseSolvers")));
+        selectedSolversTable.setPlaceholder(new Label(SolverAssistant.messages.getString("EmptyTableSelectedSolvers")));
     }
 
     private void configTableViewPageUI() {

@@ -9,15 +9,19 @@ package solverassistant;
 import entities.SolverInstance;
 import entities.SolverInstanceProperties;
 import java.net.URL;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -81,7 +85,10 @@ public class FXMLEditSolverController implements Initializable {
     private Label solverLabel, benchmarkLabel, solverTypeLabel, timeOutLabel, moreSolversLabel, memoryLabel, coresLabel;
 
     @FXML
-    private TextField solverTextField, benchmarkTextField, solverTypeTextField, timeOutTextField, memoryTextField, coresTextField;
+    private TextField solverTextField, benchmarkTextField, timeOutTextField, memoryTextField, coresTextField;
+
+    @FXML
+    private ComboBox comboSolverType;
 
     @FXML
     private Button sendToDBButton;
@@ -133,7 +140,11 @@ public class FXMLEditSolverController implements Initializable {
     public void loadSolver() {
         solverTextField.setText(SolverManager.solverCharged.getName());
         benchmarkTextField.setText(String.valueOf(SolverManager.solverCharged.getBenchmark()));
-        solverTypeTextField.setText(SolverManager.solverCharged.getType());
+        if (SolverManager.solverCharged.getType().equals("COMPLETE")) {
+            comboSolverType.setValue("COMPLETE");
+        } else {
+            comboSolverType.setValue("UNCOMPLETE");
+        }
         timeOutTextField.setText(String.valueOf(SolverManager.solverCharged.getTimeOut()));
         memoryTextField.setText(String.valueOf(SolverManager.solverCharged.getMemory()));
         coresTextField.setText(String.valueOf(SolverManager.solverCharged.getNumberOfCores()));
@@ -149,6 +160,35 @@ public class FXMLEditSolverController implements Initializable {
     }
 
     private void configTableViewPageUI() {
+        comboSolverType.getItems().addAll(
+                "COMPLETE",
+                "UNCOMPLETE"
+        );
+        timeOutTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                int value = Integer.parseInt(newValue);
+                timeOutTextField.setText(String.valueOf(value));
+            } catch (Exception e) {
+                timeOutTextField.setText(oldValue);
+            }
+        });
+        memoryTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                int value = Integer.parseInt(newValue);
+                memoryTextField.setText(String.valueOf(value));
+            } catch (Exception e) {
+                memoryTextField.setText(oldValue);
+            }
+        });
+        coresTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                int value = Integer.parseInt(newValue);
+                coresTextField.setText(String.valueOf(value));
+            } catch (Exception e) {
+                coresTextField.setText(oldValue);
+            }
+        });
+
         colInstance.setCellValueFactory(new PropertyValueFactory<>("fileName"));
         colTime.setCellValueFactory(new PropertyValueFactory<>("time"));
         colOptimal.setCellValueFactory(new PropertyValueFactory<>("optimum"));
@@ -171,7 +211,7 @@ public class FXMLEditSolverController implements Initializable {
     private void saveSolverData() {
         SolverManager.solverCharged.setName(solverTextField.getText());
         SolverManager.solverCharged.setBenchmark(benchmarkTextField.getText());
-        SolverManager.solverCharged.setType(solverTypeTextField.getText());
+        SolverManager.solverCharged.setType(comboSolverType.getValue().toString());
         SolverManager.solverCharged.setTimeOut(Integer.parseInt(timeOutTextField.getText()));
         SolverManager.solverCharged.setMemory(Integer.parseInt(memoryTextField.getText()));
         SolverManager.solverCharged.setNumberOfCores(Integer.parseInt(coresTextField.getText()));

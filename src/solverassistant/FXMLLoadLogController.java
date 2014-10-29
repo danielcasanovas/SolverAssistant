@@ -57,6 +57,7 @@ public class FXMLLoadLogController implements Initializable {
 //            logName = fileChooser.getSelectedFile().getName();
             log = SolverAssistant.utils.fileReader(new File("C:\\Users\\Daniel\\Desktop\\ahmaxsat-ls-ms_crafted-COMPLETE-1800-3500-2.log"));
 //            log = SolverAssistant.utils.fileReader(file);
+            logTextArea.setDisable(false);
             logNameLabel.setText(logName);
             logTextArea.setText(log);
             SolverManager.loadSolver(logName, log);

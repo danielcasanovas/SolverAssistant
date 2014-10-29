@@ -8,24 +8,36 @@
 
 <AnchorPane id="AnchorPane" styleClass="backgroundColor" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="solverassistant.FXMLEditSolverController">
     <children>
-        <AnchorPane AnchorPane.bottomAnchor="-14.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="-38.0" AnchorPane.topAnchor="14.0">
+        <VBox spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="15.0">
             <children>
-                <Label id="solverLabel" fx:id="solverLabel" alignment="CENTER" prefHeight="17.0" prefWidth="125.0" text="Solver" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                <TextField id="solverTextField" fx:id="solverTextField" alignment="CENTER" prefWidth="125.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="20.0" />
-                <Label id="benchmarkLabel" fx:id="benchmarkLabel" alignment="CENTER" prefHeight="17.0" prefWidth="125.0" text="Benchmark" AnchorPane.leftAnchor="140.0" AnchorPane.topAnchor="0.0" />
-                <TextField id="benchmarkTextField" fx:id="benchmarkTextField" alignment="CENTER" prefHeight="17.0" prefWidth="125.0" AnchorPane.leftAnchor="140.0" AnchorPane.topAnchor="20.0" />
-                <Label id="solverTypeLabel" fx:id="solverTypeLabel" alignment="CENTER" prefHeight="17.0" prefWidth="125.0" text="Solver type" AnchorPane.leftAnchor="280.0" AnchorPane.topAnchor="0.0" />
-                <TextField id="solverTypeTextField" fx:id="solverTypeTextField" alignment="CENTER" prefHeight="17.0" prefWidth="125.0" AnchorPane.leftAnchor="280.0" AnchorPane.topAnchor="20.0" />
-                <Label id="timeOutLabel" fx:id="timeOutLabel" alignment="CENTER" prefHeight="17.0" prefWidth="125.0" text="Time out" AnchorPane.leftAnchor="420.0" AnchorPane.topAnchor="0.0" />
-                <TextField id="timeOutTextField" fx:id="timeOutTextField" alignment="CENTER" prefHeight="17.0" prefWidth="125.0" AnchorPane.leftAnchor="420.0" AnchorPane.topAnchor="20.0" />
-                <Label id="memoryLabel" fx:id="memoryLabel" alignment="CENTER" prefHeight="17.0" prefWidth="125.0" text="Memory" AnchorPane.leftAnchor="560.0" AnchorPane.topAnchor="0.0" />
-                <TextField id="memoryTextField" fx:id="memoryTextField" alignment="CENTER" prefHeight="17.0" prefWidth="125.0" AnchorPane.leftAnchor="560.0" AnchorPane.topAnchor="20.0" />
-                <Label id="coresLabel" fx:id="coresLabel" alignment="CENTER" layoutX="1000.0" prefHeight="17.0" prefWidth="125.0" text="Number of cores" AnchorPane.leftAnchor="700.0" AnchorPane.topAnchor="0.0" />
-                <TextField id="coresTextField" fx:id="coresTextField" alignment="CENTER" prefHeight="17.0" prefWidth="125.0" AnchorPane.leftAnchor="700.0" AnchorPane.topAnchor="20.0" />
-                <Label id="moreSolversLabel" fx:id="moreSolversLabel" disable="true" prefHeight="17.0" prefWidth="450.0" text="Load more solvers at :" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="60.0" />
-                <Button id="sendToDBButton" fx:id="sendToDBButton" styleClass="button-defaultButton" onAction="#saveSolverAction" prefHeight="25.0" prefWidth="265.0" text="Send to Database" AnchorPane.leftAnchor="560.0" AnchorPane.topAnchor="55.0" />
+                <HBox alignment="CENTER" spacing="20.0" AnchorPane.topAnchor="10.0">
+                    <children> 
+                        <Label id="solverLabel" fx:id="solverLabel" alignment="CENTER" prefHeight="17.0" prefWidth="125.0" text="Solver"/>
+                        <Label id="benchmarkLabel" fx:id="benchmarkLabel" alignment="CENTER" prefHeight="17.0" prefWidth="125.0" text="Benchmark" HBox.hgrow="ALWAYS" />
+                        <Label id="solverTypeLabel" fx:id="solverTypeLabel" alignment="CENTER" prefHeight="17.0" prefWidth="125.0" text="Solver type" HBox.hgrow="ALWAYS" />
+                        <Label id="timeOutLabel" fx:id="timeOutLabel" alignment="CENTER" prefHeight="17.0" prefWidth="125.0" text="Time out" HBox.hgrow="ALWAYS" />
+                        <Label id="memoryLabel" fx:id="memoryLabel" alignment="CENTER" prefHeight="17.0" prefWidth="125.0" text="Memory" HBox.hgrow="ALWAYS" />
+                        <Label id="coresLabel" fx:id="coresLabel" alignment="CENTER" layoutX="1000.0" prefHeight="17.0" prefWidth="125.0" text="Number of cores" HBox.hgrow="ALWAYS" />
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER" spacing="20.0" AnchorPane.topAnchor="35.0">
+                    <children> 
+                        <TextField id="solverTextField" fx:id="solverTextField" alignment="CENTER" prefWidth="125.0" HBox.hgrow="ALWAYS" />
+                        <TextField id="benchmarkTextField" fx:id="benchmarkTextField" alignment="CENTER" prefHeight="17.0" prefWidth="125.0" HBox.hgrow="ALWAYS" />
+                        <ComboBox id="comboSolverType" fx:id="comboSolverType" prefHeight="25.0" prefWidth="125.0" styleClass="comboBox-defaultComboBox" visibleRowCount="2" HBox.hgrow="ALWAYS"/>
+                        <TextField id="timeOutTextField" fx:id="timeOutTextField" alignment="CENTER" prefHeight="17.0" prefWidth="125.0" HBox.hgrow="ALWAYS" />
+                        <TextField id="memoryTextField" fx:id="memoryTextField" alignment="CENTER" prefHeight="17.0" prefWidth="125.0" HBox.hgrow="ALWAYS" />
+                        <TextField id="coresTextField" fx:id="coresTextField" alignment="CENTER" prefHeight="17.0" prefWidth="125.0" HBox.hgrow="ALWAYS" />
+                    </children>
+                </HBox>
+                <HBox spacing="20.0" AnchorPane.topAnchor="65.0">
+                    <children> 
+                        <Button id="sendToDBButton" fx:id="sendToDBButton" onAction="#saveSolverAction" prefHeight="25.0" prefWidth="275.0" styleClass="button-defaultButton" text="Send to Database" />
+                        <Label id="moreSolversLabel" fx:id="moreSolversLabel" disable="true" prefHeight="25.0" text="Load more solvers at :" />
+                    </children>
+                </HBox>
             </children>
-        </AnchorPane>
+        </VBox>
         <AnchorPane layoutX="229.0" layoutY="103.0" prefHeight="591.0" prefWidth="1380.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
             <children>   
                 <TableView id="instancesTable" fx:id="instancesTable" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
