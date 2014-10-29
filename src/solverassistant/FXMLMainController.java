@@ -11,7 +11,6 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
@@ -39,7 +38,8 @@ public class FXMLMainController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         this.chargeI18nValues();
         this.chargeLanguageComboBox(SolverAssistant.messages.getLocale());
-        comboLanguage.getSelectionModel().selectedItemProperty().addListener(this.languageComboBoxListener());
+        comboLanguage.getSelectionModel().selectedItemProperty().addListener(getLanguageComboBoxListener());
+        editTab.setDisable(true);
     }
 
     /**
@@ -53,10 +53,6 @@ public class FXMLMainController implements Initializable {
         barTabPageLoadController.chargeI18nValues();
         barTabPageEditController.chargeI18nValues();
         barTabPageCompareController.chargeI18nValues();
-
-        if (SolverManager.solverCharged == null) {
-            editTab.setDisable(true);
-        }
     }
 
     private void chargeLanguageComboBox(Locale language) {
@@ -79,12 +75,12 @@ public class FXMLMainController implements Initializable {
     }
 
     public void loadSolver() {
-        editTab.setDisable(false);
         barTabPageEditController.loadSolver();
+        editTab.setDisable(false);
     }
 
     // -------- Listeners
-    private ChangeListener languageComboBoxListener() {
+    private ChangeListener getLanguageComboBoxListener() {
         return new ChangeListener() {
             public void stateChanged(ChangeEvent changeEvent) {
             }

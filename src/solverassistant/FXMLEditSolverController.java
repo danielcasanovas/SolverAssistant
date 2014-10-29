@@ -94,7 +94,6 @@ public class FXMLEditSolverController implements Initializable {
         solvPropList = new ArrayList<>();
         this.configTableViewPageUI();
         this.chargeI18nValues();
-
     }
 
     /**

@@ -89,7 +89,7 @@ public class FXMLCompareController implements Initializable {
 
     private ObservableList<SolverProperties> data; // All solvers without the instances from db to put in first table
     private ObservableList<SolverProperties> filteredData; // Solvers filetered
-    private ObservableList<SolverProperties> selectedData; // Solvers filetered
+    private ObservableList<SolverProperties> selectedData; // Solvers selected
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -109,10 +109,11 @@ public class FXMLCompareController implements Initializable {
         }
         data = FXCollections.observableArrayList(solversPropierties);
         selectedData.addListener((ListChangeListener.Change<? extends SolverProperties> change) -> {
-            if(selectedData.isEmpty()){
+            if (selectedData.isEmpty()) {
                 compareButton.setDisable(true);
+            } else {
+                compareButton.setDisable(false);
             }
-            else compareButton.setDisable(false);
         });
     }
 
@@ -173,8 +174,8 @@ public class FXMLCompareController implements Initializable {
         wholeWordCheckBox.selectedProperty().addListener(getComboBoxListener());
     }
 
-    private void bindDataToTable(ObservableList<SolverProperties> data, boolean table) {
-        if (table) {
+    private void bindDataToTable(ObservableList<SolverProperties> data, boolean selectedTable) {
+        if (selectedTable) {
             selectedSolversTable.getItems().clear();
             selectedSolversTable.getItems().addAll(data);
         } else {
@@ -199,7 +200,6 @@ public class FXMLCompareController implements Initializable {
             return true;
         }
         if (wholeWordCheckBox.isSelected()) {
-            // If not check if check box is selected and filter by filterstring
             if (solverCheckBox.isSelected() && solv.getName().toLowerCase().equals(filterString.toLowerCase())) {
                 return true;
             } else if (benchmarkCheckBox.isSelected() && solv.getBenchmark().toLowerCase().equals(filterString.toLowerCase())) {
@@ -216,7 +216,6 @@ public class FXMLCompareController implements Initializable {
                 return false;
             }
         } else {
-            // If not check if check box is selected and filter by filterstring
             if (solverCheckBox.isSelected() && solv.getName().toLowerCase().contains(filterString.toLowerCase())) {
                 return true;
             } else if (benchmarkCheckBox.isSelected() && solv.getBenchmark().toLowerCase().contains(filterString.toLowerCase())) {
