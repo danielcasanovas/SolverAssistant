@@ -39,7 +39,7 @@ public class FXMLMainController implements Initializable {
         this.chargeI18nValues();
         this.chargeLanguageComboBox(SolverAssistant.messages.getLocale());
         comboLanguage.getSelectionModel().selectedItemProperty().addListener(getLanguageComboBoxListener());
-        editTab.setDisable(true);
+//        editTab.setDisable(true);
     }
 
     /**

@@ -7,16 +7,16 @@
     <offline-allowed/>
   </information>
   <resources>
-    <jfx:javafx-runtime version="8.0+" href="http://javadl.sun.com/webapps/download/GetFile/javafx-latest/windows-i586/javafx2.jnlp"/>
+    <jfx:javafx-runtime version="2.2+" href="http://javadl.sun.com/webapps/download/GetFile/javafx-latest/windows-i586/javafx2.jnlp"/>
   </resources>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="SolverAssistant.jar" size="63624" download="eager" />
+    <jar href="SolverAssistant.jar" size="79946" download="eager" />
     <jar href="lib/ibatis-common-2.jar" size="84742" download="eager" />
     <jar href="lib/sqlite-jdbc-3.8.7.jar" size="3959324" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="SolverAssistant" >
-    <param name="requiredFXVersion" value="8.0+"/>
+    <param name="requiredFXVersion" value="2.2+"/>
   </applet-desc>
   <jfx:javafx-desc  width="800" height="600" main-class="solverassistant.SolverAssistant"  name="SolverAssistant" />
   <update check="always"/>
