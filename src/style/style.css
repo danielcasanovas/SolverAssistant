@@ -43,8 +43,18 @@
     -fx-background-color: #deeff6;
 }
 
-#sendToDBButton{
+.button-deleteButton{
+    -fx-background-image:url("/images/delete.png");
+    -fx-background-size: 10 10;
+    -fx-cursor: hand;
+}
 
+.button-deleteButton:hover{
+    -fx-opacity: 0.5;
+}
+
+#sendToDBButton{
+    -fx-side: 10 10;
     -fx-background-image:url("/images/box.png");
     -fx-background-size: 18 18;
     -fx-background-repeat: no-repeat;

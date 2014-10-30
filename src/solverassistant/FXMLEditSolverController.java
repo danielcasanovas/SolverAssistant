@@ -218,6 +218,6 @@ public class FXMLEditSolverController implements Initializable {
     @FXML
     private void saveSolverAction(ActionEvent event) {
         this.saveSolverData();
-        SolverManager.daoSolver.addSolver(SolverManager.solverCharged);
+        SolverManager.daoSolver.addSolverFULL(SolverManager.solverCharged);
     }
 }

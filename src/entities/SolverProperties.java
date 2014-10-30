@@ -132,4 +132,46 @@ public class SolverProperties {
         return instancesList;
     }
 
+    /**
+     * @param name the name to set
+     */
+    public void setNameProperty(StringProperty name) {
+        this.name = name;
+    }
+
+    /**
+     * @param benchmark the benchmark to set
+     */
+    public void setBenchmarkProperty(StringProperty benchmark) {
+        this.benchmark = benchmark;
+    }
+
+    /**
+     * @param type the type to set
+     */
+    public void setTypeProperty(StringProperty type) {
+        this.type = type;
+    }
+
+    /**
+     * @param timeOut the timeOut to set
+     */
+    public void setTimeOutProperty(IntegerProperty timeOut) {
+        this.timeOut = timeOut;
+    }
+
+    /**
+     * @param memory the memory to set
+     */
+    public void setMemoryProperty(IntegerProperty memory) {
+        this.memory = memory;
+    }
+
+    /**
+     * @param numberOfCores the numberOfCores to set
+     */
+    public void setNumberOfCoresProperty(IntegerProperty numberOfCores) {
+        this.numberOfCores = numberOfCores;
+    }
+
 }

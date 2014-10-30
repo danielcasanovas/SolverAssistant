@@ -19,6 +19,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -27,9 +28,15 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.util.converter.IntegerStringConverter;
 
 public class FXMLCompareController implements Initializable {
 
@@ -38,6 +45,9 @@ public class FXMLCompareController implements Initializable {
 
     @FXML
     private TableColumn<SolverProperties, Boolean> colAllSelect;
+
+    @FXML
+    private TableColumn<SolverProperties, Boolean> colAllDelete;
 
     @FXML
     private TableColumn<SolverProperties, String> colAllSolver;
@@ -117,6 +127,10 @@ public class FXMLCompareController implements Initializable {
         });
     }
 
+    private void setSolverFromDB(Solver solv) {
+        SolverManager.daoSolver.setSolver(solv);
+    }
+
     public void chargeI18nValues() {
         colAllSolver.setText(SolverAssistant.messages.getString("Solver"));
         colAllBenchmark.setText(SolverAssistant.messages.getString("Benchmark"));
@@ -149,13 +163,91 @@ public class FXMLCompareController implements Initializable {
     }
 
     private void configTableViewPageUI() {
+        allSolversTable.setEditable(true);
+
         colAllSelect.setCellFactory((TableColumn<SolverProperties, Boolean> p) -> new CheckBoxTableCell<>());
+
+        colAllDelete.setCellFactory((TableColumn<SolverProperties, Boolean> p) -> new ButtonCell());
+
         colAllSolver.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colAllSolver.setCellFactory(TextFieldTableCell.forTableColumn());
+        colAllSolver.setOnEditCommit((CellEditEvent<SolverProperties, String> event) -> {
+            ((SolverProperties) event.getTableView().getItems().get(
+                    event.getTablePosition().getRow())).getNameProperty().set(event.getNewValue());
+            Solver solverToEdit = ((SolverProperties) event.getTableView().getItems().get(event.getTablePosition().getRow())).getSolver();
+            solverToEdit.setName(event.getNewValue());
+            setSolverFromDB(solverToEdit);
+        });
+
         colAllBenchmark.setCellValueFactory(new PropertyValueFactory<>("benchmark"));
+        colAllBenchmark.setCellFactory(TextFieldTableCell.forTableColumn());
+        colAllBenchmark.setOnEditCommit((CellEditEvent<SolverProperties, String> event) -> {
+            ((SolverProperties) event.getTableView().getItems().get(
+                    event.getTablePosition().getRow())).getBenchmarkProperty().set(event.getNewValue());
+            Solver solverToEdit = ((SolverProperties) event.getTableView().getItems().get(event.getTablePosition().getRow())).getSolver();
+            solverToEdit.setBenchmark(event.getNewValue());
+            setSolverFromDB(solverToEdit);
+        });
+
         colAllSolverType.setCellValueFactory(new PropertyValueFactory<>("type"));
+        colAllSolverType.setCellFactory(TextFieldTableCell.forTableColumn());
+        colAllSolverType.setOnEditCommit((CellEditEvent<SolverProperties, String> event) -> {
+            if (event.getNewValue().toUpperCase().equals("COMPLETE") || event.getNewValue().toUpperCase().equals("UNCOMPLETE")) {
+                ((SolverProperties) event.getTableView().getItems().get(
+                        event.getTablePosition().getRow())).getTypeProperty().set(event.getNewValue());
+                Solver solverToEdit = ((SolverProperties) event.getTableView().getItems().get(event.getTablePosition().getRow())).getSolver();
+                solverToEdit.setType(event.getNewValue().toUpperCase());
+                setSolverFromDB(solverToEdit);
+            } else {
+                allSolversTable.getColumns().get(0).setVisible(false);
+                allSolversTable.getColumns().get(0).setVisible(true);
+            }
+        });
+
         colAllTimeOut.setCellValueFactory(new PropertyValueFactory<>("timeOut"));
+        colAllTimeOut.setCellFactory(TextFieldTableCell.<SolverProperties, Integer>forTableColumn(new IntegerStringConverter()));
+        colAllTimeOut.setOnEditCommit((CellEditEvent<SolverProperties, Integer> event) -> {
+            try {
+                ((SolverProperties) event.getTableView().getItems().get(
+                        event.getTablePosition().getRow())).getTimeOutProperty().set(event.getNewValue());
+                Solver solverToEdit = ((SolverProperties) event.getTableView().getItems().get(event.getTablePosition().getRow())).getSolver();
+                solverToEdit.setTimeOut(event.getNewValue());
+                setSolverFromDB(solverToEdit);
+            } catch (Exception e) {
+                allSolversTable.getColumns().get(0).setVisible(false);
+                allSolversTable.getColumns().get(0).setVisible(true);
+            }
+        });
+
         colAllMemory.setCellValueFactory(new PropertyValueFactory<>("memory"));
+        colAllMemory.setCellFactory(TextFieldTableCell.<SolverProperties, Integer>forTableColumn(new IntegerStringConverter()));
+        colAllMemory.setOnEditCommit((CellEditEvent<SolverProperties, Integer> event) -> {
+            try {
+                ((SolverProperties) event.getTableView().getItems().get(
+                        event.getTablePosition().getRow())).getMemoryProperty().set(event.getNewValue());
+                Solver solverToEdit = ((SolverProperties) event.getTableView().getItems().get(event.getTablePosition().getRow())).getSolver();
+                solverToEdit.setMemory(event.getNewValue());
+                setSolverFromDB(solverToEdit);
+            } catch (Exception e) {
+                allSolversTable.getColumns().get(0).setVisible(false);
+                allSolversTable.getColumns().get(0).setVisible(true);
+            }
+        });
+
         colAllNumberOfCores.setCellValueFactory(new PropertyValueFactory<>("numberOfCores"));
+        colAllNumberOfCores.setCellFactory(TextFieldTableCell.<SolverProperties, Integer>forTableColumn(new IntegerStringConverter()));
+        colAllNumberOfCores.setOnEditCommit((CellEditEvent<SolverProperties, Integer> event) -> {
+            try {
+                ((SolverProperties) event.getTableView().getItems().get(
+                        event.getTablePosition().getRow())).getNumberOfCoresProperty().set(event.getNewValue());
+                Solver solverToEdit = ((SolverProperties) event.getTableView().getItems().get(event.getTablePosition().getRow())).getSolver();
+                solverToEdit.setNumberOfCores(event.getNewValue());
+                setSolverFromDB(solverToEdit);
+            } catch (Exception e) {
+                allSolversTable.getColumns().get(0).setVisible(false);
+                allSolversTable.getColumns().get(0).setVisible(true);
+            }
+        });
 
         colSelectedSolver.setCellValueFactory(new PropertyValueFactory<>("name"));
         colSelectedBenchmark.setCellValueFactory(new PropertyValueFactory<>("benchmark"));
@@ -234,6 +326,43 @@ public class FXMLCompareController implements Initializable {
         }
     }
 
+    public void addToSelectedsList(Object obj) {
+        selectedData.add((SolverProperties) obj);
+    }
+
+    public void removeFromSelectedsList(Object obj) {
+        selectedData.remove((SolverProperties) obj);
+    }
+
+    // -------- Listeners
+    private ChangeListener<Boolean> getComboBoxListener() {
+        return (ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            updateFilteredData();
+            bindDataToTable(filteredData, false);
+        };
+    }
+
+    private ChangeListener<String> getTextFieldListener() {
+        return ((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            updateFilteredData();
+            bindDataToTable(filteredData, false);
+        });
+    }
+
+    // -------- Actions
+    @FXML
+    private void resetAndReloadSolvers(ActionEvent event) {
+        loadSolversFromDB();
+        updateFilteredData();
+        bindDataToTable(filteredData, false);
+        selectedData.clear();
+        bindDataToTable(selectedData, true);
+        colAllSelect.setCellFactory(null);
+        colAllSelect.setCellFactory((TableColumn<SolverProperties, Boolean> p) -> new CheckBoxTableCell<>());
+
+    }
+
+    // -------- Cell Custom Classes 
     public class CheckBoxTableCell<S, T> extends TableCell<S, T> {
 
         private final CheckBox checkBox;
@@ -278,39 +407,40 @@ public class FXMLCompareController implements Initializable {
         }
     }
 
-    public void addToSelectedsList(Object obj) {
-        selectedData.add((SolverProperties) obj);
-    }
+    private class ButtonCell extends TableCell<SolverProperties, Boolean> {
 
-    public void removeFromSelectedsList(Object obj) {
-        selectedData.remove((SolverProperties) obj);
-    }
+        final Button cellButton = new Button();
 
-    // -------- Listeners
-    private ChangeListener<Boolean> getComboBoxListener() {
-        return (ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-            updateFilteredData();
-            bindDataToTable(filteredData, false);
-        };
-    }
+        ButtonCell() {
+            Image imageDecline = new Image(getClass().getResourceAsStream("/images/delete_16px.png"));
+            cellButton.setGraphic(new ImageView(imageDecline));
+            cellButton.setStyle("-fx-background-color: transparent;");
 
-    private ChangeListener<String> getTextFieldListener() {
-        return ((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            updateFilteredData();
-            bindDataToTable(filteredData, false);
-        });
-    }
+//            cellButton.setStyle("-fx-side: 10 10;-fx-background-image:url(\"/images/delete.png\");-fx-background-size: 20 20;");
+            //Action when the button is pressed
+            cellButton.setOnAction((ActionEvent t) -> {
+                SolverProperties solver = (SolverProperties) ButtonCell.this.getTableView().getItems().get(ButtonCell.this.getIndex());
+                SolverManager.daoSolver.deleteSolver(solver.getSolver());
+                data.remove(solver);
+                if (selectedData.contains(solver)) {
+                    selectedData.remove(solver);
+                    bindDataToTable(selectedData, true);
+                }
+                updateFilteredData();
+                bindDataToTable(filteredData, false);
+            });
+            setAlignment(Pos.CENTER);
+        }
 
-    // -------- Actions
-    @FXML
-    private void resetAndReloadSolvers(ActionEvent event) {
-        loadSolversFromDB();
-        updateFilteredData();
-        selectedData.clear();
-        bindDataToTable(filteredData, false);
-        bindDataToTable(selectedData, true);
-        colAllSelect.setCellFactory(null);
-        colAllSelect.setCellFactory((TableColumn<SolverProperties, Boolean> p) -> new CheckBoxTableCell<>());
-
+        //Display button if the row is not empty
+        @Override
+        protected void updateItem(Boolean t, boolean empty) {
+            super.updateItem(t, empty);
+            if (!empty) {
+                setGraphic(cellButton);
+            } else {
+                setGraphic(null);
+            }
+        }
     }
 }
