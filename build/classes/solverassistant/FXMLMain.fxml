@@ -8,7 +8,7 @@
 <?import javafx.scene.image.*?>
 <?import java.net.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" id="AnchorPane" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" styleClass="title-backgroundColor" xmlns="http://javafx.com/javafx/8" fx:controller="solverassistant.FXMLMainController">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" id="AnchorPane" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" styleClass="title-background" xmlns="http://javafx.com/javafx/8" fx:controller="solverassistant.FXMLMainController">
     <children>
         <TabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
             <tabs>
@@ -29,6 +29,9 @@
                 </Tab>
             </tabs>
         </TabPane>
+        <ImageView fx:id="logoUDL" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+            <Image url="/images/logoUDL.png" />
+        </ImageView>
         <ComboBox id="comboLanguage" fx:id="comboLanguage" prefHeight="25.0" prefWidth="100.0" promptText="Language" styleClass="comboBox-defaultComboBox" visibleRowCount="3" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0" />
         <Label id="statusLabel" fx:id="statusLabel" textAlignment="CENTER" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="70.0" styleClass="label-statusLabel" visible="false"/>
         <ImageView fx:id="statusImage" styleClass="image-status" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="70.0" visible="false">

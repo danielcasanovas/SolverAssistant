@@ -61,7 +61,7 @@ public class FXMLLoadLogController implements Initializable {
             logNameLabel.setText(logName);
             logTextArea.setText(log);
             SolverManager.loadSolver(logName, log);
-            SolverManager.showStatus("The log was propery charged");
+            SolverManager.showStatus(SolverAssistant.messages.getString("SolverLoadedInfo"));
         }
     }
 }

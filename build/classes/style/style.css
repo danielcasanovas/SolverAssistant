@@ -4,10 +4,10 @@
  EPS UDL 2014/2015
 */
 
-.title-backgroundColor{
+.title-background{
     -fx-background-color: #DA45B4;
-    -fx-background-image: url("/images/logoUDL.png");
-    -fx-background-repeat: no-repeat;
+    -fx-background-image: url("/images/background.png");
+    -fx-background-repeat: repeat-x;
 }
 
 .backgroundColor{
@@ -40,7 +40,9 @@
 }
 
 .button-defaultButton:hover{
-    -fx-background-color: #deeff6;
+    -fx-background-color: BA2074;
+    -fx-opacity: 0.5;
+    -fx-text-fill: white;
 }
 
 .button-deleteButton{

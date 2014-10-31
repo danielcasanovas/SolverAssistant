@@ -22,7 +22,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -33,10 +32,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import utils.IntegerStringConverter;
-import utils.Utils;
 
 public class FXMLCompareController implements Initializable {
 
@@ -177,6 +173,7 @@ public class FXMLCompareController implements Initializable {
             Solver solverToEdit = ((SolverProperties) event.getTableView().getItems().get(event.getTablePosition().getRow())).getSolver();
             solverToEdit.setName(event.getNewValue());
             setSolverFromDB(solverToEdit);
+            SolverManager.showStatus(SolverAssistant.messages.getString("SolverModifiedInfo"));
         });
 
         colAllBenchmark.setCellValueFactory(new PropertyValueFactory<>("benchmark"));
@@ -187,6 +184,7 @@ public class FXMLCompareController implements Initializable {
             Solver solverToEdit = ((SolverProperties) event.getTableView().getItems().get(event.getTablePosition().getRow())).getSolver();
             solverToEdit.setBenchmark(event.getNewValue());
             setSolverFromDB(solverToEdit);
+            SolverManager.showStatus(SolverAssistant.messages.getString("SolverModifiedInfo"));
         });
 
         colAllSolverType.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -202,6 +200,7 @@ public class FXMLCompareController implements Initializable {
                 allSolversTable.getColumns().get(0).setVisible(false);
                 allSolversTable.getColumns().get(0).setVisible(true);
             }
+            SolverManager.showStatus(SolverAssistant.messages.getString("SolverModifiedInfo"));
         });
 
         colAllTimeOut.setCellValueFactory(new PropertyValueFactory<>("timeOut"));
@@ -217,6 +216,7 @@ public class FXMLCompareController implements Initializable {
                 allSolversTable.getColumns().get(0).setVisible(false);
                 allSolversTable.getColumns().get(0).setVisible(true);
             }
+            SolverManager.showStatus(SolverAssistant.messages.getString("SolverModifiedInfo"));
         });
 
         colAllMemory.setCellValueFactory(new PropertyValueFactory<>("memory"));
@@ -232,6 +232,7 @@ public class FXMLCompareController implements Initializable {
                 allSolversTable.getColumns().get(0).setVisible(false);
                 allSolversTable.getColumns().get(0).setVisible(true);
             }
+            SolverManager.showStatus(SolverAssistant.messages.getString("SolverModifiedInfo"));
         });
 
         colAllNumberOfCores.setCellValueFactory(new PropertyValueFactory<>("numberOfCores"));
@@ -247,6 +248,7 @@ public class FXMLCompareController implements Initializable {
                 allSolversTable.getColumns().get(0).setVisible(false);
                 allSolversTable.getColumns().get(0).setVisible(true);
             }
+            SolverManager.showStatus(SolverAssistant.messages.getString("SolverModifiedInfo"));
         });
 
         colSelectedSolver.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -359,6 +361,7 @@ public class FXMLCompareController implements Initializable {
         bindDataToTable(selectedData, true);
         colAllSelect.setCellFactory(null);
         colAllSelect.setCellFactory((TableColumn<SolverProperties, Boolean> p) -> new CheckBoxTableCell<>());
+        SolverManager.showStatus(SolverAssistant.messages.getString("ResetAndReloadInfo"));
     }
 
     // -------- Cell Custom Classes 
@@ -376,9 +379,11 @@ public class FXMLCompareController implements Initializable {
                     if (ov.getValue()) {
                         getTableView().getSelectionModel().select(getTableRow().getIndex());
                         addToSelectedsList(getTableView().getSelectionModel().getSelectedItem());
+                        SolverManager.showStatus(SolverAssistant.messages.getString("SolverSelectedInfo"));
                     } else {
                         getTableView().getSelectionModel().select(getTableRow().getIndex());
                         removeFromSelectedsList(getTableView().getSelectionModel().getSelectedItem());
+                        SolverManager.showStatus(SolverAssistant.messages.getString("SolverUnSelectedInfo"));
                     }
                     bindDataToTable(selectedData, true);
                 }
@@ -425,6 +430,7 @@ public class FXMLCompareController implements Initializable {
                 }
                 updateFilteredData();
                 bindDataToTable(filteredData, false);
+                SolverManager.showStatus(SolverAssistant.messages.getString("SolverDeletedInfo"));
             });
             setAlignment(Pos.CENTER);
         }

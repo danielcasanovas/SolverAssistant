@@ -50,19 +50,23 @@ public class FXMLMainController implements Initializable {
         this.chargeI18nValues();
         this.chargeLanguageComboBox(SolverAssistant.messages.getLocale());
         comboLanguage.getSelectionModel().selectedItemProperty().addListener(getLanguageComboBoxListener());
+//        statusLabel.setOnMouseMoved((MouseEvent e) -> {
+//            statusLabel.setVisible(false);
+//            statusImage.setVisible(false);
+//        });
     }
 
     /**
      * Set the properly i18n data to all the components in the view
      */
     public void chargeI18nValues() {
-        loadTab.setText(SolverAssistant.messages.getString("LoadLog"));
-        editTab.setText(SolverAssistant.messages.getString("EditSolver"));
-        compareTab.setText(SolverAssistant.messages.getString("CompareFromDatabase"));
+            loadTab.setText(SolverAssistant.messages.getString("LoadLog"));
+            editTab.setText(SolverAssistant.messages.getString("EditSolver"));
+            compareTab.setText(SolverAssistant.messages.getString("CompareFromDatabase"));
 
-        barTabPageLoadController.chargeI18nValues();
-        barTabPageEditController.chargeI18nValues();
-        barTabPageCompareController.chargeI18nValues();
+            barTabPageLoadController.chargeI18nValues();
+            barTabPageEditController.chargeI18nValues();
+            barTabPageCompareController.chargeI18nValues();
     }
 
     private void chargeLanguageComboBox(Locale language) {
@@ -89,6 +93,31 @@ public class FXMLMainController implements Initializable {
         editTab.setDisable(false);
     }
 
+    public void showStatus(String message) {
+        statusLabel.setText(message);
+        statusLabel.setVisible(true);
+        statusImage.setVisible(true);
+        
+        Task<Void> sleeper = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                try {
+                    Thread.sleep(3750);
+                } catch (InterruptedException e) {
+                }
+                return null;
+            }
+        };
+        sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent event) {
+                statusLabel.setVisible(false);
+                statusImage.setVisible(false);
+            }
+        });
+        new Thread(sleeper).start();
+    }
+
     // -------- Listeners
     private ChangeListener getLanguageComboBoxListener() {
         return new ChangeListener() {
@@ -112,32 +141,8 @@ public class FXMLMainController implements Initializable {
                         break;
                 }
                 chargeI18nValues();
+                showStatus(SolverAssistant.messages.getString("LanguageChangedInfo"));
             }
         };
-    }
-
-    public void showStatus(String message) {
-        statusLabel.setText(message);
-        statusLabel.setVisible(true);
-        statusImage.setVisible(true);
-        Task<Void> sleeper = new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-                try {
-                    Thread.sleep(3750);
-                } catch (InterruptedException e) {
-                }
-                return null;
-            }
-        };
-        sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-            @Override
-            public void handle(WorkerStateEvent event) {
-                statusLabel.setVisible(false);
-                statusImage.setVisible(false);
-            }
-        });
-        new Thread(sleeper).start();
-
     }
 }
