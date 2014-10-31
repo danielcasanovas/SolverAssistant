@@ -32,15 +32,21 @@ public class SolverManager {
     }
 
     public static void loadSolver(String logName, String log) {
-        solverCharged = Utils.createSolverFromData(logName, log);
-        mainController.loadSolver();
+        Solver load = Utils.createSolverFromData(logName, log);
+        if (load != null) {
+            solverCharged = Utils.createSolverFromData(logName, log);
+            mainController.loadSolver();
+            SolverManager.showStatus(SolverAssistant.messages.getString("SolverLoadedInfo"));
+        } else {
+            showStatus(SolverAssistant.messages.getString("ErrorLoadLog"));
+        }
     }
 
     public static void initDB() {
         daoSolver = new DAOSolver();
     }
-    
-    public static void showStatus(String message){
+
+    public static void showStatus(String message) {
         mainController.showStatus(message);
     }
 }

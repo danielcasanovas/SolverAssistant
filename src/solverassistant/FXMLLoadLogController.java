@@ -36,9 +36,7 @@ public class FXMLLoadLogController implements Initializable {
         this.chargeI18nValues();
     }
 
-    /**
-     * Set the properly i18n data to all the components in the view
-     */
+    //Set the properly i18n data to all the components in the view
     public void chargeI18nValues() {
         loadLogButton.setText(SolverAssistant.messages.getString("OpenNewLog"));
     }
@@ -61,7 +59,6 @@ public class FXMLLoadLogController implements Initializable {
             logNameLabel.setText(logName);
             logTextArea.setText(log);
             SolverManager.loadSolver(logName, log);
-            SolverManager.showStatus(SolverAssistant.messages.getString("SolverLoadedInfo"));
         }
     }
 }

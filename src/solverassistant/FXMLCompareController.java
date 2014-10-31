@@ -107,6 +107,7 @@ public class FXMLCompareController implements Initializable {
         chargeI18nValues();
     }
 
+    // Get all solvers from database
     private void loadSolversFromDB() {
         List<Solver> solvers = SolverManager.daoSolver.getAllSolvers();
         List<SolverProperties> solversPropierties = new ArrayList<>();
@@ -123,10 +124,12 @@ public class FXMLCompareController implements Initializable {
         });
     }
 
+    // Update solver to database
     private void setSolverFromDB(Solver solv) {
         SolverManager.daoSolver.setSolver(solv);
     }
 
+    // Set the properly i18n data to all the components in the view
     public void chargeI18nValues() {
         colAllSolver.setText(SolverAssistant.messages.getString("Solver"));
         colAllBenchmark.setText(SolverAssistant.messages.getString("Benchmark"));
@@ -150,6 +153,7 @@ public class FXMLCompareController implements Initializable {
         memoryCheckBox.setText(SolverAssistant.messages.getString("TimeOut"));
         timeOutCheckBox.setText(SolverAssistant.messages.getString("Memory"));
         coresCheckBox.setText(SolverAssistant.messages.getString("NumberOfCores"));
+        wholeWordCheckBox.setText(SolverAssistant.messages.getString("WholeWord"));
 
         reloadButton.setText(SolverAssistant.messages.getString("ResetAndReloadData"));
         compareButton.setText(SolverAssistant.messages.getString("Compare"));
@@ -158,6 +162,7 @@ public class FXMLCompareController implements Initializable {
         selectedSolversTable.setPlaceholder(new Label(SolverAssistant.messages.getString("EmptyTableSelectedSolvers")));
     }
 
+    // Config the UI components
     private void configTableViewPageUI() {
         allSolversTable.setEditable(true);
 
@@ -268,6 +273,7 @@ public class FXMLCompareController implements Initializable {
         wholeWordCheckBox.selectedProperty().addListener(getComboBoxListener());
     }
 
+    // Bind data to solversTable or solversSelectedTable
     private void bindDataToTable(ObservableList<SolverProperties> data, boolean selectedTable) {
         if (selectedTable) {
             selectedSolversTable.getItems().clear();
@@ -278,6 +284,7 @@ public class FXMLCompareController implements Initializable {
         }
     }
 
+    // Update filtered data list 
     private void updateFilteredData() {
         filteredData.clear();
         for (SolverProperties p : data) {
@@ -287,6 +294,7 @@ public class FXMLCompareController implements Initializable {
         }
     }
 
+    // Filter depending on the filter checboxes
     private boolean matchesFilter(SolverProperties solv) {
         String filterString = filterTextField.getText();
         // No filter --> Add all.
@@ -328,10 +336,12 @@ public class FXMLCompareController implements Initializable {
         }
     }
 
+    // Add to selected solvers list
     public void addToSelectedsList(Object obj) {
         selectedData.add((SolverProperties) obj);
     }
 
+    // Remove from selected solvers list
     public void removeFromSelectedsList(Object obj) {
         selectedData.remove((SolverProperties) obj);
     }
@@ -419,7 +429,7 @@ public class FXMLCompareController implements Initializable {
 
             cellButton.getStyleClass().add("button-deleteButton");
 
-            //Action when the button is pressed
+            // Action when the button is pressed
             cellButton.setOnAction((ActionEvent t) -> {
                 SolverProperties solver = (SolverProperties) ButtonCell.this.getTableView().getItems().get(ButtonCell.this.getIndex());
                 SolverManager.daoSolver.deleteSolver(solver.getSolver());
@@ -435,7 +445,7 @@ public class FXMLCompareController implements Initializable {
             setAlignment(Pos.CENTER);
         }
 
-        //Display button if the row is not empty
+        // Display button if the row is not empty
         @Override
         protected void updateItem(Boolean t, boolean empty) {
             super.updateItem(t, empty);

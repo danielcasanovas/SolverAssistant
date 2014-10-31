@@ -20,12 +20,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
-import javafx.event.EventHandler;
-import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
-import javafx.stage.Popup;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 public class Utils {
 
@@ -89,8 +83,8 @@ public class Utils {
             solverCharged.setName(solverInfoList.get(solverInfoList.size() - 1));
         } catch (Exception e) {
             System.err.println("[ERROR-INFO] Solver has incomplete or incorrect name.");
+            return null;
         }
-
         try {
             StringTokenizer st = new StringTokenizer(log, "\t");
             SolverInstance instance = null;
