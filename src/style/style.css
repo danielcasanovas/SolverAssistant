@@ -44,17 +44,27 @@
 }
 
 .button-deleteButton{
-    -fx-background-image:url("/images/delete.png");
-    -fx-background-size: 10 10;
+    -fx-background-image: url("/images/delete.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 16 16;
+    -fx-background-position: center center;
+    -fx-background-color: transparent;
     -fx-cursor: hand;
 }
 
 .button-deleteButton:hover{
-    -fx-opacity: 0.5;
+    -fx-opacity: 0.7;
+}
+
+.label-statusLabel{
+    -fx-text-fill: white;
+}
+
+.image-status{
+    
 }
 
 #sendToDBButton{
-    -fx-side: 10 10;
     -fx-background-image:url("/images/box.png");
     -fx-background-size: 18 18;
     -fx-background-repeat: no-repeat;

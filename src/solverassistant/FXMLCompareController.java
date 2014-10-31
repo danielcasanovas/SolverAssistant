@@ -19,10 +19,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -33,10 +33,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import utils.IntegerStringConverter;
+import utils.Utils;
 
 public class FXMLCompareController implements Initializable {
 
@@ -359,7 +359,6 @@ public class FXMLCompareController implements Initializable {
         bindDataToTable(selectedData, true);
         colAllSelect.setCellFactory(null);
         colAllSelect.setCellFactory((TableColumn<SolverProperties, Boolean> p) -> new CheckBoxTableCell<>());
-
     }
 
     // -------- Cell Custom Classes 
@@ -412,11 +411,9 @@ public class FXMLCompareController implements Initializable {
         final Button cellButton = new Button();
 
         ButtonCell() {
-            Image imageDecline = new Image(getClass().getResourceAsStream("/images/delete_16px.png"));
-            cellButton.setGraphic(new ImageView(imageDecline));
-            cellButton.setStyle("-fx-background-color: transparent;");
 
-//            cellButton.setStyle("-fx-side: 10 10;-fx-background-image:url(\"/images/delete.png\");-fx-background-size: 20 20;");
+            cellButton.getStyleClass().add("button-deleteButton");
+
             //Action when the button is pressed
             cellButton.setOnAction((ActionEvent t) -> {
                 SolverProperties solver = (SolverProperties) ButtonCell.this.getTableView().getItems().get(ButtonCell.this.getIndex());

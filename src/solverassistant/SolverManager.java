@@ -39,4 +39,8 @@ public class SolverManager {
     public static void initDB() {
         daoSolver = new DAOSolver();
     }
+    
+    public static void showStatus(String message){
+        mainController.showStatus(message);
+    }
 }

@@ -20,6 +20,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
+import javafx.event.EventHandler;
+import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class Utils {
 
@@ -131,5 +137,4 @@ public class Utils {
             return solverCharged;
         }
     }
-
 }

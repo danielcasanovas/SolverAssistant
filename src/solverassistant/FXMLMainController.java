@@ -11,16 +11,18 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
+import javafx.scene.image.ImageView;
 import javax.swing.event.ChangeEvent;
 
 public class FXMLMainController implements Initializable {
-
-    @FXML
-    private ComboBox<String> comboLanguage;
 
     @FXML
     private FXMLLoadLogController barTabPageLoadController;
@@ -33,6 +35,15 @@ public class FXMLMainController implements Initializable {
 
     @FXML
     private Tab loadTab, editTab, compareTab;
+
+    @FXML
+    private ComboBox<String> comboLanguage;
+
+    @FXML
+    private Label statusLabel;
+
+    @FXML
+    private ImageView statusImage;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -103,5 +114,30 @@ public class FXMLMainController implements Initializable {
                 chargeI18nValues();
             }
         };
+    }
+
+    public void showStatus(String message) {
+        statusLabel.setText(message);
+        statusLabel.setVisible(true);
+        statusImage.setVisible(true);
+        Task<Void> sleeper = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                try {
+                    Thread.sleep(3750);
+                } catch (InterruptedException e) {
+                }
+                return null;
+            }
+        };
+        sleeper.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent event) {
+                statusLabel.setVisible(false);
+                statusImage.setVisible(false);
+            }
+        });
+        new Thread(sleeper).start();
+
     }
 }

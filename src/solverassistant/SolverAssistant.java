@@ -35,7 +35,6 @@ public class SolverAssistant extends Application {
         stage.setTitle("Solver Assistant 0.1");
         stage.setMinWidth(900);
         stage.setMinHeight(600);
-//        stage.setResizable(false);
         stage.show();
     }
 
