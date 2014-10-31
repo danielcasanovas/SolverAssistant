@@ -36,7 +36,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.util.converter.IntegerStringConverter;
+import utils.IntegerStringConverter;
 
 public class FXMLCompareController implements Initializable {
 
