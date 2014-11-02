@@ -38,7 +38,7 @@
         <Label id="statusLabel" fx:id="statusLabel" styleClass="label-statusLabel" textAlignment="CENTER" visible="false" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="70.0" />
         <ImageView fx:id="statusImage" styleClass="image-status" visible="false" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="70.0">
            <image>
-               <Image url="/images/info_mini.png" />
+               <Image url="/images/infoMini.png" />
            </image>
         </ImageView>
     </children>

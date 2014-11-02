@@ -39,7 +39,7 @@
 }
 
 .button-defaultButton:hover{
-    -fx-background-color: BA2074;
+    -fx-background-color: #97587C;
     -fx-opacity: 0.5;
     -fx-text-fill: white;
 }

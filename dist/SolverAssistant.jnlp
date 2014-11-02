@@ -11,7 +11,7 @@
   </resources>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="SolverAssistant.jar" size="76964" download="eager" />
+    <jar href="SolverAssistant.jar" size="76961" download="eager" />
     <jar href="lib/ibatis-common-2.jar" size="84742" download="eager" />
     <jar href="lib/sqlite-jdbc-3.8.7.jar" size="3959324" download="eager" />
   </resources>
