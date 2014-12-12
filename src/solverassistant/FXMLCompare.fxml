@@ -7,54 +7,5 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane styleClass="backgroundColor" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="solverassistant.FXMLCompareController">
-    <children>
-        <AnchorPane prefHeight="270" prefWidth="190.0" styleClass="filterPane" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="40.0">
-            <children>
-                <Label id="filterLabel" fx:id="filterLabel" alignment="CENTER" prefHeight="17.0" prefWidth="150.0" text="Filter" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="10.0" />
-                <TextField id="filterTextField" fx:id="filterTextField" alignment="CENTER" layoutY="20.0" prefWidth="150.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="30.0" />
-                <Label id="filterByLabel" fx:id="filterByLabel" alignment="CENTER" prefHeight="17.0" prefWidth="150.0" text="Filter by:" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="70.0" />
-                <CheckBox id="solverCheckBox" fx:id="solverCheckBox" layoutY="90.0" selected="true" text="Solver" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="100.0" />
-                <CheckBox id="benchmarkCheckBox" fx:id="benchmarkCheckBox" layoutY="110.0" selected="true" text="Benchmark" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="120.0" />
-                <CheckBox id="typeCheckBox" fx:id="typeCheckBox" layoutY="130.0" selected="true" text="Solver type" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="140.0" />
-                <CheckBox id="timeOutCheckBox" fx:id="timeOutCheckBox" layoutY="150.0" selected="true" text="Time out" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="160.0" />
-                <CheckBox id="memoryCheckBox" fx:id="memoryCheckBox" layoutY="170.0" selected="true" text="Memory" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="180.0" />
-                <CheckBox id="coresCheckBox" fx:id="coresCheckBox" layoutY="190.0" selected="true" text="Number of cores" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="200.0" />
-                <CheckBox id="wholeWordCheckBox" fx:id="wholeWordCheckBox" layoutY="190.0" selected="false" text="Whole word" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="220.0" />
-            </children>
-        </AnchorPane>
-        <Button id="reloadButton" fx:id="reloadButton" onAction="#resetAndReloadSolvers" prefHeight="25.0" prefWidth="190.0" styleClass="button-defaultButton" text="Reset and reload data" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="320.0" />
-        <Button id="compareButton" fx:id="compareButton" disable="true" prefHeight="25.0" prefWidth="190.0" styleClass="button-defaultButton" text="Compare" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="20.0" />
-        <VBox spacing="20.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="245.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
-            <children>
-                <TableView id="allSolversTable" fx:id="allSolversTable" VBox.vgrow="ALWAYS">
-                    <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                    </columnResizePolicy>
-                    <columns>
-                        <TableColumn fx:id="colAllSelect" prefWidth="50.0" text="Select" />
-                        <TableColumn fx:id="colAllDelete" prefWidth="50.0" text="Delete" />
-                        <TableColumn fx:id="colAllSolver" prefWidth="75.0" text="Solver" />
-                        <TableColumn fx:id="colAllBenchmark" prefWidth="75.0" text="Benchmark" />
-                        <TableColumn fx:id="colAllSolverType" prefWidth="75.0" text="Solver type" />
-                        <TableColumn fx:id="colAllTimeOut" prefWidth="75.0" text="Time out" />
-                        <TableColumn fx:id="colAllMemory" prefWidth="75.0" text="Memory" />
-                        <TableColumn fx:id="colAllNumberOfCores" prefWidth="75.0" text="Number of cores" />
-                    </columns>
-                </TableView>
-                <TableView id="selectedSolversTable" fx:id="selectedSolversTable" prefHeight="300.0" VBox.vgrow="ALWAYS">
-                    <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                    </columnResizePolicy>
-                    <columns>
-                        <TableColumn fx:id="colSelectedSolver" prefWidth="75.0" text="Solver" />
-                        <TableColumn fx:id="colSelectedBenchmark" prefWidth="75.0" text="Benchmark" />
-                        <TableColumn fx:id="colSelectedSolverType" prefWidth="75.0" text="Solver type" />
-                        <TableColumn fx:id="colSelectedTimeOut" prefWidth="75.0" text="Time out" />
-                        <TableColumn fx:id="colSelectedMemory" prefWidth="75.0" text="Memory" />
-                        <TableColumn fx:id="colSelectedNumberOfCores" prefWidth="75.0" text="Number of cores" />
-                    </columns>
-                </TableView>
-            </children>
-        </VBox>
-    </children>
+    
 </AnchorPane>

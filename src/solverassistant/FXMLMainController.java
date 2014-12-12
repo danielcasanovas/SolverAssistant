@@ -19,7 +19,6 @@ import javafx.scene.control.Tab;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javax.swing.event.ChangeEvent;
-import static solverassistant.SolverManager.solverCharged;
 
 public class FXMLMainController implements Initializable {
 
@@ -30,10 +29,10 @@ public class FXMLMainController implements Initializable {
     private FXMLEditSolverController barTabPageEditController;
 
     @FXML
-    private FXMLCompareController barTabPageCompareController;
+    private FXMLDataBaseController barTabPageDataBaseController;
 
     @FXML
-    private Tab loadTab, editTab, compareTab;
+    private Tab loadTab, editTab, dataBaseTab, compareTab;
 
     @FXML
     private ComboBox<String> comboLanguage;
@@ -59,11 +58,12 @@ public class FXMLMainController implements Initializable {
     public void chargeI18nValues() {
         loadTab.setText(SolverAssistant.messages.getString("LoadLog"));
         editTab.setText(SolverAssistant.messages.getString("EditSolver"));
-        compareTab.setText(SolverAssistant.messages.getString("ManageSolvers"));
+        dataBaseTab.setText(SolverAssistant.messages.getString("DataBase"));
+        compareTab.setText(SolverAssistant.messages.getString("Compare"));
 
         barTabPageLoadController.chargeI18nValues();
         barTabPageEditController.chargeI18nValues();
-        barTabPageCompareController.chargeI18nValues();
+        barTabPageDataBaseController.chargeI18nValues();
     }
 
     // Load the languages combobox

@@ -22,7 +22,12 @@
                         <fx:include fx:id="barTabPageEdit" source="FXMLEditSolver.fxml" />
                     </content>
                 </Tab>
-                <Tab id="compareTab" fx:id="compareTab" closable="false" text="Compare from database">
+                <Tab id="dataBaseTab" fx:id="dataBaseTab" closable="false" text="DataBase">
+                    <content>
+                        <fx:include fx:id="barTabPageDataBase" source="FXMLDataBase.fxml" />
+                    </content>
+                </Tab>
+                 <Tab id="compareTab" fx:id="compareTab" closable="false" disable="false" text="Compare">
                     <content>
                         <fx:include fx:id="barTabPageCompare" source="FXMLCompare.fxml" />
                     </content>
