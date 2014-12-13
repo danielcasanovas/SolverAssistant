@@ -30,6 +30,9 @@ public class FXMLMainController implements Initializable {
 
     @FXML
     private FXMLDataBaseController barTabPageDataBaseController;
+    
+    @FXML
+    private FXMLCompareController barTabPageCompareController;
 
     @FXML
     private Tab loadTab, editTab, dataBaseTab, compareTab;
@@ -64,6 +67,7 @@ public class FXMLMainController implements Initializable {
         barTabPageLoadController.chargeI18nValues();
         barTabPageEditController.chargeI18nValues();
         barTabPageDataBaseController.chargeI18nValues();
+        barTabPageCompareController.chargeI18nValues();
     }
 
     // Load the languages combobox
@@ -90,6 +94,12 @@ public class FXMLMainController implements Initializable {
     public void loadSolver() {
         barTabPageEditController.loadSolver();
         editTab.setDisable(false);
+    }
+    
+    // Enable the compare tab
+    public void compareSolvers() {
+        barTabPageCompareController.generateTable();
+        compareTab.setDisable(false);
     }
 
     // Show status message in the label

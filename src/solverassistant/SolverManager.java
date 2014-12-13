@@ -10,6 +10,7 @@ import database.DAOSolver;
 import utils.Utils;
 import entities.Solver;
 import java.io.IOException;
+import java.util.List;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -18,8 +19,9 @@ public class SolverManager {
 
     private final Scene scene;
     private static FXMLMainController mainController;
-    public static Solver solverCharged = null;
     public static DAOSolver daoSolver = null;
+    public static Solver solverCharged = null;
+    public static List<Solver> solversToCompare = null;
 
     public SolverManager(Scene scene) {
         this.scene = scene;
@@ -31,6 +33,14 @@ public class SolverManager {
         mainController = mainLoader.<FXMLMainController>getController();
     }
 
+    public static void initDB() {
+        daoSolver = new DAOSolver();
+    }
+
+    public static void showStatus(String message) {
+        mainController.showStatus(message);
+    }
+    
     public static void loadSolver(String logName, String log) {
         Solver load = Utils.createSolverFromData(logName, log);
         if (load != null) {
@@ -42,11 +52,8 @@ public class SolverManager {
         }
     }
 
-    public static void initDB() {
-        daoSolver = new DAOSolver();
-    }
-
-    public static void showStatus(String message) {
-        mainController.showStatus(message);
-    }
+     public static void compareSolvers(){
+         mainController.compareSolvers();
+          //showStatus(SolverAssistant.messages.getString("ErrorLoadLog"));
+     }
 }

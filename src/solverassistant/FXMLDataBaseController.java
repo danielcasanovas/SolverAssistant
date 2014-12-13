@@ -387,6 +387,13 @@ public class FXMLDataBaseController implements Initializable {
         SolverManager.showStatus(SolverAssistant.messages.getString("ResetAndReloadInfo"));
     }
 
+      @FXML
+    private void compareAction(ActionEvent event) {
+        SolverManager.solversToCompare = new ArrayList<>();
+        for(SolverProperties solv : selectedData) SolverManager.solversToCompare.add(solv.getSolver());
+        SolverManager.compareSolvers();
+    }
+    
     // -------- Cell Custom Classes 
     public class CheckBoxTableCell<S, T> extends TableCell<S, T> {
 
