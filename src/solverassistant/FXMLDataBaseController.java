@@ -82,7 +82,7 @@ public class FXMLDataBaseController implements Initializable {
     private TableColumn<SolverProperties, Integer> colSelectedNumberOfCores;
 
     @FXML
-    private Label filterLabel, filterByLabel;
+    private Label filterLabel, filterByLabel, benchmarkAdviceLabel;
 
     @FXML
     private TextField filterTextField;
@@ -116,11 +116,7 @@ public class FXMLDataBaseController implements Initializable {
         }
         data = FXCollections.observableArrayList(solversPropierties);
         selectedData.addListener((ListChangeListener.Change<? extends SolverProperties> change) -> {
-            if (selectedData.isEmpty()) {
-                compareButton.setDisable(true);
-            } else {
-                compareButton.setDisable(false);
-            }
+            checkCompareButton();
         });
     }
 
@@ -344,6 +340,23 @@ public class FXMLDataBaseController implements Initializable {
     // Remove from selected solvers list
     public void removeFromSelectedsList(Object obj) {
         selectedData.remove((SolverProperties) obj);
+    }
+
+    // Check if the compare button have to be able or not
+    public void checkCompareButton() {
+        if (selectedData.isEmpty()) {
+            compareButton.setDisable(true); // If there is no solvers selected not
+        } else {
+            compareButton.setDisable(false);
+            benchmarkAdviceLabel.setText("");
+            for (SolverProperties solv : selectedData) {
+                if (!solv.getBenchmark().equals(selectedData.get(0).getBenchmark())) { // Also if there is diferent benchmarks
+                    compareButton.setDisable(true);
+                    benchmarkAdviceLabel.setText(SolverAssistant.messages.getString("IncompatibleBenchmarks"));
+                    break;
+                }
+            }
+        }
     }
 
     // -------- Listeners

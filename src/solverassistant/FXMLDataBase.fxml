@@ -8,7 +8,7 @@
 
 <AnchorPane styleClass="backgroundColor" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="solverassistant.FXMLDataBaseController">
     <children>
-        <AnchorPane prefHeight="270" prefWidth="190.0" styleClass="filterPane" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="40.0">
+        <AnchorPane prefHeight="270" prefWidth="190.0" styleClass="optionsPane" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="40.0">
             <children>
                 <Label id="filterLabel" fx:id="filterLabel" alignment="CENTER" prefHeight="17.0" prefWidth="150.0" text="Filter" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="10.0" />
                 <TextField id="filterTextField" fx:id="filterTextField" alignment="CENTER" layoutY="20.0" prefWidth="150.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="30.0" />
@@ -23,6 +23,7 @@
             </children>
         </AnchorPane>
         <Button id="reloadButton" fx:id="reloadButton" onAction="#resetAndReloadSolvers" prefHeight="25.0" prefWidth="190.0" styleClass="button-defaultButton" text="Reset and reload data" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="320.0" />
+         <Label  id="benchmarkAdviceLabel" fx:id="benchmarkAdviceLabel" prefWidth="190.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="20.0" alignment="CENTER" styleClass="label-errorLabel" />
         <Button id="compareButton" fx:id="compareButton" disable="true" prefHeight="25.0" prefWidth="190.0" styleClass="button-defaultButton" text="Compare" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="20.0" />
         <VBox spacing="20.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="245.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
             <children>
