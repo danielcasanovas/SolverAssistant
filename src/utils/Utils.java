@@ -6,6 +6,8 @@
  */
 package utils;
 
+import database.DAOSolver;
+import entities.CompareSolver;
 import entities.SolverInstance;
 import entities.Solver;
 import java.io.BufferedReader;
@@ -16,10 +18,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
+import solverassistant.SolverManager;
 
 public class Utils {
 
@@ -126,9 +132,85 @@ public class Utils {
                 }
             }
         } catch (Exception e) {
-            System.err.println("[ERROR-INFO] There is incomplete or incorrect instances in the log.");
+            System.err.println("[WARNING-INFO] There is incomplete or incorrect instances in the log.");
         } finally {
             return solverCharged;
         }
+    }
+
+    public static Map<String, CompareSolver> getComparisonData(List<Solver> solvers) {
+
+        loadInstancesLists(solvers); // Charge all instances into solvers from DAO
+        Map<String, CompareSolver> map = new HashMap<>();
+
+        for (Solver solv : solvers) {
+            int instancesCount = 0;
+            double time = 0;
+            int solvedCount = 0;
+            String folder = getFolder(solv.getInstancesList().get(0));
+            for (SolverInstance instance : solv.getInstancesList()) {
+                if (folder.equals(getFolder(instance))) {
+                    instancesCount++;
+                    if (instance.getTimeOut() == 0) {
+                        time += instance.getTime();
+                        solvedCount++;
+                    }
+                } else {
+                    // Save Data
+                    ArrayList<Double> info = new ArrayList<>();
+                    info.add(time);
+                    info.add((double) solvedCount);
+                    System.out.println("+-+: " + solv.getName());
+                    CompareSolver solverToAdd;
+                    if (map.containsKey(folder)) {
+                        solverToAdd = map.get(folder);
+                    } else {
+                        solverToAdd = new CompareSolver(folder);
+                    }
+
+                    solverToAdd.addToHashMap(solv.getName(), info);
+                    solverToAdd.setNumberOfInstances(instancesCount);
+                    map.put(folder, solverToAdd);
+
+                    // Reset Data
+                    folder = getFolder(instance);
+                    instancesCount = 1;
+                    if (instance.getTimeOut() == 0) {
+                        time = instance.getTime();
+                        solvedCount = 1;
+                    } else {
+                        time = 0;
+                        solvedCount = 0;
+                    }
+                }
+            }
+//            System.out.println("Check-----" + map.size());
+//            CompareSolver aux = map.get("bipartite/maxcut-140-630-0.7");
+//            System.out.println("Check------");
+//            System.out.println(aux.getFolder());
+//            for (double d : aux.getMultiMap().get("SAT4J")) {
+//                System.out.println(d + " |");
+//            }
+        }
+        System.out.println("Total folders------" + map.size());
+        CompareSolver aux = map.get("bipartite/maxcut-140-630-0.7");
+        ArrayList<Double> get = aux.getMultiMap().get("Test");
+        System.out.println("Values: " + get.toString());
+        return map;
+    }
+
+    private static void loadInstancesLists(List<Solver> solvers) {
+        for (Solver solv : solvers) {
+            solv.setInstancesList(SolverManager.daoSolver.getAllInstancesBySolver(solv.getId()));
+        }
+    }
+
+    private static String getFolder(SolverInstance instance) {
+        StringTokenizer st;
+        st = new StringTokenizer(instance.getFileName(), "/");
+        for (int i = 1; i <= st.countTokens(); i++) {
+            st.nextToken();
+        }
+        return st.nextToken() + "/" + st.nextToken();
     }
 }

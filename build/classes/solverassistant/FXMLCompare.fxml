@@ -6,14 +6,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane styleClass="backgroundColor" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="solverassistant.FXMLCompareController">
-    <children>
-        <AnchorPane prefHeight="270" prefWidth="190.0" styleClass="optionsPane" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="40.0">
-            <children>
-                <Label id="optionsLabel" fx:id="optionsLabel" alignment="CENTER" prefHeight="17.0" prefWidth="150.0" text="Options" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="10.0" />
-            </children>
-        </AnchorPane>
-        <TableView id="comparisonTable" fx:id="comparisonTable" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="245.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
-        </TableView>
-    </children>
+<AnchorPane id="comparePane" fx:id="comparePane" styleClass="backgroundColor" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="solverassistant.FXMLCompareController">
+   
 </AnchorPane>

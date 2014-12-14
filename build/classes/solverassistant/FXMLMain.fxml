@@ -27,7 +27,7 @@
                         <fx:include fx:id="barTabPageDataBase" source="FXMLDataBase.fxml" />
                     </content>
                 </Tab>
-                 <Tab id="compareTab" fx:id="compareTab" closable="false" disable="false" text="Compare">
+                 <Tab id="compareTab" fx:id="compareTab" closable="false" disable="true" text="Compare">
                     <content>
                         <fx:include fx:id="barTabPageCompare" source="FXMLCompare.fxml" />
                     </content>

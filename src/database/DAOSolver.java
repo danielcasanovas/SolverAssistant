@@ -23,6 +23,7 @@ public class DAOSolver {
     public final static String sqlInsertSolverInstance = "INSERT INTO `SolverInstance` (`Instance`,`Time`,`Optimum`,`Solution`,`Info`,`TimeOut`,`Buggy`,`SegmentationFault`,`Log`,`OutOfMemory`,`NumberOfVariables`,`NumberOfClause`,`NumberOfHardClause`,`NumberOfSoftClause`,`NumberOfUnsatClause`,`NumberOfUnsatClauseWeigth`,`SolverId`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
     public final static String sqlSetSolvers = "UPDATE `Solver` SET `Name`=?,`Benchmark`=?,`Type`=?,`TimeOut`=?,`Memory`=?,`NumberOfCores`=? WHERE SolverId=?;";
     public final static String sqlGetSolvers = "SELECT * FROM `Solver`";
+    public final static String sqlGetSolverIntances = "SELECT * FROM `SolverInstance` WHERE SolverId=?;";
     public final static String sqlDeleteSolvers = "DELETE FROM `Solver` WHERE SolverId=?;";
 
     public DAOSolver() {
@@ -139,8 +140,8 @@ public class DAOSolver {
         }
         databaseManager.closeConnection();
     }
-    
-     public void deleteSolver(Solver solv) {
+
+    public void deleteSolver(Solver solv) {
         PreparedStatement pst = null;
         try {
             databaseManager.openConnection();
@@ -190,5 +191,37 @@ public class DAOSolver {
         }
         databaseManager.closeConnection();
         return solvers;
+    }
+
+    public List<SolverInstance> getAllInstancesBySolver(int id) {
+        List<SolverInstance> solverInstances = new ArrayList<>();
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            databaseManager.openConnection();
+            pst = databaseManager.getStatement(sqlGetSolverIntances);
+            int i = 1;
+            pst.setInt(i++, id);
+            pst.execute();
+            ResultSet res = pst.executeQuery();
+            while (res.next()) {
+                solverInstances.add(new SolverInstance(res.getString(2), res.getDouble(3), res.getBoolean(4), res.getInt(5), res.getInt(6), res.getInt(7), res.getInt(8), res.getInt(9), res.getInt(10), res.getString(11), res.getInt(12), res.getInt(13), res.getInt(14), res.getInt(15), res.getInt(16), res.getInt(17)));
+            }
+        } catch (SQLException e) {
+            System.err.println("[ERROR-INFO (DAO)] - " + e);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pst != null) {
+                    pst.close();
+                }
+            } catch (SQLException ex) {
+                System.err.println("[ERROR-INFO (DAO)] - " + ex);
+            }
+        }
+        databaseManager.closeConnection();
+        return solverInstances;
     }
 }

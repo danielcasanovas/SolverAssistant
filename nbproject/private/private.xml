@@ -5,16 +5,12 @@
         <group>
             <file>file:/D:/WorkSpace/SolverAssistant/src/solverassistant/SolverManager.java</file>
             <file>file:/D:/WorkSpace/SolverAssistant/src/utils/Utils.java</file>
-            <file>file:/D:/WorkSpace/SolverAssistant/src/solverassistant/FXMLLoadLogController.java</file>
-            <file>file:/D:/WorkSpace/SolverAssistant/src/bundles/bundle_en.properties</file>
             <file>file:/D:/WorkSpace/SolverAssistant/src/solverassistant/SolverAssistant.java</file>
-            <file>file:/D:/WorkSpace/SolverAssistant/src/solverassistant/FXMLDataBase.fxml</file>
             <file>file:/D:/WorkSpace/SolverAssistant/src/solverassistant/FXMLMainController.java</file>
-            <file>file:/D:/WorkSpace/SolverAssistant/src/solverassistant/FXMLCompare.fxml</file>
-            <file>file:/D:/WorkSpace/SolverAssistant/src/solverassistant/FXMLDataBaseController.java</file>
+            <file>file:/D:/WorkSpace/SolverAssistant/src/database/DAOSolver.java</file>
+            <file>file:/D:/WorkSpace/SolverAssistant/src/entities/SolverInstance.java</file>
             <file>file:/D:/WorkSpace/SolverAssistant/src/solverassistant/FXMLCompareController.java</file>
-            <file>file:/D:/WorkSpace/SolverAssistant/src/solverassistant/FXMLMain.fxml</file>
-            <file>file:/D:/WorkSpace/SolverAssistant/src/style/style.css</file>
+            <file>file:/D:/WorkSpace/SolverAssistant/src/entities/CompareSolver.java</file>
         </group>
     </open-files>
 </project-private>
