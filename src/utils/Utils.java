@@ -149,6 +149,8 @@ public class Utils {
             int solvedCount = 0;
             String folder = getFolder(solv.getInstancesList().get(0));
             for (SolverInstance instance : solv.getInstancesList()) {
+                System.out.println(instance.getFileName());
+                System.out.println("HOHO:" + getFolder(instance));
                 if (folder.equals(getFolder(instance))) {
                     instancesCount++;
                     if (instance.getTimeOut() == 0) {
@@ -160,7 +162,6 @@ public class Utils {
                     ArrayList<Double> info = new ArrayList<>();
                     info.add(time);
                     info.add((double) solvedCount);
-                    System.out.println("+-+: " + solv.getName());
                     CompareSolver solverToAdd;
                     if (map.containsKey(folder)) {
                         solverToAdd = map.get(folder);
@@ -184,6 +185,21 @@ public class Utils {
                     }
                 }
             }
+            // Save Last Data
+            ArrayList<Double> info = new ArrayList<>();
+            info.add(time);
+            info.add((double) solvedCount);
+            CompareSolver solverToAdd;
+            if (map.containsKey(folder)) {
+                solverToAdd = map.get(folder);
+            } else {
+                solverToAdd = new CompareSolver(folder);
+            }
+
+            solverToAdd.addToHashMap(solv.getName(), info);
+            solverToAdd.setNumberOfInstances(instancesCount);
+            map.put(folder, solverToAdd);
+
 //            System.out.println("Check-----" + map.size());
 //            CompareSolver aux = map.get("bipartite/maxcut-140-630-0.7");
 //            System.out.println("Check------");
@@ -192,10 +208,10 @@ public class Utils {
 //                System.out.println(d + " |");
 //            }
         }
-        System.out.println("Total folders------" + map.size());
-        CompareSolver aux = map.get("bipartite/maxcut-140-630-0.7");
-        ArrayList<Double> get = aux.getMultiMap().get("Test");
-        System.out.println("Values: " + get.toString());
+//        System.out.println("Total folders------" + map.size());
+//        CompareSolver aux = map.get("bipartite/maxcut-140-630-0.7");
+//        ArrayList<Double> get = aux.getMultiMap().get("Test");
+//        System.out.println("Values: " + get.toString());
         return map;
     }
 
