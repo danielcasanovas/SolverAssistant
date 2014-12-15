@@ -6,6 +6,21 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="comparePane" fx:id="comparePane" styleClass="backgroundColor" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="solverassistant.FXMLCompareController">
-   
+<AnchorPane styleClass="backgroundColor" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="solverassistant.FXMLCompareController">
+    <AnchorPane prefHeight="270" prefWidth="190.0" styleClass="optionsPane" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="40.0">
+        <children>
+            <Label id="operationsLabel" fx:id="operationsLabel" alignment="CENTER" prefHeight="17.0" prefWidth="150.0" text="Operations" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="10.0" />
+        </children>
+    </AnchorPane>
+    <HBox alignment="CENTER" AnchorPane.topAnchor="40.0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="250.0">   
+        <ScrollPane  HBox.hgrow="ALWAYS">
+            <content>
+                <HBox alignment="CENTER" fx:id="compareContainer">
+                    <children>
+                
+                    </children>
+                </HBox>
+            </content>
+        </ScrollPane>
+    </HBox>
 </AnchorPane>

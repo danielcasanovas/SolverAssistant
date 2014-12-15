@@ -150,7 +150,7 @@ public class Utils {
             for (SolverInstance instance : solv.getInstancesList()) {
                 if (folder.equals(getFolder(instance))) { // While we don't change the folder increment counters
                     instancesCount++;
-                    if (instance.getTimeOut() == 0 && instance.getBuggy() == 0 && instance.getSegmentationFault() == 0 && instance.getOutOfMemory() == 0) { // If the instance is solved save the time and increment de count
+                    if (isSolved(instance)) { // If the instance is solved save the time and increment de count
                         time += instance.getTime();
                         solvedCount++;
                     }
@@ -169,7 +169,6 @@ public class Utils {
                     solverToAdd.addToHashMap(solv.getName(), info);
                     solverToAdd.setNumberOfInstances(instancesCount);
                     map.put(folder, solverToAdd);
-                    System.out.println(map.keySet());
 
                     // Reset Data
                     folder = getFolder(instance);
@@ -214,5 +213,9 @@ public class Utils {
             st.nextToken();
         }
         return st.nextToken() + "/" + st.nextToken();
+    }
+
+    private static boolean isSolved(SolverInstance instance) {
+        return instance.getTimeOut() == 0 && instance.getBuggy() == 0 && instance.getSegmentationFault() == 0 && instance.getOutOfMemory() == 0;
     }
 }
