@@ -1,3 +1,9 @@
+/*
+ * TFG: Daniel Casanovas Gayoso 
+ * Grau en Enginyeria Informàtica - Escola Politècnica Superior de Lleida
+ * 2014/2015
+ * CompareSolver entity
+ */
 package entities;
 
 import java.util.ArrayList;

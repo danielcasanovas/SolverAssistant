@@ -30,7 +30,7 @@ public class FXMLMainController implements Initializable {
 
     @FXML
     private FXMLDataBaseController barTabPageDataBaseController;
-    
+
     @FXML
     private FXMLCompareController barTabPageCompareController;
 
@@ -95,10 +95,10 @@ public class FXMLMainController implements Initializable {
         barTabPageEditController.loadSolver();
         editTab.setDisable(false);
     }
-    
+
     // Enable the compare tab
-    public void compareSolvers() {
-        barTabPageCompareController.generateTable();
+    public void compareSolvers(boolean option) {
+        barTabPageCompareController.generateTable(option);
         compareTab.setDisable(false);
     }
 

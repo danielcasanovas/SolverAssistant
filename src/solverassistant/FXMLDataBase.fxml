@@ -23,7 +23,8 @@
             </children>
         </AnchorPane>
         <Button id="reloadButton" fx:id="reloadButton" onAction="#resetAndReloadSolvers" prefHeight="25.0" prefWidth="190.0" styleClass="button-defaultButton" text="Reset and reload data" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="320.0" />
-         <Label id="benchmarkAdviceLabel" fx:id="benchmarkAdviceLabel" alignment="CENTER" prefWidth="190.0" styleClass="label-errorLabel" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="20.0" />
+        <Label id="benchmarkAdviceLabel" fx:id="benchmarkAdviceLabel" alignment="CENTER" prefWidth="190.0" styleClass="label-errorLabel" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="20.0" />
+        <ComboBox id="operationChoiceBox" fx:id="operationChoiceBox" disable="true" prefHeight="25.0" prefWidth="190.0" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="20.0" />
         <Button id="compareButton" fx:id="compareButton" disable="true" onAction="#compareAction" prefHeight="25.0" prefWidth="190.0" styleClass="button-defaultButton" text="Compare" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="20.0" />
         <VBox spacing="20.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="245.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
             <children>

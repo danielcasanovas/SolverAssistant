@@ -97,3 +97,6 @@
     -fx-background-repeat: no-repeat;
     -fx-background-position: 130 3.5;
 }
+.label-headerCompareTable{
+    -fx-background-color: red;
+}

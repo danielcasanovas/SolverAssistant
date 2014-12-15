@@ -6,7 +6,6 @@
  */
 package utils;
 
-import database.DAOSolver;
 import entities.CompareSolver;
 import entities.SolverInstance;
 import entities.Solver;
@@ -21,7 +20,7 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -141,7 +140,7 @@ public class Utils {
     public static Map<String, CompareSolver> getComparisonData(List<Solver> solvers) {
 
         loadInstancesLists(solvers); // Charge all instances into solvers from DAO
-        Map<String, CompareSolver> map = new HashMap<>();
+        Map<String, CompareSolver> map = new LinkedHashMap<>();
 
         for (Solver solv : solvers) {
             int instancesCount = 0;
@@ -149,15 +148,13 @@ public class Utils {
             int solvedCount = 0;
             String folder = getFolder(solv.getInstancesList().get(0));
             for (SolverInstance instance : solv.getInstancesList()) {
-                System.out.println(instance.getFileName());
-                System.out.println("HOHO:" + getFolder(instance));
-                if (folder.equals(getFolder(instance))) {
+                if (folder.equals(getFolder(instance))) { // While we don't change the folder increment counters
                     instancesCount++;
-                    if (instance.getTimeOut() == 0) {
+                    if (instance.getTimeOut() == 0 && instance.getBuggy() == 0 && instance.getSegmentationFault() == 0 && instance.getOutOfMemory() == 0) { // If the instance is solved save the time and increment de count
                         time += instance.getTime();
                         solvedCount++;
                     }
-                } else {
+                } else { // If not save the data and reset the counters
                     // Save Data
                     ArrayList<Double> info = new ArrayList<>();
                     info.add(time);
@@ -172,6 +169,7 @@ public class Utils {
                     solverToAdd.addToHashMap(solv.getName(), info);
                     solverToAdd.setNumberOfInstances(instancesCount);
                     map.put(folder, solverToAdd);
+                    System.out.println(map.keySet());
 
                     // Reset Data
                     folder = getFolder(instance);
@@ -199,19 +197,7 @@ public class Utils {
             solverToAdd.addToHashMap(solv.getName(), info);
             solverToAdd.setNumberOfInstances(instancesCount);
             map.put(folder, solverToAdd);
-
-//            System.out.println("Check-----" + map.size());
-//            CompareSolver aux = map.get("bipartite/maxcut-140-630-0.7");
-//            System.out.println("Check------");
-//            System.out.println(aux.getFolder());
-//            for (double d : aux.getMultiMap().get("SAT4J")) {
-//                System.out.println(d + " |");
-//            }
         }
-//        System.out.println("Total folders------" + map.size());
-//        CompareSolver aux = map.get("bipartite/maxcut-140-630-0.7");
-//        ArrayList<Double> get = aux.getMultiMap().get("Test");
-//        System.out.println("Values: " + get.toString());
         return map;
     }
 

@@ -24,6 +24,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -93,6 +94,9 @@ public class FXMLDataBaseController implements Initializable {
     @FXML
     private CheckBox wholeWordCheckBox, solverCheckBox, benchmarkCheckBox, typeCheckBox, memoryCheckBox, timeOutCheckBox, coresCheckBox;
 
+    @FXML
+    private ComboBox<String> operationChoiceBox;
+
     private ObservableList<SolverProperties> data; // All solvers without the instances from db to put in first table
     private ObservableList<SolverProperties> filteredData; // Solvers filetered
     private ObservableList<SolverProperties> selectedData; // Solvers selected
@@ -105,6 +109,7 @@ public class FXMLDataBaseController implements Initializable {
         loadSolversFromDB();
         bindDataToTable(data, false);
         chargeI18nValues();
+        chargeOrReloadChoiceBox();
     }
 
     // Get all solvers from database
@@ -156,6 +161,7 @@ public class FXMLDataBaseController implements Initializable {
 
         allSolversTable.setPlaceholder(new Label(SolverAssistant.messages.getString("EmptyTableDataBaseSolvers")));
         selectedSolversTable.setPlaceholder(new Label(SolverAssistant.messages.getString("EmptyTableSelectedSolvers")));
+        chargeOrReloadChoiceBox();
     }
 
     // Config the UI components
@@ -346,17 +352,28 @@ public class FXMLDataBaseController implements Initializable {
     public void checkCompareButton() {
         if (selectedData.isEmpty()) {
             compareButton.setDisable(true); // If there is no solvers selected not
+            operationChoiceBox.setDisable(true);
         } else {
             compareButton.setDisable(false);
+            operationChoiceBox.setDisable(false);
             benchmarkAdviceLabel.setText("");
             for (SolverProperties solv : selectedData) {
                 if (!solv.getBenchmark().equals(selectedData.get(0).getBenchmark())) { // Also if there is diferent benchmarks
                     compareButton.setDisable(true);
+                    operationChoiceBox.setDisable(true);
                     benchmarkAdviceLabel.setText(SolverAssistant.messages.getString("IncompatibleBenchmarks"));
                     break;
                 }
             }
         }
+    }
+
+    // Load the operations choiceBox
+    private void chargeOrReloadChoiceBox() {
+        operationChoiceBox.getItems().clear();
+        operationChoiceBox.getItems().add(SolverAssistant.messages.getString("Mean"));
+        operationChoiceBox.getItems().add(SolverAssistant.messages.getString("Median"));
+        operationChoiceBox.getSelectionModel().select(0);
     }
 
     // -------- Listeners
@@ -387,13 +404,19 @@ public class FXMLDataBaseController implements Initializable {
         SolverManager.showStatus(SolverAssistant.messages.getString("ResetAndReloadInfo"));
     }
 
-      @FXML
+    @FXML
     private void compareAction(ActionEvent event) {
         SolverManager.solversToCompare = new ArrayList<>();
-        for(SolverProperties solv : selectedData) SolverManager.solversToCompare.add(solv.getSolver());
-        SolverManager.compareSolvers();
+        for (SolverProperties solv : selectedData) {
+            SolverManager.solversToCompare.add(solv.getSolver());
+        }
+        if (operationChoiceBox.getSelectionModel().getSelectedItem().equals(SolverAssistant.messages.getString("Mean"))) {
+            SolverManager.compareSolvers(true);
+        } else {
+            SolverManager.compareSolvers(false);
+        }
     }
-    
+
     // -------- Cell Custom Classes 
     public class CheckBoxTableCell<S, T> extends TableCell<S, T> {
 
@@ -447,7 +470,7 @@ public class FXMLDataBaseController implements Initializable {
 
         ButtonCell() {
 
-            cellButton.getStyleClass().add("button-deleteButton");
+            cellButton.getStyleClass().add("button-deleteButton"); // TODO CHECK
 
             // Action when the button is pressed
             cellButton.setOnAction((ActionEvent t) -> {

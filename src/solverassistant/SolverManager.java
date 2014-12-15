@@ -40,7 +40,7 @@ public class SolverManager {
     public static void showStatus(String message) {
         mainController.showStatus(message);
     }
-    
+
     public static void loadSolver(String logName, String log) {
         Solver load = Utils.createSolverFromData(logName, log);
         if (load != null) {
@@ -52,8 +52,8 @@ public class SolverManager {
         }
     }
 
-     public static void compareSolvers(){
-         mainController.compareSolvers();
-          //showStatus(SolverAssistant.messages.getString("ErrorLoadLog"));
-     }
+    public static void compareSolvers(Boolean option) {
+        mainController.compareSolvers(option);
+        //showStatus(SolverAssistant.messages.getString("ErrorLoadLog"));
+    }
 }
