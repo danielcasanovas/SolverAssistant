@@ -34,7 +34,7 @@ public class FXMLCompareController implements Initializable {
 
     @FXML
     private Label operationsLabel;
-    
+
     private GridPane gridPane;
 
     /**
@@ -80,26 +80,29 @@ public class FXMLCompareController implements Initializable {
         // DATA
         for (String folderValue : rawResults.keySet()) {
 
+            // FOLDER NAMES
             gridPane.add(new Label(folderValue), column, row);
             column++;
 
             CompareSolver solverCompared = rawResults.get(folderValue);
             totalInstances += solverCompared.getNumberOfInstances();
 
+            // NUMBER OF INSTANCES
             gridPane.add(new Label(String.valueOf(solverCompared.getNumberOfInstances())), column, row);
             column++;
 
+            // VALUES
             for (String solverValue : solverCompared.getMultiMap().keySet()) {
                 ArrayList<Double> data = solverCompared.getMultiMap().get(solverValue);
                 String result = "";
                 if (option) {
-                    result += isNaN(data.get(0) / data.get(1)) ? "0" : String.format("%.2f", (data.get(0) / data.get(1)));
-                } else; // TODO 
-                result += " (" + data.get(1).intValue() + ")";
+                    result += isNaN(data.get(1)) ? "0" : String.format("%.2f", data.get(1));
+                } else  result += isNaN(data.get(2)) ? "0" : String.format("%.2f", data.get(2));
+                result += " (" + data.get(0).intValue() + ")";
                 if (totalSolvedInTime.containsKey(solverValue)) {
-                    totalSolvedInTime.put(solverValue, (totalSolvedInTime.get(solverValue) + data.get(1).intValue()));
+                    totalSolvedInTime.put(solverValue, (totalSolvedInTime.get(solverValue) + data.get(0).intValue()));
                 } else {
-                    totalSolvedInTime.put(solverValue, data.get(1).intValue());
+                    totalSolvedInTime.put(solverValue, data.get(0).intValue());
                 }
 
                 gridPane.add(new Label(result), column, row);

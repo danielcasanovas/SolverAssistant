@@ -91,6 +91,7 @@ public class Utils {
             return null;
         }
         try {
+            System.out.println("Check" + log);
             StringTokenizer st = new StringTokenizer(log, "\t");
             SolverInstance instance = null;
             boolean firstElement = true;
@@ -106,7 +107,12 @@ public class Utils {
                 } else {
                     instance.setOptimum(false);
                 }
-                instance.setSolution(Integer.parseInt(st.nextToken()));
+                String solution = st.nextToken();
+                if (solution.equals("UNKNOW")) { // UNKNOW es -1
+                    instance.setSolution(-1);
+                } else {
+                    instance.setSolution(Integer.parseInt(solution));
+                }
                 instance.setInfo(Integer.parseInt(st.nextToken()));
                 instance.setTimeOut(Integer.parseInt(st.nextToken()));
                 instance.setBuggy(Integer.parseInt(st.nextToken()));
@@ -121,7 +127,11 @@ public class Utils {
 
                 String unSatClauseWeigthString = st.nextToken();
                 int limit = unSatClauseWeigthString.indexOf("/", 0);
-                instance.setUnsatClauseWeigth(Integer.parseInt(unSatClauseWeigthString.substring(0, limit)));
+                if (limit != -1) {
+                    instance.setUnsatClauseWeigth(Integer.parseInt(unSatClauseWeigthString.substring(0, limit)));
+                } else {
+                    instance.setUnsatClauseWeigth(Integer.parseInt(unSatClauseWeigthString));
+                }
 
                 solverCharged.addInstanceToList(instance);
 
@@ -144,21 +154,21 @@ public class Utils {
 
         for (Solver solv : solvers) {
             int instancesCount = 0;
-            double time = 0;
-            int solvedCount = 0;
+            List<Double> timeValues = new ArrayList<Double>();
             String folder = getFolder(solv.getInstancesList().get(0));
             for (SolverInstance instance : solv.getInstancesList()) {
                 if (folder.equals(getFolder(instance))) { // While we don't change the folder increment counters
-                    instancesCount++;
-                    if (isSolved(instance)) { // If the instance is solved save the time and increment de count
-                        time += instance.getTime();
-                        solvedCount++;
+                    instancesCount++; // Increment instances count
+                    if (isSolved(instance)) { // If the instance is solved save the time and increment de solved count
+                        timeValues.add(instance.getTime());
                     }
                 } else { // If not save the data and reset the counters
                     // Save Data
-                    ArrayList<Double> info = new ArrayList<>();
-                    info.add(time);
-                    info.add((double) solvedCount);
+                    ArrayList<Double> info = new ArrayList<>(); // Object 0 is the number of solved instances, 1 the mean , 2 the median
+                    info.add((double) timeValues.size());
+                    info.add(mean(timeValues));
+                    info.add(median(timeValues));
+
                     CompareSolver solverToAdd;
                     if (map.containsKey(folder)) {
                         solverToAdd = map.get(folder);
@@ -166,26 +176,25 @@ public class Utils {
                         solverToAdd = new CompareSolver(folder);
                     }
 
-                    solverToAdd.addToHashMap(solv.getName(), info);
+                    solverToAdd.addToHashMap(solv.getName(), info); // Add to CompareSolver object hashmap the data with the solver name as key
                     solverToAdd.setNumberOfInstances(instancesCount);
-                    map.put(folder, solverToAdd);
+
+                    map.put(folder, solverToAdd); // Add to the map to return this object with the folder as key
 
                     // Reset Data
                     folder = getFolder(instance);
                     instancesCount = 1;
+                    timeValues = new ArrayList<>();
                     if (instance.getTimeOut() == 0) {
-                        time = instance.getTime();
-                        solvedCount = 1;
-                    } else {
-                        time = 0;
-                        solvedCount = 0;
+                        timeValues.add(instance.getTime());
                     }
                 }
             }
             // Save Last Data
             ArrayList<Double> info = new ArrayList<>();
-            info.add(time);
-            info.add((double) solvedCount);
+            info.add((double) timeValues.size());
+            info.add(mean(timeValues));
+            info.add(median(timeValues));
             CompareSolver solverToAdd;
             if (map.containsKey(folder)) {
                 solverToAdd = map.get(folder);
@@ -195,6 +204,7 @@ public class Utils {
 
             solverToAdd.addToHashMap(solv.getName(), info);
             solverToAdd.setNumberOfInstances(instancesCount);
+
             map.put(folder, solverToAdd);
         }
         return map;
@@ -216,6 +226,35 @@ public class Utils {
     }
 
     private static boolean isSolved(SolverInstance instance) {
-        return instance.getTimeOut() == 0 && instance.getBuggy() == 0 && instance.getSegmentationFault() == 0 && instance.getOutOfMemory() == 0;
+        if (instance.getTimeOut() != 0 && instance.getBuggy() != 0 && instance.getSegmentationFault() != 0 && instance.getOutOfMemory() != 0) {
+            return false;
+        }
+//        if (instance.getSolution() != -1) {
+//            return false;
+//        }
+        // TODO condicions restants
+        //  - solution != -1
+        //  - solution == UNKNOWN
+        //  - si (optimum != -1) llavors solution ha de ser OPTIMUM_FOUND, UNSAT o INCOMPLETE
+        //  - si (optimum == -1) llavors solution ha de ser UNSAT
+        return true;
+    }
+
+    private static Double mean(List<Double> values) {
+        double total = 0;
+        for (double d : values) {
+            total += d;
+        }
+        return total / values.size();
+    }
+
+    private static Double median(List<Double> values) {
+        Collections.sort(values);
+        int middle = values.size() / 2;
+        if (values.size() % 2 == 1) {
+            return values.get(middle);
+        } else {
+            return (values.get(middle - 1) + values.get(middle)) / 2.0;
+        }
     }
 }
