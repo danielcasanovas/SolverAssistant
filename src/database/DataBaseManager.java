@@ -6,11 +6,6 @@
  */
 package database;
 
-import com.ibatis.common.jdbc.ScriptRunner;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -23,6 +18,39 @@ public class DataBaseManager {
     private final int timeout = 30;
     private Connection conn = null;
     private PreparedStatement statement = null;
+
+    private final String creationTableSolverSQL = "CREATE TABLE IF NOT EXISTS `Solver` ("
+            + "  `SolverId` INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + "  `Name` TEXT DEFAULT NULL,"
+            + "  `Benchmark` TEXT DEFAULT NULL,"
+            + "  `Type` TEXT DEFAULT NULL,"
+            + "  `TimeOut` INTEGER DEFAULT NULL,"
+            + "  `Memory` INTEGER DEFAULT NULL,"
+            + "  `NumberOfCores` INTEGER DEFAULT NULL"
+            + ");";
+
+    private final String creationTableSolverInstanceSQL = " CREATE TABLE IF NOT EXISTS `SolverInstance` ("
+            + "  `SolverInstanceId` INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + "  `Instance` TEXT DEFAULT NULL,"
+            + "  `Time` NUMERIC DEFAULT NULL,"
+            + "  `Optimum` NUMERIC DEFAULT NULL,"
+            + "  `Solution` INTEGER DEFAULT NULL,"
+            + "  `Info` INTEGER DEFAULT NULL,"
+            + "  `TimeOut` INTEGER DEFAULT NULL,"
+            + "  `Buggy` INTEGER DEFAULT NULL,"
+            + "  `SegmentationFault` INTEGER DEFAULT NULL,"
+            + "  `Log` TEXT DEFAULT NULL,"
+            + "  `OutOfMemory` INTEGER DEFAULT NULL,"
+            + "  `NumberOfVariables` INTEGER DEFAULT NULL,"
+            + "  `NumberOfClause` INTEGER DEFAULT NULL,"
+            + "  `NumberOfHardClause` INTEGER DEFAULT NULL,"
+            + "  `NumberOfSoftClause` INTEGER DEFAULT NULL,"
+            + "  `NumberOfUnsatClause` INTEGER DEFAULT NULL,"
+            + "  `NumberOfUnsatClauseWeigth` INTEGER DEFAULT NULL,"
+            + "  `SolverId` INTEGER REFERENCES `Solver`(`SolverId`)"
+            + "    ON DELETE CASCADE"
+            + "    ON UPDATE CASCADE"
+            + ");";
 
     // To use, use empty constructor and after call init function with the db name or use the second constructor with the db name
     // After that execute executeUp or executeQr
@@ -69,25 +97,24 @@ public class DataBaseManager {
         }
     }
 
-    private void runInitialScript() {
-        String aSQLScriptFilePath = "src\\utils\\CreationDataBase.sql";
-        openConnection();
-
+    public void runInitialScript() {
+        PreparedStatement pst = null;
         try {
-            // Initialize object for ScripRunner
-            ScriptRunner sr = new ScriptRunner(conn, false, false);
-
-            // Give the input file to Reader
-            Reader reader = new BufferedReader(new FileReader(aSQLScriptFilePath));
-
-            // Exctute script
-            sr.runScript(reader);
-
-            System.out.println("[INFO (DB Manager)] Initial script executed");
-
-        } catch (IOException | SQLException e) {
-            System.err.println("[ERROR-INFO (DB Manager)] Failed to Execute " + aSQLScriptFilePath + ". Message: " + e.getMessage());
+            openConnection();
+            pst = getStatement(creationTableSolverSQL);
+            pst.executeUpdate();
+            pst = getStatement(creationTableSolverInstanceSQL);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("[ERROR-INFO (Initial Script)] - " + e);
         } finally {
+            try {
+                if (pst != null) {
+                    pst.close();
+                }
+            } catch (SQLException ex) {
+                System.err.println("[ERROR-INFO (Initial Script)] - " + ex);
+            }
             closeConnection();
         }
     }

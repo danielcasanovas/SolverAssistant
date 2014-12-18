@@ -91,7 +91,6 @@ public class Utils {
             return null;
         }
         try {
-            System.out.println("Check" + log);
             StringTokenizer st = new StringTokenizer(log, "\t");
             SolverInstance instance = null;
             boolean firstElement = true;
