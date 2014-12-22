@@ -73,12 +73,8 @@ public class DAOSolver {
                     i = 1;
                     pst.setString(i++, instance.getFileName());
                     pst.setDouble(i++, instance.getTime());
-                    if (instance.isOptimum()) {
-                        pst.setInt(i++, 1);
-                    } else {
-                        pst.setInt(i++, 0);
-                    }
-                    pst.setInt(i++, instance.getSolution());
+                    pst.setInt(i++, instance.getOptimum());
+                    pst.setString(i++, instance.getSolution());
                     pst.setInt(i++, instance.getInfo());
                     pst.setInt(i++, instance.getTimeOut());
                     pst.setInt(i++, instance.getBuggy());
@@ -205,7 +201,7 @@ public class DAOSolver {
             pst.execute();
             ResultSet res = pst.executeQuery();
             while (res.next()) {
-                solverInstances.add(new SolverInstance(res.getString(2), res.getDouble(3), res.getBoolean(4), res.getInt(5), res.getInt(6), res.getInt(7), res.getInt(8), res.getInt(9), res.getInt(10), res.getString(11), res.getInt(12), res.getInt(13), res.getInt(14), res.getInt(15), res.getInt(16), res.getInt(17)));
+                solverInstances.add(new SolverInstance(res.getString(2), res.getDouble(3), res.getInt(4), res.getString(5), res.getInt(6), res.getInt(7), res.getInt(8), res.getInt(9), res.getInt(10), res.getString(11), res.getInt(12), res.getInt(13), res.getInt(14), res.getInt(15), res.getInt(16), res.getInt(17)));
             }
         } catch (SQLException e) {
             System.err.println("[ERROR-INFO (DAO)] - " + e);

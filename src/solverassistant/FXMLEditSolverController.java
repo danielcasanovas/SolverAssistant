@@ -37,10 +37,10 @@ public class FXMLEditSolverController implements Initializable {
     private TableColumn<SolverInstance, Double> colTime;
 
     @FXML
-    private TableColumn<SolverInstance, Boolean> colOptimal;
+    private TableColumn<SolverInstance, Integer> colOptimal;
 
     @FXML
-    private TableColumn<SolverInstance, Integer> colSolution;
+    private TableColumn<SolverInstance, String> colSolution;
 
     @FXML
     private TableColumn<SolverInstance, Integer> colInfo;
@@ -114,8 +114,8 @@ public class FXMLEditSolverController implements Initializable {
 
         colInstance.setText(SolverAssistant.messages.getString("Instance"));
         colTime.setText(SolverAssistant.messages.getString("Time"));
-        colOptimal.setText(SolverAssistant.messages.getString("Optimal"));
         colSolution.setText(SolverAssistant.messages.getString("Solution"));
+        colOptimal.setText(SolverAssistant.messages.getString("Optimal"));
         colInfo.setText(SolverAssistant.messages.getString("Info"));
         colTimeOut.setText(SolverAssistant.messages.getString("TimeOut"));
         colBuggy.setText(SolverAssistant.messages.getString("Buggy"));

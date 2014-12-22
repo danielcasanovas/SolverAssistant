@@ -34,7 +34,7 @@ public class DataBaseManager {
             + "  `Instance` TEXT DEFAULT NULL,"
             + "  `Time` NUMERIC DEFAULT NULL,"
             + "  `Optimum` NUMERIC DEFAULT NULL,"
-            + "  `Solution` INTEGER DEFAULT NULL,"
+            + "  `Solution` TEXT DEFAULT NULL,"
             + "  `Info` INTEGER DEFAULT NULL,"
             + "  `TimeOut` INTEGER DEFAULT NULL,"
             + "  `Buggy` INTEGER DEFAULT NULL,"

@@ -33,16 +33,16 @@ public class SolverInstanceProperties {
             solverInstance.setTime(time);
         }
     };
-    private BooleanProperty optimum = new SimpleBooleanProperty() {
+    private IntegerProperty optimum = new SimpleIntegerProperty() {
         @Override
-        public void set(boolean optimum) {
+        public void set(int optimum) {
             super.set(optimum);
             solverInstance.setOptimum(optimum);
         }
     };
-    private IntegerProperty solution = new SimpleIntegerProperty() {
+    private StringProperty solution = new SimpleStringProperty() {
         @Override
-        public void set(int solution) {
+        public void set(String solution) {
             super.set(solution);
             solverInstance.setSolution(solution);
         }
@@ -142,7 +142,7 @@ public class SolverInstanceProperties {
             this.solverInstance = solverInstance;
             getFileNameProperty().set(solverInstance.getFileName());
             getTimeProperty().set(solverInstance.getTime());
-            getOptimumProperty().set(solverInstance.isOptimum());
+            getOptimumProperty().set(solverInstance.getOptimum());
             getSolutionProperty().set(solverInstance.getSolution());
             getInfoProperty().set(solverInstance.getInfo());
             getTimeOutProperty().set(solverInstance.getTimeOut());
@@ -182,19 +182,19 @@ public class SolverInstanceProperties {
         return time.getValue();
     }
 
-    public BooleanProperty getOptimumProperty() {
+    public IntegerProperty getOptimumProperty() {
         return optimum;
     }
 
-    public boolean getOptimum() {
+    public int getOptimum() {
         return optimum.getValue();
     }
 
-    public IntegerProperty getSolutionProperty() {
+    public StringProperty getSolutionProperty() {
         return solution;
     }
 
-    public int getSolution() {
+    public String getSolution() {
         return solution.getValue();
     }
 

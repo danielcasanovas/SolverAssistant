@@ -101,17 +101,8 @@ public class Utils {
                     firstElement = false;
                 }
                 instance.setTime(Double.parseDouble(st.nextToken()));
-                if (st.nextToken().equals("OPTIMUM_FOUND")) {
-                    instance.setOptimum(true);
-                } else {
-                    instance.setOptimum(false);
-                }
-                String solution = st.nextToken();
-                if (solution.equals("UNKNOW")) { // UNKNOW es -1
-                    instance.setSolution(-1);
-                } else {
-                    instance.setSolution(Integer.parseInt(solution));
-                }
+                instance.setSolution(st.nextToken());
+                instance.setOptimum(Integer.parseInt(st.nextToken()));
                 instance.setInfo(Integer.parseInt(st.nextToken()));
                 instance.setTimeOut(Integer.parseInt(st.nextToken()));
                 instance.setBuggy(Integer.parseInt(st.nextToken()));
@@ -228,32 +219,52 @@ public class Utils {
         if (instance.getTimeOut() != 0 && instance.getBuggy() != 0 && instance.getSegmentationFault() != 0 && instance.getOutOfMemory() != 0) {
             return false;
         }
-//        if (instance.getSolution() != -1) {
-//            return false;
-//        }
-        // TODO condicions restants
-        //  - solution != -1
-        //  - solution == UNKNOWN
-        //  - si (optimum != -1) llavors solution ha de ser OPTIMUM_FOUND, UNSAT o INCOMPLETE
-        //  - si (optimum == -1) llavors solution ha de ser UNSAT
+        try {
+            if (Integer.parseInt(instance.getSolution()) != -1) {
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            System.err.println("[WARNING-INFO] Solution is not a Number.");
+        }
+        if (instance.getSolution().equals("UNKNOW")) {
+            return false;
+        }
+        if (instance.getOptimum() != -1) {
+            if (!(instance.getSolution().equals("OPTIMUM_FOUND") || instance.getSolution().equals("UNSAT") || instance.getSolution().equals("INCOMPLETE"))) {
+                return false;
+            }
+        }
+        if (instance.getOptimum() == -1) {
+            if (!instance.getSolution().equals("UNSAT")) {
+                return false;
+            }
+        }
         return true;
     }
 
     private static Double mean(List<Double> values) {
-        double total = 0;
-        for (double d : values) {
-            total += d;
+        if (values.isEmpty()) {
+            return 0.0;
+        } else {
+            double total = 0;
+            for (double d : values) {
+                total += d;
+            }
+            return total / values.size();
         }
-        return total / values.size();
     }
 
     private static Double median(List<Double> values) {
-        Collections.sort(values);
-        int middle = values.size() / 2;
-        if (values.size() % 2 == 1) {
-            return values.get(middle);
+        if (values.isEmpty()) {
+            return 0.0;
         } else {
-            return (values.get(middle - 1) + values.get(middle)) / 2.0;
+            Collections.sort(values);
+            int middle = values.size() / 2;
+            if (values.size() % 2 == 1) {
+                return values.get(middle);
+            } else {
+                return (values.get(middle - 1) + values.get(middle)) / 2.0;
+            }
         }
     }
 }

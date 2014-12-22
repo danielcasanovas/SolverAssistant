@@ -10,8 +10,8 @@ public class SolverInstance {
 
     private String fileName;
     private double time;
-    private boolean optimum;
-    private int solution;
+    private int optimum;
+    private String solution;
     private int info;
     private int timeOut;
     private int buggy;
@@ -28,8 +28,8 @@ public class SolverInstance {
     public SolverInstance() {
         this.fileName = "";
         this.time = 0;
-        this.optimum = false;
-        this.solution = 0;
+        this.optimum = 0;
+        this.solution = "";
         this.info = 0;
         this.timeOut = 0;
         this.buggy = 0;
@@ -44,7 +44,7 @@ public class SolverInstance {
         this.unsatClauseWeigth = 0;
     }
 
-    public SolverInstance(String fileName, double time, boolean optimum, int solution, int info, int timeOut, int buggy, int segmentationFault, int outOfMemory, String log, int numberOfVariables, int numberOfClause, int numberOfHardClause, int numberOfSoftClause, int numberOfUnsatClause, int unsatClauseWeigth) {
+    public SolverInstance(String fileName, double time, int optimum, String solution, int info, int timeOut, int buggy, int segmentationFault, int outOfMemory, String log, int numberOfVariables, int numberOfClause, int numberOfHardClause, int numberOfSoftClause, int numberOfUnsatClause, int unsatClauseWeigth) {
         this.fileName = fileName;
         this.time = time;
         this.optimum = optimum;
@@ -94,28 +94,28 @@ public class SolverInstance {
     /**
      * @return the optimum
      */
-    public boolean isOptimum() {
+    public int getOptimum() {
         return optimum;
     }
 
     /**
      * @param optimum the optimum to set
      */
-    public void setOptimum(boolean optimum) {
+    public void setOptimum(int optimum) {
         this.optimum = optimum;
     }
 
     /**
      * @return the solution
      */
-    public int getSolution() {
+    public String getSolution() {
         return solution;
     }
 
     /**
      * @param solution the solution to set
      */
-    public void setSolution(int solution) {
+    public void setSolution(String solution) {
         this.solution = solution;
     }
 
