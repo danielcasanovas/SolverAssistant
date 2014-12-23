@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -36,6 +37,8 @@ public class FXMLCompareController implements Initializable {
     private Label exportLabel;
 
     private GridPane gridPane;
+
+    private int totalRows = 0, totalColumns = 0;
 
     /**
      * Initializes the controller class.
@@ -186,15 +189,13 @@ public class FXMLCompareController implements Initializable {
         return sortedMap;
     }
 
-    private Node getNodeFromGridPane(GridPane gridPane, int col, int row) {
-        for (Node node : gridPane.getChildren()) {
-            if (GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
-                return node;
-            }
-        }
-        return null;
-    }
-
+    /**
+     *
+     * @param gridPane Pane to sort
+     * @param sortedTotalMapAsc HashMap with sorted positions
+     * @param rawResults HashMap with folders as key and CompareSolvers as Value
+     * @return
+     */
     private GridPane sortGridPaneByMap(GridPane gridPane, Map<Integer, ArrayList<Double>> sortedTotalMapAsc, Map<String, CompareSolver> rawResults) {
 
         GridPane gridPaneSorted = new GridPane();
@@ -211,7 +212,7 @@ public class FXMLCompareController implements Initializable {
         int row = 1;
         for (String folderValue : rawResults.keySet()) {
             gridPaneSorted.add(new Label(folderValue), 0, row);
-            gridPaneSorted.add(getNodeFromGridPane(gridPane, 1, row), 1, row);
+            gridPaneSorted.add(utils.Utils.getNodeFromGridPane(gridPane, 1, row), 1, row);
             row++;
         }
 
@@ -219,7 +220,7 @@ public class FXMLCompareController implements Initializable {
         column = 2;
         row = 0;
         for (Integer position : sortedTotalMapAsc.keySet()) {
-            gridPaneSorted.add(getNodeFromGridPane(gridPane, position, 0), column, row);
+            gridPaneSorted.add(utils.Utils.getNodeFromGridPane(gridPane, position, 0), column, row);
             column++;
         }
 
@@ -228,24 +229,85 @@ public class FXMLCompareController implements Initializable {
         row = 1;
         for (Integer position : sortedTotalMapAsc.keySet()) {
             for (int i = 1; i <= rawResults.keySet().size(); i++) {
-                gridPaneSorted.add(getNodeFromGridPane(gridPane, position, i), column, row);
+                gridPaneSorted.add(utils.Utils.getNodeFromGridPane(gridPane, position, i), column, row);
                 row++;
             }
             row = 1;
             column++;
         }
 
+        // PAINT BEST
+        column = 2;
+        row = 1;
+        for (int i = 1; i <= rawResults.keySet().size(); i++) {
+            // GET MAX VALUE
+            String aux = utils.Utils.getNodeFromGridPane(gridPaneSorted, column, row).toString();
+            double maxInstancesValue = Double.parseDouble(aux.substring(aux.indexOf("(") + 1, aux.indexOf(")")));
+            for (Integer position : sortedTotalMapAsc.keySet()) {
+                aux = utils.Utils.getNodeFromGridPane(gridPaneSorted, column, row).toString();
+                double nextInstancesValue = Double.parseDouble(aux.substring(aux.indexOf("(") + 1, aux.indexOf(")")));
+                if (maxInstancesValue < nextInstancesValue) {
+                    maxInstancesValue = nextInstancesValue;
+                }
+
+                column++;
+            }
+
+            // PAINT ALL MAX VALUES
+            column = 2;
+            int minColumnPosition = 2;
+            aux = utils.Utils.getNodeFromGridPane(gridPaneSorted, column, row).toString();
+            double minTimeValue = Double.parseDouble(aux.substring(aux.indexOf("'") + 1, aux.indexOf(" ")).replace(',', '.'));
+            for (Integer position : sortedTotalMapAsc.keySet()) {
+                aux = utils.Utils.getNodeFromGridPane(gridPaneSorted, column, row).toString();
+                double nextInstancesValue = Double.parseDouble(aux.substring(aux.indexOf("(") + 1, aux.indexOf(")")));
+                double nextMinTimeValue = Double.parseDouble(aux.substring(aux.indexOf("'") + 1, aux.indexOf(" ")).replace(',', '.'));
+
+                if (nextInstancesValue == maxInstancesValue) {
+                    utils.Utils.getNodeFromGridPane(gridPaneSorted, column, row).setStyle("-fx-text-fill: #AD9F22;");
+                    if (minTimeValue > nextMinTimeValue) {
+                        minColumnPosition = column;
+                    }
+                }
+                column++;
+            }
+            // Replace the Label with the * to the min Value and paint it in green
+            String newText = utils.Utils.getNodeFromGridPane(gridPaneSorted, minColumnPosition, row).toString().substring(utils.Utils.getNodeFromGridPane(gridPaneSorted, minColumnPosition, row).toString().indexOf("'") + 1, utils.Utils.getNodeFromGridPane(gridPaneSorted, minColumnPosition, row).toString().lastIndexOf("'")) + " *";
+            gridPaneSorted.getChildren().remove(utils.Utils.getNodeFromGridPane(gridPaneSorted, minColumnPosition, row));
+            gridPaneSorted.add(new Label(newText), minColumnPosition, row);
+            utils.Utils.getNodeFromGridPane(gridPaneSorted, minColumnPosition, row).setStyle("-fx-text-fill: #0F772D;");
+            column = 2;
+            row++;
+        }
+
         // TOTALS
         row = rawResults.keySet().size() + 1;
 
-        gridPaneSorted.add(getNodeFromGridPane(gridPane, 0, row), 0, row);
-        gridPaneSorted.add(getNodeFromGridPane(gridPane, 1, row), 1, row);
+        gridPaneSorted.add(utils.Utils.getNodeFromGridPane(gridPane, 0, row), 0, row);
+        gridPaneSorted.add(utils.Utils.getNodeFromGridPane(gridPane, 1, row), 1, row);
 
         column = 2;
         for (Integer position : sortedTotalMapAsc.keySet()) {
-            gridPaneSorted.add(getNodeFromGridPane(gridPane, position, row), column, row);
+            gridPaneSorted.add(utils.Utils.getNodeFromGridPane(gridPane, position, row), column, row);
             column++;
         }
+        totalColumns = column;
+        totalRows = row;
         return gridPaneSorted;
+    }
+
+    // -------- Actions
+    @FXML
+    private void exportAsPlot(ActionEvent event) {
+    }
+
+    @FXML
+    private void exportAsHTML(ActionEvent event) {
+        utils.Utils.exportAsHTML(gridPane, totalColumns, totalRows);
+    }
+
+    @FXML
+    private void exportAsLatex(ActionEvent event) {
+        utils.Utils.exportAsLatex(gridPane, totalColumns, totalRows);
     }
 }

@@ -415,6 +415,7 @@ public class FXMLDataBaseController implements Initializable {
         } else {
             SolverManager.compareSolvers(false);
         }
+        SolverManager.showStatus(SolverAssistant.messages.getString("CompareTableCreated"));
     }
 
     // -------- Cell Custom Classes 

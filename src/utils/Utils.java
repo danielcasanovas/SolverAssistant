@@ -24,6 +24,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
+import javafx.scene.Node;
+import javafx.scene.layout.GridPane;
 import solverassistant.SolverManager;
 
 public class Utils {
@@ -59,9 +61,8 @@ public class Utils {
         return content;
     }
 
-    public void fileWriter(String path, String content) {
+    public static void fileWriter(String path, String content) {
         Writer writer = null;
-
         try {
             writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path), "utf-8"));
             writer.write(content);
@@ -215,6 +216,15 @@ public class Utils {
         return st.nextToken() + "/" + st.nextToken();
     }
 
+    public static Node getNodeFromGridPane(GridPane gridPane, int col, int row) {
+        for (Node node : gridPane.getChildren()) {
+            if (GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
+                return node;
+            }
+        }
+        return null;
+    }
+
     private static boolean isSolved(SolverInstance instance) {
         if (instance.getTimeOut() != 0 && instance.getBuggy() != 0 && instance.getSegmentationFault() != 0 && instance.getOutOfMemory() != 0) {
             return false;
@@ -264,5 +274,34 @@ public class Utils {
                 return (values.get(middle - 1) + values.get(middle)) / 2.0;
             }
         }
+    }
+
+    public static void exportAsHTML(GridPane table, int columns, int rows) {
+        String html = "<html><body><table><tr>";
+        for (int i = 0; i < columns; i++) {
+            String aux = getNodeFromGridPane(table, i, 0).toString();
+            html += "<th>" + aux.substring(aux.indexOf("'") + 1, aux.lastIndexOf("'")) + "</th>";
+        }
+        html += "</tr>";
+        for (int x = 1; x < rows; x++) {
+            html += "<tr>";
+            for (int i = 0; i < columns; i++) {
+                String aux = getNodeFromGridPane(table, i, x).toString();
+                html += "<td>";
+                if (aux.substring(aux.indexOf("'") + 1, aux.lastIndexOf("'")).contains("*")) {
+                    html += "<font color='#1EAA46'>" + aux.substring(aux.indexOf("'") + 1, aux.lastIndexOf("'"));
+                } else {
+                    html += aux.substring(aux.indexOf("'") + 1, aux.lastIndexOf("'"));
+                }
+                html += "</td>";
+            }
+            html += "</tr>";
+        }
+        html += "</table></body></html>";
+        fileWriter("index.html", html);
+    }
+
+    public static void exportAsLatex(GridPane table, int columns, int rows) {
+
     }
 }
