@@ -33,7 +33,7 @@ public class FXMLCompareController implements Initializable {
     private HBox compareContainer;
 
     @FXML
-    private Label operationsLabel;
+    private Label exportLabel;
 
     private GridPane gridPane;
 
@@ -47,12 +47,13 @@ public class FXMLCompareController implements Initializable {
 
     //Set the properly i18n data to all the components in the view
     public void chargeI18nValues() {
-        operationsLabel.setText(SolverAssistant.messages.getString("Operations"));
+        exportLabel.setText(SolverAssistant.messages.getString("Export"));
     }
 
     public void generateTable(boolean option) {
         Map<String, CompareSolver> rawResults = utils.Utils.getComparisonData(SolverManager.solversToCompare);
         Map<String, Integer> totalSolvedInTime = new HashMap<>();
+        Map<String, Double> totalSolvedTimes = new HashMap<>();
         int totalInstances = 0;
         int row = 0;
         int column = 0;
@@ -97,12 +98,27 @@ public class FXMLCompareController implements Initializable {
                 String result = "";
                 if (option) {
                     result += isNaN(data.get(1)) ? "0" : String.format("%.2f", data.get(1));
-                } else  result += isNaN(data.get(2)) ? "0" : String.format("%.2f", data.get(2));
+                } else {
+                    result += isNaN(data.get(2)) ? "0" : String.format("%.2f", data.get(2));
+                }
                 result += " (" + data.get(0).intValue() + ")";
                 if (totalSolvedInTime.containsKey(solverValue)) {
                     totalSolvedInTime.put(solverValue, (totalSolvedInTime.get(solverValue) + data.get(0).intValue()));
                 } else {
                     totalSolvedInTime.put(solverValue, data.get(0).intValue());
+                }
+                if (totalSolvedTimes.containsKey(solverValue)) {
+                    if (option) {
+                        totalSolvedTimes.put(solverValue, (totalSolvedTimes.get(solverValue) + data.get(1)));
+                    } else {
+                        totalSolvedTimes.put(solverValue, (totalSolvedTimes.get(solverValue) + data.get(2)));
+                    }
+                } else {
+                    if (option) {
+                        totalSolvedTimes.put(solverValue, data.get(1));
+                    } else {
+                        totalSolvedTimes.put(solverValue, data.get(2));
+                    }
                 }
 
                 gridPane.add(new Label(result), column, row);
@@ -119,13 +135,16 @@ public class FXMLCompareController implements Initializable {
         gridPane.add(new Label(String.valueOf(totalInstances)), column, row);
         column++;
 
-        Map<Integer, Integer> totalWithSolverMap = new HashMap<>();
+        Map<Integer, ArrayList<Double>> totalWithSolverMap = new HashMap<>();
         for (String solver : totalSolvedInTime.keySet()) {
             gridPane.add(new Label(String.valueOf(totalSolvedInTime.get(solver))), column, row);
-            totalWithSolverMap.put(column, totalSolvedInTime.get(solver));
+            ArrayList<Double> data = new ArrayList<>();
+            data.add(totalSolvedInTime.get(solver).doubleValue());
+            data.add(totalSolvedTimes.get(solver));
+            totalWithSolverMap.put(column, data);
             column++;
         }
-        Map<Integer, Integer> sortedTotalsMapAsc = sortByComparator(totalWithSolverMap, false);
+        Map<Integer, ArrayList<Double>> sortedTotalsMapAsc = sortByComparator(totalWithSolverMap);
         gridPane = sortGridPaneByMap(gridPane, sortedTotalsMapAsc, rawResults);
 
         gridPane.setPadding(new Insets(40, 40, 40, 40));
@@ -135,26 +154,32 @@ public class FXMLCompareController implements Initializable {
         compareContainer.getChildren().add(gridPane);
     }
 
-    private static Map<Integer, Integer> sortByComparator(Map<Integer, Integer> unsortMap, final boolean order) {
+    private static Map<Integer, ArrayList<Double>> sortByComparator(Map<Integer, ArrayList<Double>> unsortMap) {
 
-        List<Entry<Integer, Integer>> list = new LinkedList<Entry<Integer, Integer>>(unsortMap.entrySet());
+        List<Entry<Integer, ArrayList<Double>>> list = new LinkedList<>(unsortMap.entrySet());
 
         // Sorting the list based on values
-        Collections.sort(list, new Comparator<Entry<Integer, Integer>>() {
-            public int compare(Entry<Integer, Integer> o1,
-                    Entry<Integer, Integer> o2) {
-                if (order) {
-                    return o1.getValue().compareTo(o2.getValue());
+        Collections.sort(list, new Comparator<Entry<Integer, ArrayList<Double>>>() {
+            @Override
+            public int compare(Entry<Integer, ArrayList<Double>> o1,
+                    Entry<Integer, ArrayList<Double>> o2) {
+                if (o1.getValue().get(0) > o2.getValue().get(0)) {
+                    return -1;
+                } else if (o1.getValue().get(0).equals(o2.getValue().get(0))) {
+                    if (o1.getValue().get(1) >= o2.getValue().get(1)) {
+                        return 1;
+                    } else {
+                        return -1;
+                    }
                 } else {
-                    return o2.getValue().compareTo(o1.getValue());
-
+                    return 1;
                 }
             }
         });
 
         // Maintaining insertion order with the help of LinkedList
-        Map<Integer, Integer> sortedMap = new LinkedHashMap<Integer, Integer>();
-        for (Entry<Integer, Integer> entry : list) {
+        Map<Integer, ArrayList<Double>> sortedMap = new LinkedHashMap<Integer, ArrayList<Double>>();
+        for (Entry<Integer, ArrayList<Double>> entry : list) {
             sortedMap.put(entry.getKey(), entry.getValue());
         }
 
@@ -170,7 +195,7 @@ public class FXMLCompareController implements Initializable {
         return null;
     }
 
-    private GridPane sortGridPaneByMap(GridPane gridPane, Map<Integer, Integer> sortedTotalMapAsc, Map<String, CompareSolver> rawResults) {
+    private GridPane sortGridPaneByMap(GridPane gridPane, Map<Integer, ArrayList<Double>> sortedTotalMapAsc, Map<String, CompareSolver> rawResults) {
 
         GridPane gridPaneSorted = new GridPane();
 

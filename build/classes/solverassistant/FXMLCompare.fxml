@@ -7,9 +7,12 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane styleClass="backgroundColor" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="solverassistant.FXMLCompareController">
-    <AnchorPane prefHeight="270" prefWidth="190.0" styleClass="optionsPane" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="40.0">
+    <AnchorPane prefHeight="150" prefWidth="190.0" styleClass="optionsPane" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="40.0">
         <children>
-            <Label id="operationsLabel" fx:id="operationsLabel" alignment="CENTER" prefHeight="17.0" prefWidth="150.0" text="Operations" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="10.0" />
+            <Label id="exportLabel" fx:id="exportLabel" alignment="CENTER" prefHeight="17.0" prefWidth="150.0" text="Export" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="10.0" />
+            <Button id="exportPlotButton" fx:id="exportPlotButton" prefHeight="17.0" prefWidth="150.0" styleClass="button-defaultButton" text="Plot" AnchorPane.topAnchor="40.0" AnchorPane.leftAnchor="20.0" />
+            <Button id="exportHtmlButton" fx:id="exportHtmlButton" prefHeight="17.0" prefWidth="150.0" styleClass="button-defaultButton" text="Html" AnchorPane.topAnchor="70.0" AnchorPane.leftAnchor="20.0" />
+            <Button id="exportLatexButton" fx:id="exportLatexButton" prefHeight="17.0" prefWidth="150.0" styleClass="button-defaultButton" text="Latex" AnchorPane.topAnchor="100.0" AnchorPane.leftAnchor="20.0" />
         </children>
     </AnchorPane>
     <HBox alignment="CENTER" AnchorPane.topAnchor="40.0" AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="250.0">   

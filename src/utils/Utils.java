@@ -171,16 +171,16 @@ public class Utils {
 
                     map.put(folder, solverToAdd); // Add to the map to return this object with the folder as key
 
-                    // Reset Data
+                    // Reset Data and check the first instance of the new solver
                     folder = getFolder(instance);
                     instancesCount = 1;
                     timeValues = new ArrayList<>();
-                    if (instance.getTimeOut() == 0) {
+                    if (isSolved(instance)) { // If the instance is solved save the time and increment de solved count
                         timeValues.add(instance.getTime());
                     }
                 }
             }
-            // Save Last Data
+            // Save Last Folder Data
             ArrayList<Double> info = new ArrayList<>();
             info.add((double) timeValues.size());
             info.add(mean(timeValues));
@@ -220,19 +220,17 @@ public class Utils {
             return false;
         }
         try {
-            if (Integer.parseInt(instance.getSolution()) != -1) {
+            if (Integer.parseInt(instance.getSolution()) == -1) {
                 return false;
             }
         } catch (NumberFormatException e) {
-            System.err.println("[WARNING-INFO] Solution is not a Number.");
+//            System.err.println("[WARNING-INFO] Instance solution is not a Number.");
         }
         if (instance.getSolution().equals("UNKNOW")) {
             return false;
         }
-        if (instance.getOptimum() != -1) {
-            if (!(instance.getSolution().equals("OPTIMUM_FOUND") || instance.getSolution().equals("UNSAT") || instance.getSolution().equals("INCOMPLETE"))) {
-                return false;
-            }
+        if (!(instance.getOptimum() == -1 || instance.getSolution().equals("OPTIMUM_FOUND") || instance.getSolution().equals("UNSAT") || instance.getSolution().equals("INCOMPLETE"))) {
+            return false;
         }
         if (instance.getOptimum() == -1) {
             if (!instance.getSolution().equals("UNSAT")) {
