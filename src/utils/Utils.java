@@ -20,6 +20,7 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -276,6 +277,27 @@ public class Utils {
         }
     }
 
+    public static void exportAsPlot() {
+        String text = "#Inst\\t";
+        for (Solver solv : SolverManager.solversToCompare) {
+            List<SolverInstance> instances = solv.getInstancesList();
+            instances.sort(new InstanceComparator());
+        }
+//        fileWriter("complete-" + SolverManager.solversToCompare.get(0).getBenchmark() + "table-graph.txt", text);
+    }
+
+    public static class InstanceComparator implements Comparator<SolverInstance> {
+
+        @Override
+        public int compare(SolverInstance i1, SolverInstance i2) {
+            if (i1.getTime() <= i2.getTime()) {
+                return 1;
+            } else {
+                return -1;
+            }
+        }
+    }
+
     public static void exportAsHTML(GridPane table, int columns, int rows) {
         String html = "<html><body><table><tr>";
         for (int i = 0; i < columns; i++) {
@@ -298,10 +320,45 @@ public class Utils {
             html += "</tr>";
         }
         html += "</table></body></html>";
-        fileWriter("index.html", html);
+        fileWriter("table.html", html);
     }
 
     public static void exportAsLatex(GridPane table, int columns, int rows) {
+        String latex = "\\documentclass{article}\n"
+                + "\\begin{document}\n"
+                + "\n"
+                + "\\begin{table}[ht]\n"
+                + "\\begin{center}\n"
+                + "\\begin{tabular}{|l|r||r|r|r|r|}\n"
+                + "\\hline\n";
 
+        for (int i = 0; i < columns; i++) {
+            String aux = getNodeFromGridPane(table, i, 0).toString();
+            latex += aux.substring(aux.indexOf("'") + 1, aux.lastIndexOf("'"));
+            if (i < columns - 1) {
+                latex += " & ";
+            }
+        }
+        latex += "\\\\ \\hline \n";
+
+        for (int x = 1; x < rows; x++) {
+            for (int i = 0; i < columns; i++) {
+                String aux = getNodeFromGridPane(table, i, x).toString();
+                if (aux.substring(aux.indexOf("'") + 1, aux.lastIndexOf("'")).contains("*")) {
+                    latex += "\\textbf{" + aux.substring(aux.indexOf("'") + 1, aux.lastIndexOf("'")) + "}";
+                } else {
+                    latex += aux.substring(aux.indexOf("'") + 1, aux.lastIndexOf("'"));
+                }
+                latex += " & ";
+            }
+            latex += "\\\\ \\hline \n";
+        }
+        latex += "\\end{tabular}\n"
+                + "\\end{center}\n"
+                + "\\caption{Time in seconds.}\n"
+                + "\\label{tag}\n"
+                + "\\end{table}\n";
+        latex += "\\end{document}\n";
+        fileWriter("table.tex", latex);
     }
 }

@@ -7,6 +7,7 @@
 package solverassistant;
 
 import entities.CompareSolver;
+import entities.Solver;
 import static java.lang.Double.isNaN;
 import java.net.URL;
 import java.util.ArrayList;
@@ -39,6 +40,8 @@ public class FXMLCompareController implements Initializable {
     private GridPane gridPane;
 
     private int totalRows = 0, totalColumns = 0;
+    
+    private List<Solver> solversToCompare = null;
 
     /**
      * Initializes the controller class.
@@ -304,10 +307,12 @@ public class FXMLCompareController implements Initializable {
     @FXML
     private void exportAsHTML(ActionEvent event) {
         utils.Utils.exportAsHTML(gridPane, totalColumns, totalRows);
+        SolverManager.showStatus(SolverAssistant.messages.getString("TableExportedAsHTML"));
     }
 
     @FXML
     private void exportAsLatex(ActionEvent event) {
         utils.Utils.exportAsLatex(gridPane, totalColumns, totalRows);
+        SolverManager.showStatus(SolverAssistant.messages.getString("TableExportedAsLatex"));
     }
 }
