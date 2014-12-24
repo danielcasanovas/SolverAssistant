@@ -274,15 +274,20 @@ public class FXMLCompareController implements Initializable {
             column = 2;
             int minColumnPosition = 2;
             aux = utils.Utils.getNodeFromGridPane(gridPaneSorted, column, row).toString();
-            double minTimeValue = Double.parseDouble(aux.substring(aux.indexOf("'") + 1, aux.indexOf(" ")).replace(',', '.'));
+            boolean first = true;
+            double minTimeValue = 0;
             for (Integer position : sortedTotalMapAsc.keySet()) {
                 aux = utils.Utils.getNodeFromGridPane(gridPaneSorted, column, row).toString();
                 double nextInstancesValue = Double.parseDouble(aux.substring(aux.indexOf("(") + 1, aux.indexOf(")")));
                 double nextMinTimeValue = Double.parseDouble(aux.substring(aux.indexOf("'") + 1, aux.indexOf(" ")).replace(',', '.'));
-
                 if (nextInstancesValue == maxInstancesValue) {
                     utils.Utils.getNodeFromGridPane(gridPaneSorted, column, row).setStyle("-fx-text-fill: #AD9F22;");
-                    if (minTimeValue > nextMinTimeValue) {
+                    if (first) {
+                        minTimeValue = Double.parseDouble(aux.substring(aux.indexOf("'") + 1, aux.indexOf(" ")).replace(',', '.'));
+                        minColumnPosition = column;
+                        first = false;
+                    } else if (minTimeValue > nextMinTimeValue) {
+                        minTimeValue = nextMinTimeValue;
                         minColumnPosition = column;
                     }
                 }
