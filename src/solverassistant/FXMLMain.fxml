@@ -27,7 +27,7 @@
                         <fx:include fx:id="barTabPageDataBase" source="FXMLDataBase.fxml" />
                     </content>
                 </Tab>
-                 <Tab id="compareTab" fx:id="compareTab" closable="false" disable="true" text="Compare">
+                <Tab id="compareTab" fx:id="compareTab" closable="false" disable="true" text="Compare">
                     <content>
                         <fx:include fx:id="barTabPageCompare" source="FXMLCompare.fxml" />
                     </content>
@@ -35,16 +35,16 @@
             </tabs>
         </TabPane>
         <ImageView fx:id="logoUDL" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
-           <image>
-               <Image url="/images/logoUDL.png" />
-           </image>
+            <image>
+                <Image url="/images/logoUDL.png" />
+            </image>
         </ImageView>
         <ComboBox id="comboLanguage" fx:id="comboLanguage" prefHeight="25.0" prefWidth="100.0" promptText="Language" styleClass="comboBox-defaultComboBox" visibleRowCount="3" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0" />
         <Label id="statusLabel" fx:id="statusLabel" styleClass="label-statusLabel" textAlignment="CENTER" visible="false" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="70.0" />
         <ImageView fx:id="statusImage" styleClass="image-status" visible="false" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="70.0">
-           <image>
-               <Image url="/images/infoMini.png" />
-           </image>
+            <image>
+                <Image url="/images/infoMini.png" />
+            </image>
         </ImageView>
     </children>
     <stylesheets>

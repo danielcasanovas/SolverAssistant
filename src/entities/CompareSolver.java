@@ -12,11 +12,11 @@ import java.util.Map;
 import java.util.Objects;
 
 public class CompareSolver {
-    
+
     private String folder;
     private int numberOfInstances;
     private Map<String, ArrayList<Double>> solverMap;
-    
+
     public CompareSolver(String type) {
         this.folder = type;
         solverMap = new HashMap<>();
@@ -65,14 +65,13 @@ public class CompareSolver {
     }
 
     /**
-     *
-     * @param solver
-     * @param solutionInfo
+     * @param solver Name of the solver
+     * @param solutionInfo Mean , median and instance values
      */
     public void addToHashMap(String solver, ArrayList solutionInfo) {
         this.solverMap.put(solver, solutionInfo);
     }
-    
+
     @Override
     public boolean equals(Object object) {
         return (object instanceof CompareSolver) && ((CompareSolver) object).getFolder().equals(this.getFolder());

@@ -112,7 +112,9 @@ public class FXMLDataBaseController implements Initializable {
         chargeOrReloadChoiceBox();
     }
 
-    // Get all solvers from database
+    /**
+     * Get all solvers from database
+     */
     private void loadSolversFromDB() {
         List<Solver> solvers = SolverManager.daoSolver.getAllSolvers();
         List<SolverProperties> solversPropierties = new ArrayList<>();
@@ -125,12 +127,16 @@ public class FXMLDataBaseController implements Initializable {
         });
     }
 
-    // Update solver to database
+    /**
+     * Update solver to database
+     */
     private void setSolverFromDB(Solver solv) {
         SolverManager.daoSolver.setSolver(solv);
     }
 
-    // Set the properly i18n data to all the components in the view
+    /**
+     * Set the properly i18n data to all the components in the view
+     */
     public void chargeI18nValues() {
         colAllSolver.setText(SolverAssistant.messages.getString("Solver"));
         colAllBenchmark.setText(SolverAssistant.messages.getString("Benchmark"));
@@ -164,7 +170,9 @@ public class FXMLDataBaseController implements Initializable {
         chargeOrReloadChoiceBox();
     }
 
-    // Config the UI components
+    /**
+     * Config the UI components
+     */
     private void configTableViewPageUI() {
         allSolversTable.setEditable(true);
 
@@ -275,7 +283,12 @@ public class FXMLDataBaseController implements Initializable {
         wholeWordCheckBox.selectedProperty().addListener(getComboBoxListener());
     }
 
-    // Bind data to solversTable or solversSelectedTable
+    /**
+     * Bind data to solversTable or solversSelectedTable
+     *
+     * @param data to bind
+     * @param selectedTable table
+     */
     private void bindDataToTable(ObservableList<SolverProperties> data, boolean selectedTable) {
         if (selectedTable) {
             selectedSolversTable.getItems().clear();
@@ -286,7 +299,9 @@ public class FXMLDataBaseController implements Initializable {
         }
     }
 
-    // Update filtered data list 
+    /**
+     * Update filtered data list
+     */
     private void updateFilteredData() {
         filteredData.clear();
         for (SolverProperties p : data) {
@@ -296,7 +311,12 @@ public class FXMLDataBaseController implements Initializable {
         }
     }
 
-    // Filter depending on the filter checboxes
+    /**
+     * Filter depending on the filter checboxes
+     *
+     * @param solv Solver to filter
+     * @return true if filtered or not if not
+     */
     private boolean matchesFilter(SolverProperties solv) {
         String filterString = filterTextField.getText();
         // No filter --> Add all.
@@ -338,17 +358,27 @@ public class FXMLDataBaseController implements Initializable {
         }
     }
 
-    // Add to selected solvers list
+    /**
+     * Add to selected solvers list
+     *
+     * @param obj selected solver
+     */
     public void addToSelectedsList(Object obj) {
         selectedData.add((SolverProperties) obj);
     }
 
-    // Remove from selected solvers list
+    /**
+     * Remove to selected solvers list
+     *
+     * @param obj selected solver
+     */
     public void removeFromSelectedsList(Object obj) {
         selectedData.remove((SolverProperties) obj);
     }
 
-    // Check if the compare button have to be able or not
+    /**
+     * Check if the compare button have to be able or not
+     */
     public void checkCompareButton() {
         if (selectedData.isEmpty()) {
             compareButton.setDisable(true); // If there is no solvers selected not
@@ -368,7 +398,9 @@ public class FXMLDataBaseController implements Initializable {
         }
     }
 
-    // Load the operations choiceBox
+    /**
+     * Load the operations choiceBox
+     */
     private void chargeOrReloadChoiceBox() {
         operationChoiceBox.getItems().clear();
         operationChoiceBox.getItems().add(SolverAssistant.messages.getString("Mean"));

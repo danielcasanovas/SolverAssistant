@@ -34,6 +34,12 @@ public class Utils {
     public Utils() {
     }
 
+    /**
+     * Read a file
+     *
+     * @param file File to read
+     * @return String with the content
+     */
     public String fileReader(File file) {
         String content = "";
         FileReader fr = null;
@@ -62,10 +68,18 @@ public class Utils {
         return content;
     }
 
+    /**
+     * Write content in a file
+     *
+     * @param path Name of the file
+     * @param content Content of the file
+     */
     public static void fileWriter(String path, String content) {
         Writer writer = null;
         try {
-            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path), "utf-8"));
+            File dir = new File("exports/");
+            dir.mkdir();
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("exports/" + path), "utf-8"));
             writer.write(content);
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -77,6 +91,13 @@ public class Utils {
         }
     }
 
+    /**
+     * Create Solver with all his instances from content
+     *
+     * @param logName Solver info
+     * @param log SolverInstances info
+     * @return Solver created
+     */
     public static Solver createSolverFromData(String logName, String log) {
         Solver solverCharged = new Solver();
         try {
@@ -202,12 +223,23 @@ public class Utils {
         return map;
     }
 
+    /**
+     * Load all the instances into Solvers
+     *
+     * @param solvers Solvers to load
+     */
     private static void loadInstancesLists(List<Solver> solvers) {
         for (Solver solv : solvers) {
             solv.setInstancesList(SolverManager.daoSolver.getAllInstancesBySolver(solv.getId()));
         }
     }
 
+    /**
+     * Return the folder of an instance
+     *
+     * @param instance Instance to know the folder
+     * @return folder
+     */
     private static String getFolder(SolverInstance instance) {
         StringTokenizer st;
         st = new StringTokenizer(instance.getFileName(), "/");
@@ -217,6 +249,14 @@ public class Utils {
         return st.nextToken() + "/" + st.nextToken();
     }
 
+    /**
+     * Return the node of a grid pane giving the position
+     *
+     * @param gridPane GridPane to extract the node
+     * @param col Column of the node
+     * @param row Row of the node
+     * @return Node to return
+     */
     public static Node getNodeFromGridPane(GridPane gridPane, int col, int row) {
         for (Node node : gridPane.getChildren()) {
             if (GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
@@ -226,6 +266,12 @@ public class Utils {
         return null;
     }
 
+    /**
+     * Return if an instance is Solved or not
+     *
+     * @param instance instance to check
+     * @return true if its solved , false if not
+     */
     private static boolean isSolved(SolverInstance instance) {
         if (instance.getTimeOut() != 0 && instance.getBuggy() != 0 && instance.getSegmentationFault() != 0 && instance.getOutOfMemory() != 0) {
             return false;
@@ -235,7 +281,6 @@ public class Utils {
                 return false;
             }
         } catch (NumberFormatException e) {
-//            System.err.println("[WARNING-INFO] Instance solution is not a Number.");
         }
         if (instance.getSolution().equals("UNKNOW")) {
             return false;
@@ -251,6 +296,12 @@ public class Utils {
         return true;
     }
 
+    /**
+     * Return the mean
+     *
+     * @param values List of all the values
+     * @return the mean
+     */
     private static Double mean(List<Double> values) {
         if (values.isEmpty()) {
             return 0.0;
@@ -263,6 +314,12 @@ public class Utils {
         }
     }
 
+    /**
+     * Return the median
+     *
+     * @param values List of all the values
+     * @return the median
+     */
     private static Double median(List<Double> values) {
         if (values.isEmpty()) {
             return 0.0;
@@ -277,13 +334,44 @@ public class Utils {
         }
     }
 
+    /**
+     * Export as Plot
+     */
     public static void exportAsPlot() {
-        String text = "#Inst\\t";
+        String text = "#Inst\t";
+        for (Solver solv : SolverManager.solversToCompare) {
+            text += solv.getName() + "\t";
+        }
+        text += "\n";
+        int i = 0;
+        List<List<SolverInstance>> listOfSolverInstancesList = new ArrayList<>();
         for (Solver solv : SolverManager.solversToCompare) {
             List<SolverInstance> instances = solv.getInstancesList();
             instances.sort(new InstanceComparator());
+            listOfSolverInstancesList.add(instances);
         }
-//        fileWriter("complete-" + SolverManager.solversToCompare.get(0).getBenchmark() + "table-graph.txt", text);
+        boolean next;
+        do {
+            next = false;
+            boolean begginin = true;
+            for (List<SolverInstance> list : listOfSolverInstancesList) {
+                if (i < list.size()) {
+                    if (begginin) {
+                        text += (i + 1) + "\t";
+                        begginin = false;
+                    }
+                    if (isSolved(list.get(i))) {
+                        text += list.get(i).getTime() + "\t";
+                    } else {
+                        text += "-" + "\t";
+                    }
+                    next = true;
+                }
+            }
+            text += "\n";
+            i++;
+        } while (next);
+        fileWriter("complete-" + SolverManager.solversToCompare.get(0).getBenchmark() + "-table-graph.txt", text);
     }
 
     public static class InstanceComparator implements Comparator<SolverInstance> {
@@ -291,13 +379,20 @@ public class Utils {
         @Override
         public int compare(SolverInstance i1, SolverInstance i2) {
             if (i1.getTime() <= i2.getTime()) {
-                return 1;
-            } else {
                 return -1;
+            } else {
+                return 1;
             }
         }
     }
 
+    /**
+     * Export as HTML
+     *
+     * @param table table to export
+     * @param columns number of table columns
+     * @param rows number of table rows
+     */
     public static void exportAsHTML(GridPane table, int columns, int rows) {
         String html = "<html><body><table><tr>";
         for (int i = 0; i < columns; i++) {
@@ -310,7 +405,10 @@ public class Utils {
             for (int i = 0; i < columns; i++) {
                 String aux = getNodeFromGridPane(table, i, x).toString();
                 html += "<td>";
-                if (aux.substring(aux.indexOf("'") + 1, aux.lastIndexOf("'")).contains("*")) {
+                String value = aux.substring(aux.indexOf("'") + 1, aux.lastIndexOf("'"));
+                value = value.replace("/", "\\/");
+                value = value.replace("_", "\\_");
+                if (value.contains("*")) {
                     html += "<font color='#1EAA46'>" + aux.substring(aux.indexOf("'") + 1, aux.lastIndexOf("'"));
                 } else {
                     html += aux.substring(aux.indexOf("'") + 1, aux.lastIndexOf("'"));
@@ -323,6 +421,13 @@ public class Utils {
         fileWriter("table.html", html);
     }
 
+    /**
+     * Export as Latex
+     *
+     * @param table table to export
+     * @param columns number of table columns
+     * @param rows number of table rows
+     */
     public static void exportAsLatex(GridPane table, int columns, int rows) {
         String latex = "\\documentclass{article}\n"
                 + "\\begin{document}\n"

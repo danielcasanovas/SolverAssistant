@@ -57,7 +57,9 @@ public class FXMLMainController implements Initializable {
         });
     }
 
-    // Set the properly i18n data to all the components in the view
+    /**
+     * Set the properly i18n data to all the components in the view
+     */
     public void chargeI18nValues() {
         loadTab.setText(SolverAssistant.messages.getString("LoadLog"));
         editTab.setText(SolverAssistant.messages.getString("EditSolver"));
@@ -70,7 +72,11 @@ public class FXMLMainController implements Initializable {
         barTabPageCompareController.chargeI18nValues();
     }
 
-    // Load the languages combobox
+    /**
+     * Load the languages combobox
+     *
+     * @param language selected
+     */
     private void chargeLanguageComboBox(Locale language) {
         comboLanguage.getItems().addAll(
                 "Català",
@@ -90,19 +96,29 @@ public class FXMLMainController implements Initializable {
         }
     }
 
-    // Load the solver in the SolverManager and enable the edit tab
+    /**
+     * Load the solver in the SolverManager and enable the edit tab
+     */
     public void loadSolver() {
         barTabPageEditController.loadSolver();
         editTab.setDisable(false);
     }
 
-    // Enable the compare tab
+    /**
+     * Enable the compare tab
+     *
+     * @param option true if mena , false if median
+     */
     public void compareSolvers(boolean option) {
         barTabPageCompareController.generateTable(option);
         compareTab.setDisable(false);
     }
 
-    // Show status message in the label
+    /**
+     * Show status message in the label
+     *
+     * @param message message to show
+     */
     public void showStatus(String message) {
         statusLabel.setText(message);
         statusLabel.setVisible(true);

@@ -52,12 +52,13 @@ public class DataBaseManager {
             + "    ON UPDATE CASCADE"
             + ");";
 
-    // To use, use empty constructor and after call init function with the db name or use the second constructor with the db name
-    // After that execute executeUp or executeQr
     public DataBaseManager() {
         init();
     }
 
+    /**
+     * Init database calling the initial script
+     */
     private void init() {
         try {
             runInitialScript();
@@ -66,6 +67,9 @@ public class DataBaseManager {
         }
     }
 
+    /**
+     * Open connection
+     */
     public void openConnection() {
         try {
             Class.forName(sDriver);
@@ -89,6 +93,9 @@ public class DataBaseManager {
         return statement;
     }
 
+    /**
+     * Close connection
+     */
     public void closeConnection() {
         try {
             conn.close();
@@ -97,6 +104,9 @@ public class DataBaseManager {
         }
     }
 
+    /**
+     * Execute the script of table creation
+     */
     public void runInitialScript() {
         PreparedStatement pst = null;
         try {

@@ -38,6 +38,11 @@ public class DAOSolver {
         databaseManager = new DataBaseManager();
     }
 
+    /**
+     * Add to database all the content from a Solver with his instances
+     *
+     * @param solv Solver to save
+     */
     public void addSolverFULL(Solver solv) {
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -109,6 +114,11 @@ public class DAOSolver {
         databaseManager.closeConnection();
     }
 
+    /**
+     * Update a solver in database
+     *
+     * @param solv Solver to update
+     */
     public void setSolver(Solver solv) {
         PreparedStatement pst = null;
         try {
@@ -137,6 +147,11 @@ public class DAOSolver {
         databaseManager.closeConnection();
     }
 
+    /**
+     * Delete solver with all his instances
+     *
+     * @param solv Solver to delete
+     */
     public void deleteSolver(Solver solv) {
         PreparedStatement pst = null;
         try {
@@ -159,6 +174,11 @@ public class DAOSolver {
         databaseManager.closeConnection();
     }
 
+    /**
+     * Get all Solvers
+     *
+     * @return List with all solvers from database
+     */
     public List<Solver> getAllSolvers() {
         List<Solver> solvers = new ArrayList<>();
         PreparedStatement pst = null;
@@ -189,6 +209,12 @@ public class DAOSolver {
         return solvers;
     }
 
+    /**
+     * Return List with all the instances of a solver
+     *
+     * @param id Id of the solver
+     * @return List with all the instances of a solver
+     */
     public List<SolverInstance> getAllInstancesBySolver(int id) {
         List<SolverInstance> solverInstances = new ArrayList<>();
         PreparedStatement pst = null;

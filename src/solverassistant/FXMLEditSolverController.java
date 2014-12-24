@@ -100,7 +100,9 @@ public class FXMLEditSolverController implements Initializable {
         this.chargeI18nValues();
     }
 
-    // Set the properly i18n data to all the components in the view
+    /**
+     * Set the properly i18n data to all the components in the view
+     */
     public void chargeI18nValues() {
         solverLabel.setText(SolverAssistant.messages.getString("Solver"));
         benchmarkLabel.setText(SolverAssistant.messages.getString("Benchmark"));
@@ -132,7 +134,9 @@ public class FXMLEditSolverController implements Initializable {
 //        instancesTable.requestFocus();
     }
 
-    // Load components with the solver from SolverManager
+    /**
+     * Load components with the solver from SolverManager
+     */
     public void loadSolver() {
         solverTextField.setText(SolverManager.solverCharged.getName());
         benchmarkTextField.setText(String.valueOf(SolverManager.solverCharged.getBenchmark()));
@@ -147,7 +151,9 @@ public class FXMLEditSolverController implements Initializable {
         this.bindDataToTable();
     }
 
-    // Bind SolverInstances from the solver charged in SolverManager
+    /**
+     * Bind SolverInstances from the solver charged in SolverManager
+     */
     private void bindDataToTable() {
         for (SolverInstance s : SolverManager.solverCharged.getInstancesList()) {
             solvPropList.add(new SolverInstanceProperties(s));
@@ -156,7 +162,9 @@ public class FXMLEditSolverController implements Initializable {
         instancesTable.getItems().addAll(data);
     }
 
-    // Config the UI components
+    /**
+     * Config the UI components
+     */
     private void configTableViewPageUI() {
         comboSolverType.getItems().addAll(
                 "COMPLETE",
@@ -206,7 +214,9 @@ public class FXMLEditSolverController implements Initializable {
         instancesTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
-    // Save the data from the components to the solver in SolverManager
+    /**
+     * Save the data from the components to the solver in SolverManager
+     */
     private void saveSolverData() {
         SolverManager.solverCharged.setName(solverTextField.getText());
         SolverManager.solverCharged.setBenchmark(benchmarkTextField.getText());
@@ -217,7 +227,6 @@ public class FXMLEditSolverController implements Initializable {
     }
 
     // -------- Actions
-    // Save the solver from SolverManager into database
     @FXML
     private void saveSolverAction(ActionEvent event) {
         this.saveSolverData();

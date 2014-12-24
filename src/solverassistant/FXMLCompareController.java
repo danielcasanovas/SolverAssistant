@@ -24,7 +24,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -40,7 +39,7 @@ public class FXMLCompareController implements Initializable {
     private GridPane gridPane;
 
     private int totalRows = 0, totalColumns = 0;
-    
+
     private List<Solver> solversToCompare = null;
 
     /**
@@ -51,11 +50,18 @@ public class FXMLCompareController implements Initializable {
         this.chargeI18nValues();
     }
 
-    //Set the properly i18n data to all the components in the view
+    /**
+     * Set the properly i18n data to all the components in the view
+     */
     public void chargeI18nValues() {
         exportLabel.setText(SolverAssistant.messages.getString("Export"));
     }
 
+    /**
+     * Generate unsorted table with the data
+     *
+     * @param option if true the table will contain the mean , else the median
+     */
     public void generateTable(boolean option) {
         Map<String, CompareSolver> rawResults = utils.Utils.getComparisonData(SolverManager.solversToCompare);
         Map<String, Integer> totalSolvedInTime = new HashMap<>();
@@ -160,6 +166,13 @@ public class FXMLCompareController implements Initializable {
         compareContainer.getChildren().add(gridPane);
     }
 
+    /**
+     * Sort hashmap with number of column and values (mean, median, number of
+     * instance)
+     *
+     * @param unsortMap unsort map
+     * @return sorted map
+     */
     private static Map<Integer, ArrayList<Double>> sortByComparator(Map<Integer, ArrayList<Double>> unsortMap) {
 
         List<Entry<Integer, ArrayList<Double>>> list = new LinkedList<>(unsortMap.entrySet());
@@ -193,6 +206,7 @@ public class FXMLCompareController implements Initializable {
     }
 
     /**
+     * Return a sorted pane
      *
      * @param gridPane Pane to sort
      * @param sortedTotalMapAsc HashMap with sorted positions
@@ -302,6 +316,8 @@ public class FXMLCompareController implements Initializable {
     // -------- Actions
     @FXML
     private void exportAsPlot(ActionEvent event) {
+        utils.Utils.exportAsPlot();
+        SolverManager.showStatus(SolverAssistant.messages.getString("TableExportedAsPlot"));
     }
 
     @FXML
