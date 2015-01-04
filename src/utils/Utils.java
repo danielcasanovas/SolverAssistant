@@ -21,7 +21,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -338,14 +341,15 @@ public class Utils {
      * Export as Plot
      */
     public static void exportAsPlot() {
+        List<Solver> sortedSolversByInstancesTime = getSolversSortedByInstancesTime(SolverManager.solversToCompare);
         String text = "#Inst\t";
-        for (Solver solv : SolverManager.solversToCompare) {
+        for (Solver solv : sortedSolversByInstancesTime) {
             text += solv.getName() + "\t";
         }
         text += "\n";
         int i = 0;
         List<List<SolverInstance>> listOfSolverInstancesList = new ArrayList<>();
-        for (Solver solv : SolverManager.solversToCompare) {
+        for (Solver solv : sortedSolversByInstancesTime) {
             List<SolverInstance> instances = solv.getInstancesList();
             instances.sort(new InstanceComparator());
             listOfSolverInstancesList.add(instances);
@@ -384,6 +388,48 @@ public class Utils {
                 return 1;
             }
         }
+    }
+
+    private static List<Solver> getSolversSortedByInstancesTime(List<Solver> unSortedList) {
+        Map<Solver, ArrayList<Double>> sortedSolvers = new LinkedHashMap<>();
+        for (Solver solv : unSortedList) {
+            int totalInstances = 0;
+            double totalTime = 0;
+            for (SolverInstance instance : solv.getInstancesList()) {
+                if (isSolved(instance)) {
+                    totalInstances++;
+                    totalTime += instance.getTime();
+                }
+            }
+            ArrayList<Double> data = new ArrayList<>();
+            data.add((double) totalInstances);
+            data.add(totalTime);
+            sortedSolvers.put(solv, data);
+            totalTime = 0;
+        }
+        List list = new LinkedList(sortedSolvers.entrySet());
+        Collections.sort(list, new Comparator<Map.Entry<Solver, ArrayList<Double>>>() {
+            @Override
+            public int compare(Map.Entry<Solver, ArrayList<Double>> o1, Map.Entry<Solver, ArrayList<Double>> o2) {
+                if (o1.getValue().get(0) > o2.getValue().get(0)) {
+                    return -1;
+                } else if (o1.getValue().get(0).equals(o2.getValue().get(0))) {
+                    if (o1.getValue().get(1) >= o2.getValue().get(1)) {
+                        return 1;
+                    } else {
+                        return -1;
+                    }
+                } else {
+                    return 1;
+                }
+            }
+        });
+        Map result = new LinkedHashMap();
+        for (Iterator it = list.iterator(); it.hasNext();) {
+            Map.Entry entry = (Map.Entry) it.next();
+            result.put(entry.getKey(), entry.getValue());
+        }
+        return new ArrayList<Solver>(result.keySet());
     }
 
     /**
