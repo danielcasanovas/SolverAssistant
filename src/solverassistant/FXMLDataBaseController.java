@@ -180,8 +180,6 @@ public class FXMLDataBaseController implements Initializable {
      */
     private void configTableViewPageUI() {
         allSolversTable.setEditable(true);
-
-//        colAllSelect.setCellFactory((TableColumn<SolverProperties, Boolean> p) -> new CheckBoxTableCell<>());
         colAllSelect.setCellFactory((TableColumn<SolverProperties, Boolean> p) -> new ButtonSelectCell());
         colAllDelete.setCellFactory((TableColumn<SolverProperties, Boolean> p) -> new ButtonCell());
 
