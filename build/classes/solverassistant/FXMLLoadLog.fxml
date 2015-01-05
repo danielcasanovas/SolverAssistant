@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane styleClass="backgroundColor" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="solverassistant.FXMLLoadLogController">
+    <children>
+        <TextArea id="logTextArea" fx:id="logTextArea" disable="true" editable="false" layoutY="47.0" prefHeight="471.0" prefWidth="1102.0" styleClass="logTextArea-background" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="47.0" />
+        <Button id="loadLogButton" fx:id="loadLogButton" layoutX="20.0" layoutY="14.0" onAction="#openLogAction" prefHeight="25.0" prefWidth="195.0" styleClass="button-defaultButton" text="Load Log" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="14.0" />
+        <Label id="logNameLabel" fx:id="logNameLabel" layoutX="244.0" layoutY="18.0" AnchorPane.leftAnchor="244.0" AnchorPane.topAnchor="18.0" />
+    </children>
+</AnchorPane>

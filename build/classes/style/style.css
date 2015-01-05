@@ -1,0 +1,128 @@
+/* 
+ Daniel Casanovas Gayoso 
+ Treball Fi de Grau 
+ EPS UDL 2014/2015
+*/
+
+.title-background{
+    -fx-background-image: url("/images/background.png");
+    -fx-background-repeat: repeat-x;
+}
+
+.backgroundColor{
+    -fx-background-color: white;
+}
+
+.optionsPane{
+    -fx-border-style: dashed;
+    -fx-border-color: gainsboro;
+}
+
+.logTextArea-background{
+    -fx-background-color: gainsboro;
+    -fx-text-color: white;
+}
+
+.comboBox-defaultComboBox{
+    -fx-background-color: -fx-text-box-border, -fx-control-inner-background;
+    -fx-background-insets: 0, 1 1 1 1;
+    -fx-padding: 1 3 1 3;
+    -fx-background-radius: 0;
+    -fx-cursor: hand;
+}
+
+.button-defaultButton{
+    -fx-background-color: -fx-text-box-border, -fx-control-inner-background;
+    -fx-background-insets: 0, 1 1 1 1;
+    -fx-padding: 1 3 1 3;
+    -fx-cursor: hand;
+}
+
+.button-defaultButton:hover{
+    -fx-background-color: #97587C;
+    -fx-opacity: 0.5;
+    -fx-text-fill: white;
+}
+
+.button-deleteButton{
+    -fx-background-image: url("/images/delete.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 16 16;
+    -fx-background-position: center center;
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+.button-deleteButton:hover{
+    -fx-opacity: 0.7;
+}
+
+.button-selectButton{
+    -fx-background-image: url("/images/add.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 16 16;
+    -fx-background-position: center center;
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+.button-selectButton:hover{
+    -fx-opacity: 0.7;
+}
+
+.button-unSelectButton{
+    -fx-background-image: url("/images/remove.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 16 16;
+    -fx-background-position: center center;
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+.button-unSelectButton:hover{
+    -fx-opacity: 0.7;
+}
+
+.label-statusLabel{
+    -fx-text-fill: white;
+}
+
+.label-errorLabel{
+    -fx-text-fill: red;
+}
+
+.tabPane-tabs{
+    -fx-background-color: black;
+}
+
+#sendToDBButton{
+    -fx-background-image:url("/images/box.png");
+    -fx-background-size: 18 18;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 243 3.5;
+}
+
+#reloadButton{
+
+    -fx-background-image:url("/images/refresh.png");
+    -fx-background-size: 18 18;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 168 3.5;
+}
+
+#loadLogButton{
+    -fx-background-image:url("/images/folder.png");
+    -fx-background-size: 18 18;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 173 3.5;
+}
+
+#filterTextField{
+    -fx-background-image:url("/images/search.png");
+    -fx-background-size: 18 18;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 130 3.5;
+}
+.label-headerCompareTable{
+    -fx-background-color: red;
+}
