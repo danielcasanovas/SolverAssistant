@@ -47,6 +47,7 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                     </columnResizePolicy>
                     <columns>
+                        <TableColumn fx:id="colSelectedDelete" prefWidth="50.0" text="UnSelect" />
                         <TableColumn fx:id="colSelectedSolver" prefWidth="75.0" text="Solver" />
                         <TableColumn fx:id="colSelectedBenchmark" prefWidth="75.0" text="Benchmark" />
                         <TableColumn fx:id="colSelectedSolverType" prefWidth="75.0" text="Solver type" />

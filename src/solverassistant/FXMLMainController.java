@@ -136,15 +136,15 @@ public class FXMLMainController implements Initializable {
                 switch ((String) newValue) {
                     case "Català":
                         SolverAssistant.messages = ResourceBundle.getBundle("bundles.bundle", Locale.forLanguageTag("cat"));
-                        SolverAssistant.utils.fileWriter("lang.txt", "cat");
+                        SolverAssistant.utils.fileWriterLanguage("lang.txt", "cat");
                         break;
                     case "Español":
                         SolverAssistant.messages = ResourceBundle.getBundle("bundles.bundle", Locale.forLanguageTag("es"));
-                        SolverAssistant.utils.fileWriter("lang.txt", "es");
+                        SolverAssistant.utils.fileWriterLanguage("lang.txt", "es");
                         break;
                     case "English":
                         SolverAssistant.messages = ResourceBundle.getBundle("bundles.bundle", Locale.forLanguageTag("en"));
-                        SolverAssistant.utils.fileWriter("lang.txt", "en");
+                        SolverAssistant.utils.fileWriterLanguage("lang.txt", "en");
                         break;
                 }
                 chargeI18nValues();

@@ -57,6 +57,32 @@
     -fx-opacity: 0.7;
 }
 
+.button-selectButton{
+    -fx-background-image: url("/images/add.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 16 16;
+    -fx-background-position: center center;
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+.button-selectButton:hover{
+    -fx-opacity: 0.7;
+}
+
+.button-unSelectButton{
+    -fx-background-image: url("/images/remove.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 16 16;
+    -fx-background-position: center center;
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+.button-unSelectButton:hover{
+    -fx-opacity: 0.7;
+}
+
 .label-statusLabel{
     -fx-text-fill: white;
 }

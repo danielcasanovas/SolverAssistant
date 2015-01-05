@@ -12,7 +12,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -63,6 +62,9 @@ public class FXMLDataBaseController implements Initializable {
 
     @FXML
     private TableColumn<SolverProperties, Integer> colAllNumberOfCores;
+
+    @FXML
+    private TableColumn<SolverProperties, Boolean> colSelectedDelete;
 
     @FXML
     private TableColumn<SolverProperties, String> colSelectedSolver;
@@ -138,6 +140,8 @@ public class FXMLDataBaseController implements Initializable {
      * Set the properly i18n data to all the components in the view
      */
     public void chargeI18nValues() {
+        colAllSelect.setText(SolverAssistant.messages.getString("Select"));
+        colAllDelete.setText(SolverAssistant.messages.getString("Delete"));
         colAllSolver.setText(SolverAssistant.messages.getString("Solver"));
         colAllBenchmark.setText(SolverAssistant.messages.getString("Benchmark"));
         colAllSolverType.setText(SolverAssistant.messages.getString("SolverType"));
@@ -145,6 +149,7 @@ public class FXMLDataBaseController implements Initializable {
         colAllMemory.setText(SolverAssistant.messages.getString("Memory"));
         colAllNumberOfCores.setText(SolverAssistant.messages.getString("NumberOfCores"));
 
+        colSelectedDelete.setText(SolverAssistant.messages.getString("UnSelect"));
         colSelectedSolver.setText(SolverAssistant.messages.getString("Solver"));
         colSelectedBenchmark.setText(SolverAssistant.messages.getString("Benchmark"));
         colSelectedSolverType.setText(SolverAssistant.messages.getString("SolverType"));
@@ -176,8 +181,8 @@ public class FXMLDataBaseController implements Initializable {
     private void configTableViewPageUI() {
         allSolversTable.setEditable(true);
 
-        colAllSelect.setCellFactory((TableColumn<SolverProperties, Boolean> p) -> new CheckBoxTableCell<>());
-
+//        colAllSelect.setCellFactory((TableColumn<SolverProperties, Boolean> p) -> new CheckBoxTableCell<>());
+        colAllSelect.setCellFactory((TableColumn<SolverProperties, Boolean> p) -> new ButtonSelectCell());
         colAllDelete.setCellFactory((TableColumn<SolverProperties, Boolean> p) -> new ButtonCell());
 
         colAllSolver.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -266,6 +271,7 @@ public class FXMLDataBaseController implements Initializable {
             SolverManager.showStatus(SolverAssistant.messages.getString("SolverModifiedInfo"));
         });
 
+        colSelectedDelete.setCellFactory((TableColumn<SolverProperties, Boolean> p) -> new ButtonUnSelectCell());
         colSelectedSolver.setCellValueFactory(new PropertyValueFactory<>("name"));
         colSelectedBenchmark.setCellValueFactory(new PropertyValueFactory<>("benchmark"));
         colSelectedSolverType.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -377,6 +383,24 @@ public class FXMLDataBaseController implements Initializable {
     }
 
     /**
+     * Add to data solvers list
+     *
+     * @param obj selected solver
+     */
+    public void addToDataList(Object obj) {
+        data.add((SolverProperties) obj);
+    }
+
+    /**
+     * Remove to data solvers list
+     *
+     * @param obj selected solver
+     */
+    public void removeFromDataList(Object obj) {
+        data.remove((SolverProperties) obj);
+    }
+
+    /**
      * Check if the compare button have to be able or not
      */
     public void checkCompareButton() {
@@ -431,8 +455,6 @@ public class FXMLDataBaseController implements Initializable {
         bindDataToTable(filteredData, false);
         selectedData.clear();
         bindDataToTable(selectedData, true);
-        colAllSelect.setCellFactory(null);
-        colAllSelect.setCellFactory((TableColumn<SolverProperties, Boolean> p) -> new CheckBoxTableCell<>());
         SolverManager.showStatus(SolverAssistant.messages.getString("ResetAndReloadInfo"));
     }
 
@@ -451,59 +473,13 @@ public class FXMLDataBaseController implements Initializable {
     }
 
     // -------- Cell Custom Classes 
-    public class CheckBoxTableCell<S, T> extends TableCell<S, T> {
-
-        private final CheckBox checkBox;
-        private ObservableValue<T> ov;
-
-        public CheckBoxTableCell() {
-            this.checkBox = new CheckBox();
-            this.checkBox.setAlignment(Pos.CENTER);
-            this.checkBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
-                @Override
-                public void changed(ObservableValue<? extends Boolean> ov, Boolean t, Boolean t1) {
-                    if (ov.getValue()) {
-                        getTableView().getSelectionModel().select(getTableRow().getIndex());
-                        addToSelectedsList(getTableView().getSelectionModel().getSelectedItem());
-                        SolverManager.showStatus(SolverAssistant.messages.getString("SolverSelectedInfo"));
-                    } else {
-                        getTableView().getSelectionModel().select(getTableRow().getIndex());
-                        removeFromSelectedsList(getTableView().getSelectionModel().getSelectedItem());
-                        SolverManager.showStatus(SolverAssistant.messages.getString("SolverUnSelectedInfo"));
-                    }
-                    bindDataToTable(selectedData, true);
-                }
-            });
-            setAlignment(Pos.CENTER);
-            setGraphic(checkBox);
-        }
-
-        @Override
-        public void updateItem(T item, boolean empty) {
-            super.updateItem(item, empty);
-            if (empty) {
-                setText(null);
-                setGraphic(null);
-            } else {
-                setGraphic(checkBox);
-                if (ov instanceof BooleanProperty) {
-                    checkBox.selectedProperty().unbindBidirectional((BooleanProperty) ov);
-                }
-                ov = getTableColumn().getCellObservableValue(getIndex());
-                if (ov instanceof BooleanProperty) {
-                    checkBox.selectedProperty().bindBidirectional((BooleanProperty) ov);
-                }
-            }
-        }
-    }
-
     private class ButtonCell extends TableCell<SolverProperties, Boolean> {
 
         final Button cellButton = new Button();
 
         ButtonCell() {
 
-            cellButton.getStyleClass().add("button-deleteButton"); // TODO CHECK
+            cellButton.getStyleClass().add("button-deleteButton");
 
             // Action when the button is pressed
             cellButton.setOnAction((ActionEvent t) -> {
@@ -517,6 +493,74 @@ public class FXMLDataBaseController implements Initializable {
                 updateFilteredData();
                 bindDataToTable(filteredData, false);
                 SolverManager.showStatus(SolverAssistant.messages.getString("SolverDeletedInfo"));
+            });
+            setAlignment(Pos.CENTER);
+        }
+
+        // Display button if the row is not empty
+        @Override
+        protected void updateItem(Boolean t, boolean empty) {
+            super.updateItem(t, empty);
+            if (!empty) {
+                setGraphic(cellButton);
+            } else {
+                setGraphic(null);
+            }
+        }
+    }
+
+    private class ButtonSelectCell extends TableCell<SolverProperties, Boolean> {
+
+        final Button cellButton = new Button();
+
+        ButtonSelectCell() {
+
+            cellButton.getStyleClass().add("button-selectButton");
+
+            // Action when the button is pressed
+            cellButton.setOnAction((ActionEvent t) -> {
+                SolverProperties solver = (SolverProperties) ButtonSelectCell.this.getTableView().getItems().get(ButtonSelectCell.this.getIndex());
+                addToSelectedsList(solver);
+                removeFromDataList(solver);
+                updateFilteredData();
+                bindDataToTable(filteredData, false);
+                bindDataToTable(selectedData, true);
+                SolverManager.showStatus(SolverAssistant.messages.getString("SolverSelectedInfo"));
+            });
+            setAlignment(Pos.CENTER);
+        }
+
+        // Display button if the row is not empty
+        @Override
+        protected void updateItem(Boolean t, boolean empty) {
+            super.updateItem(t, empty);
+            if (!empty) {
+                setGraphic(cellButton);
+            } else {
+                setGraphic(null);
+            }
+        }
+    }
+
+    private class ButtonUnSelectCell extends TableCell<SolverProperties, Boolean> {
+
+        final Button cellButton = new Button();
+
+        ButtonUnSelectCell() {
+
+            cellButton.getStyleClass().add("button-unSelectButton");
+
+            // Action when the button is pressed
+            cellButton.setOnAction((ActionEvent t) -> {
+                SolverProperties solver = (SolverProperties) ButtonUnSelectCell.this.getTableView().getItems().get(ButtonUnSelectCell.this.getIndex());
+                if (selectedData.contains(solver)) {
+                    selectedData.remove(solver);
+                    bindDataToTable(selectedData, true);
+                }
+                data.add(solver);
+                updateFilteredData();
+                bindDataToTable(filteredData, false);
+                SolverManager.showStatus(SolverAssistant.messages.getString("SolverUnSelectedInfo"));
             });
             setAlignment(Pos.CENTER);
         }

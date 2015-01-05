@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -83,6 +82,27 @@ public class Utils {
             File dir = new File("exports/");
             dir.mkdir();
             writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("exports/" + path), "utf-8"));
+            writer.write(content);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                writer.close();
+            } catch (Exception ex) {
+            }
+        }
+    }
+
+    /**
+     * Write content of language in a file
+     *
+     * @param path Name of the file
+     * @param content Content of the file
+     */
+    public static void fileWriterLanguage(String path, String content) {
+        Writer writer = null;
+        try {
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path), "utf-8"));
             writer.write(content);
         } catch (IOException ex) {
             ex.printStackTrace();
