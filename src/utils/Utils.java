@@ -472,8 +472,6 @@ public class Utils {
                 String aux = getNodeFromGridPane(table, i, x).toString();
                 html += "<td>";
                 String value = aux.substring(aux.indexOf("'") + 1, aux.lastIndexOf("'"));
-                value = value.replace("/", "\\/");
-                value = value.replace("_", "\\_");
                 if (value.contains("*")) {
                     html += "<font color='#1EAA46'>" + aux.substring(aux.indexOf("'") + 1, aux.lastIndexOf("'"));
                 } else {
@@ -500,8 +498,12 @@ public class Utils {
                 + "\n"
                 + "\\begin{table}[ht]\n"
                 + "\\begin{center}\n"
-                + "\\begin{tabular}{|l|r||r|r|r|r|}\n"
-                + "\\hline\n";
+                + "\\begin{tabular}{|l|r|";
+        for (int i = 0; i < columns; i++) {
+            latex += "|r|";
+        }
+        latex += "}\n";
+        latex += "\\hline\n";
 
         for (int i = 0; i < columns; i++) {
             String aux = getNodeFromGridPane(table, i, 0).toString();
@@ -510,19 +512,24 @@ public class Utils {
                 latex += " & ";
             }
         }
-        latex += "\\\\ \\hline \n";
+        latex += " \\\\ \\hline \n";
 
         for (int x = 1; x < rows; x++) {
             for (int i = 0; i < columns; i++) {
                 String aux = getNodeFromGridPane(table, i, x).toString();
-                if (aux.substring(aux.indexOf("'") + 1, aux.lastIndexOf("'")).contains("*")) {
+                String value = aux.substring(aux.indexOf("'") + 1, aux.lastIndexOf("'"));
+                value = value.replace("/", "\\/");
+                value = value.replace("_", "\\_");
+                if (value.contains("*")) {
                     latex += "\\textbf{" + aux.substring(aux.indexOf("'") + 1, aux.lastIndexOf("'")) + "}";
                 } else {
                     latex += aux.substring(aux.indexOf("'") + 1, aux.lastIndexOf("'"));
                 }
-                latex += " & ";
+                if (i < columns - 1) {
+                    latex += " & ";
+                }
             }
-            latex += "\\\\ \\hline \n";
+            latex += " \\\\ \\hline \n";
         }
         latex += "\\end{tabular}\n"
                 + "\\end{center}\n"
